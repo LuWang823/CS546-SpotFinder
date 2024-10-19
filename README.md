@@ -60,12 +60,3 @@
 ## Honor Pledge
 
 We pledge our honor that we have abided by the Stevens Honor System.
-
----
-
-## Installation and Setup
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/spotfinder.git
-   ```
