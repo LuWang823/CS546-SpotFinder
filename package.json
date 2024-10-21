@@ -1,0 +1,21 @@
+{
+  "name": "Spot Finder",
+  "version": "1.0.0",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "dev": "NODE_ENV=development node app.js",
+    "prod": "NODE_ENV=production node app.js"
+  },
+  "author": "Lu Wang CWID:20029460, Brandon Penman CWID:20006301 , Shirsha Sen CWID:20031948 , Brandon Lopez CWID:20006480, Harsh Gautam CWID:20027252",
+  "license": "ISC",
+  "description": "Spot Finder is a platform designed to make it easy to discover and share recreational spots for hobbies and sports like hiking, fishing, and skating. Users can upload and share their own findings, including geographic coordinates (latitude and longitude) and images to showcase the spot to other users. The platform allows users to search for, bookmark/favorite, and organize personal collections of points of interest that can be shared as well.",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "mongoose": "^8.7.2",
+    "nodemailer": "^6.9.15",
+    "uuid": "^10.0.0"
+  }
+}
