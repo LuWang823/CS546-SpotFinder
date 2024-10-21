@@ -105,3 +105,8 @@ export const resetPasswordHandler = catchAsync(async (req, res, _next) => {
     message: "could not reset the password",
   });
 });
+
+export const getCurrentUserHandler = catchAsync(async (req, res, next) => {
+  const user = res.locals.user;
+  return res.send(user);
+});

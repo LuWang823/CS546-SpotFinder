@@ -1,6 +1,4 @@
 import mongoose from "mongoose";
-import dotenv from "dotenv";
-dotenv.config({ path: `./config/${process.env.NODE_ENV}.env` });
 
 export async function connectToDB() {
   try {
