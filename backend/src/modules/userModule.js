@@ -1,8 +1,6 @@
 import mongoose from "mongoose";
 import { v4 as uuid } from "uuid";
 import bcrypt from "bcrypt";
-import dotenv from "dotenv";
-dotenv.config({ path: `./config/${process.env.NODE_ENV}.env` });
 
 const userSchema = new mongoose.Schema(
   {
@@ -37,7 +35,7 @@ userSchema.pre("save", async function (next) {
   }
 
   const saltRound = Number(process.env.saltRounds);
-  this.password = bcrypt.hash(this.password, saltRound);
+  this.password = await bcrypt.hash(this.password, saltRound);
 
   next();
 });

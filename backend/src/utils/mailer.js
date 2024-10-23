@@ -1,6 +1,4 @@
 import nodemailer from "nodemailer";
-import dotenv from "dotenv";
-dotenv.config({ path: "./config/dev.env" });
 
 const smtp = {
   host: "smtp.ethereal.email",
