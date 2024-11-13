@@ -1,13 +1,4 @@
-/**
- * Global Error Handling Middleware:
- * - handleDevError: Sends detailed error information in development.
- * - handleProdError: Sends limited, user-friendly error info in production. Logs unknown errors.
- * - handleZodError: Converts Zod validation errors into a custom AppError.
- * - handleCastError: Creates a custom error for invalid MongoDB object IDs.
- * - handleDuplicateKeyError: Creates a custom error for MongoDB duplicate key errors.
- * - globalErrorHandler: Main error handler that processes errors differently based on environment
- *   (development/production), and handles specific MongoDB errors (CastError, DuplicateKeyError).
- */
+// Global Error Handling Middleware:
 
 import { ZodError } from "zod";
 import AppError from "../utils/appError.js";

@@ -1,6 +1,7 @@
+// Custom Error class
 class AppError extends Error {
   status;
-  isOperational;
+  isOperational; // tracked errors
 
   constructor(message, statusCode) {
     super(message);

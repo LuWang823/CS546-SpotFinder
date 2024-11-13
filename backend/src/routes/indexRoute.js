@@ -1,3 +1,5 @@
+// Main application configuration file.
+
 import express from "express";
 import userRouter from "./userRoute.js";
 import globalErrorHandler from "../controllers/errorController.js";

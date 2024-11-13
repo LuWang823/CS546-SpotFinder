@@ -1,3 +1,5 @@
+// User-related controller functions
+
 import catchAsync from "../utils/catchAsync.js";
 import { v4 as uuid } from "uuid";
 import User from "../modules/userModule.js";
@@ -66,7 +68,7 @@ export const forgotPasswordHandler = catchAsync(async (req, res, _next) => {
   user.resetPasswordCode = resetPasswordCode;
   await user.save();
 
-  sendResetPasswordMail({
+  await sendResetPasswordMail({
     id: user.id,
     email: user.email,
     resetPasswordCode,
@@ -106,7 +108,7 @@ export const resetPasswordHandler = catchAsync(async (req, res, _next) => {
   });
 });
 
-export const getCurrentUserHandler = catchAsync(async (req, res, next) => {
+export const getCurrentUserHandler = catchAsync(async (_req, res, _next) => {
   const user = res.locals.user;
   return res.send(user);
 });

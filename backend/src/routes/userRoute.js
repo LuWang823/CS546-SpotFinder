@@ -1,11 +1,4 @@
-/**
- * User Router for handling authentication and user management routes:
- * - POST /: Creates a new user with validation.
- * - POST /verify/:id/:verificationCode: Verifies a user using an ID and verification code with validation.
- * - POST /forgotPassword: Initiates the password recovery process with validation.
- * - POST /resetPassword/:id/:resetPasswordCode: Resets a user's password using an ID and reset code with validation.
- * - Each route uses the validateResource middleware to enforce schema validation before handling the request.
- */
+// User Router for handling authentication and user management routes:
 
 import express from "express";
 import {
@@ -23,6 +16,7 @@ import {
   VerifyUserSchema,
 } from "../schemas/userSchema.js";
 import { userRequired } from "../middlewares/userRequired.js";
+import { deserializeUser } from "../middlewares/deserializeUser.js";
 
 const userRouter = express.Router();
 
@@ -42,6 +36,6 @@ userRouter.post(
   validateResource(ResetPasswordSchema),
   resetPasswordHandler,
 );
-userRouter.get("/me", userRequired, getCurrentUserHandler);
+userRouter.get("/me", deserializeUser, userRequired, getCurrentUserHandler);
 
 export default userRouter;

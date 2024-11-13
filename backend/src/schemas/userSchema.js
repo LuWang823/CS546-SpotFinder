@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import z from "zod";
 
+// Rules for valid user input data
 const Body = z.object({
   name: z.string({ required_error: "field 'name' is required" }).max(50),
   email: z
@@ -44,8 +45,8 @@ export const ResetPasswordSchema = z.object({
   params: z
     .object({
       id: z.string({ required_error: "parameter 'id' is required" }),
-      passwordResetCode: z.string({
-        required_error: "parameter 'passwordResetCode' is required",
+      resetPasswordCode: z.string({
+        required_error: "parameter 'resetPasswordCode' is required",
       }),
     })
     .refine((data) => mongoose.isValidObjectId(data.id)),
