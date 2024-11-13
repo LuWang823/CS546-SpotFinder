@@ -1,3 +1,7 @@
+/**
+ * Entry point for the application.
+ */
+
 process.on("uncaughtException", (err) => {
   console.error("uncaughtException, shutting down server");
   console.error(err);
@@ -11,10 +15,11 @@ import connectToDB from "./utils/connectToDB.js";
 dotenv.config({ path: `./config/${process.env.NODE_ENV}.env` });
 
 const port = process.env.port;
+const baseURL = process.env.baseURL;
 
 const server = app.listen(port, async () => {
   await connectToDB();
-  console.log(`app started successfully at http://localhost:${port}`);
+  console.log(`app started successfully at ${baseURL}${port}`);
 });
 
 process.on("unhandledRejection", (err) => {

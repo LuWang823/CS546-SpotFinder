@@ -1,3 +1,5 @@
+// Controller functions for handling user sessions
+
 import catchAsync from "../utils/catchAsync.js";
 import _ from "lodash";
 import User from "../modules/userModule.js";

@@ -27,8 +27,8 @@ export const sendVerificationMail = async (info) => {
     from: "spot-finder@gmail.com",
     to: info.email,
     subject: "vefification link",
-    text: `${process.env.baseURL}/users/verify/${info.id}/${info.verificationCode}`,
-    html: `<a href="${process.env.baseURL}/users/verify/${info.id}/${info.verificationCode}" >verify</a>`,
+    text: `${process.env.baseURL}${process.env.port}/api/v1/users/verify/${info.id}/${info.verificationCode}`,
+    html: `<a href="${process.env.baseURL}${process.env.port}/api/v1/users/verify/${info.id}/${info.verificationCode}" >verify</a>`,
   });
 };
 
@@ -37,7 +37,7 @@ export const sendResetPasswordMail = async (info) => {
     from: "spot-finder@gmail.com",
     to: info.email,
     subject: "reset password",
-    text: `${process.env.baseURL}/resetpassword/${info.id}/${info.resetPasswordCode}`,
-    html: `<a href="${process.env.baseURL}/resetpassword//${info.id}/${info.resetPasswordCode}" >reset password</a>`,
+    text: `${process.env.baseURL}${process.env.port}/api/v1/users/resetpassword/${info.id}/${info.resetPasswordCode}`,
+    html: `<a href="${process.env.baseURL}${process.env.port}/api/v1/users/resetpassword/${info.id}/${info.resetPasswordCode}" >reset password</a>`,
   });
 };

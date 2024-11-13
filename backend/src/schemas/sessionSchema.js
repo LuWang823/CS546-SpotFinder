@@ -1,5 +1,6 @@
 import z from "zod";
 
+// Rules for valid Session input data
 export const CreateSessionSchema = z.object({
   body: z.object({
     email: z

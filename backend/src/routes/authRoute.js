@@ -1,3 +1,5 @@
+// Authentication routes for user session management.
+
 import express from "express";
 import validateResource from "../middlewares/validateResource.js";
 import {
