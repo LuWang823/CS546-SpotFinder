@@ -1,3 +1,4 @@
 node_modules
 .rgignore
 data
+backend/package-lock.json

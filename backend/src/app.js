@@ -18,7 +18,7 @@ const port = process.env.port;
 const baseURL = process.env.baseURL;
 
 const server = app.listen(port, async () => {
-  await connectToDB();
+  //await connectToDB(); DISABLED FOR TESTING
   console.log(`app started successfully at ${baseURL}${port}`);
 });
 
