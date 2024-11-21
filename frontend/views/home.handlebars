@@ -1,3 +1,35 @@
+<style>
+    h1{
+        display:block;
+        width:100%;
+    }
+    .content{
+        display:flex;
+        justify-content: space-between;
+    }
+    /*panel colors are for visualizing bounds, remove after design is finished*/
+    .right-panel{
+        background-color:lightblue;
+        flex-basis:20%;
+    }
+    .left-panel{
+        flex-basis: 80%;
+        background-color:lightgreen;
+        margin-left:2em;
+    }
+    img{
+        width:700px;
+    }
+</style>
 <main>
     <h1>HOME PAGE</h1>
+    <div class="content">
+        <div class="left-panel">
+            <h2>Find a Spot!</h2>
+            <img src="/images/placeholder_map.webp"><!--Replace with map implementation-->
+        </div>
+        <div class="right-panel"><!-- search functionality here-->
+            <h2>Search:</h2>
+        </div>
+    </div>
 </main>
