@@ -1,0 +1,34 @@
+<main>
+    <form id="verification-form">
+        <p id="error-message"></p>
+        <label for="submit">Verification Code: </label>
+        <input type="submit" id="submit" name="submit">
+    </form>
+    <p>email will not be sent in dev, instead id and verification code are stored locally in signUp.js</p>
+</main>
+<script src="scripts/verify.js"></script>
+<script>
+    document.getElementById('verification-form').addEventListener('submit', async function (event) {
+        event.preventDefault();//obliterate default behavior
+        const errorMessage = document.getElementById('error-message');
+        //const code = document.getElementById('code').value;
+
+        
+        /*if (!code) {
+            errorMessage.textContent = 'Please enter verification code';
+            errorMessage.style.display = 'block';
+            return;
+        }*/
+        //TODO: client side validation HERE
+        try{
+            await verify(localStorage.getItem("id"),localStorage.getItem("verificationCode"));
+            errorMessage.textContent = "verified successfully";
+            errorMessage.style.display = 'block';
+            window.location.href = "/login";
+        }catch(e){
+            errorMessage.textContent = e.message;
+            errorMessage.style.display = 'block';
+        }
+        
+    });
+</script>
