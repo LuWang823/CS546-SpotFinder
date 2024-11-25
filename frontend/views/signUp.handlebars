@@ -9,37 +9,62 @@
         <input type="password" id="pass" name="pass">
         <input type="submit" id="submit" name="submit">
     </form>
-    
-    <button onclick="verify()">Verify</button>
+
+    <button id='verify' onclick="verify()">Verify</button>
 
 </main>
 <script src="scripts/signUp.js"></script>
+<script src="scripts/frontendValidation/email.js"></script>
+<script src="scripts/frontendValidation/password.js"></script>
+<script src="scripts/frontendValidation/name.js"></script>
 <script>
+    //make verify button invisible
+    document.getElementById('verify').style.display = 'none';
+
     document.getElementById('sign-up-form').addEventListener('submit', async function (event) {
         event.preventDefault();//obliterate default behavior
+        
         const name = document.getElementById('name').value;
         const email = document.getElementById('email').value;
         const password = document.getElementById('pass').value;
         const errorMessage = document.getElementById('error-message');
 
-        
-        if (!email || !password) {
+        // client side validation HERE
+        if (!email || !password || !name) {
             errorMessage.textContent = 'Please enter name, email, and password.';
             errorMessage.style.display = 'block';
             return;
         }
-        //TODO: client side validation HERE
-        try{
-            await signUp(name,email,password);
+        if (!verifyName(name)) {
+            errorMessage.textContent = 'invalid name';
+            errorMessage.style.display = 'block';
+            return;
+        }
+        if (!verifyEmail(email)) {
+            errorMessage.textContent = 'invalid email, needs to be in format abc@provider.com/net/etc..';
+            errorMessage.style.display = 'block';
+            return;
+        }
+        if (!verifyPassword(password)) {
+            errorMessage.textContent = 'invalid password';
+            errorMessage.style.display = 'block';
+            return;
+        }
+
+        try {
+            await signUp(name, email, password);
             errorMessage.textContent = "sign up successful, proceed to verify, code is in local storage for dev";
             errorMessage.style.display = 'block';
-        }catch(e){
+            document.getElementById('verify').style.display = 'block';//reveal verify button
+            return;
+        } catch (e) {
             errorMessage.textContent = e.message;
             errorMessage.style.display = 'block';
+            return;
         }
-        
+
     });
-    function verify(){
+    function verify() {
         window.location.href = "/verify";
     }
 </script>

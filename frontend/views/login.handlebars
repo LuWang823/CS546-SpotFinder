@@ -9,29 +9,43 @@
     </form>
 </main>
 <script src="scripts/login.js"></script>
+<script src="scripts/frontendValidation/email.js"></script>
+<script src="scripts/frontendValidation/password.js"></script>
 <script>
     document.getElementById('login-form').addEventListener('submit', async function (event) {
         event.preventDefault();//obliterate default behavior
+        
         const email = document.getElementById('email').value;
         const password = document.getElementById('pass').value;
         const errorMessage = document.getElementById('error-message');
 
-        
+        // client side validation HERE
         if (!email || !password) {
             errorMessage.textContent = 'Please enter both email and password.';
             errorMessage.style.display = 'block';
             return;
         }
-        //TODO: client side validation HERE
-        try{
-            await login(email,password);
+        if (!verifyEmail(email)) {
+            errorMessage.textContent = 'invalid email, needs to be in format abc@provider.com/net/etc..';
+            errorMessage.style.display = 'block';
+            return;
+        }
+        if (!verifyPassword(password)) {
+            errorMessage.textContent = 'invalid password';
+            errorMessage.style.display = 'block';
+            return;
+        }
+
+
+        try {
+            await login(email, password);
             errorMessage.textContent = 'Log-in successful';
             errorMessage.style.display = 'block';
             window.location.href = "/";
-        }catch(e){
+        } catch (e) {
             errorMessage.textContent = e.message;
             errorMessage.style.display = 'block';
         }
-        
+
     });
 </script>
