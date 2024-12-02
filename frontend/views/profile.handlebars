@@ -1,0 +1,40 @@
+<main>
+    <h2>{{name}}</h2>
+    <h4>{{email}}</h4>
+    <span>Verified: {{verified}}</span>
+    <h3>Saved Hobbies:</h3>
+    <!--Array of strings passed into this-->
+    <ul class="hobby-list">
+        {{#each hobbies}}
+        <li>{{this}}</li>
+        {{/each}}
+    </ul>
+
+    <h3>Saved Address:</h3>
+    <p>{{address}}</p>
+
+    <h3>Posted Spots</h3>
+    <ul class="spot-list">
+        <!--array of spot IDs-->
+        {{#each spots}}
+        <li><a href="/spots/{{this}}">{{this}}</a></li>
+        {{/each}}
+    </ul>
+
+    <h3>Liked Spots</h3>
+    <ul class="spot-list">
+        <!--array of spot IDs-->
+        {{#each likedSpots}}
+        <li><a href="/spots/{{this}}">{{this}}</a></li>
+        {{/each}}
+    </ul>
+
+    <h3>Visited Spots</h3>
+    <ul class="spot-list">
+        <!--array of spot IDs-->
+        {{#each visitedSpots}}
+        <li><a href="/spots/{{this}}">{{this}}</a></li>
+        {{/each}}
+    </ul>
+
+</main>
