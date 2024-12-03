@@ -19,8 +19,8 @@
         <ul id="profile-buttons">
             <li id="login"><a href="/login">Login</a></li>
             <li id="sign-up"><a href="/signUp">Sign Up</a></li>
-            <li id="profile"><a href="/profile">Profile</a></li>
-            <!-- TODO: add /profile page and create route endpoint for getting user-->
+            <li id="profile"><a href="">Profile</a></li>
+            <!-- TODO: create route endpoint for getting user-->
             <li id="sign-out"><a href="/">Sign Out</a></li>
         </ul>
     </nav>
@@ -36,6 +36,11 @@
             // User is logged in, hide login and sign-up
             document.getElementById('login').style.display = 'none';
             document.getElementById('sign-up').style.display = 'none';
+
+            //assemble link for profile page
+            const profileLink = document.getElementById('profile').querySelector('a');
+            profileLink.setAttribute('href', ('/profile/'+localStorage.getItem('accessToken')+'/'+localStorage.getItem('refreshToken')));
+
         }
 
         document.getElementById('sign-out').addEventListener('click', () => {

@@ -19,6 +19,7 @@ nav{
     display:flex;
     justify-content: space-between;
     font-weight:bold;
+    font-size:14pt;
 }
 nav ul{
     list-style-type: none;
