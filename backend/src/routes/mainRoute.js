@@ -70,7 +70,6 @@ mainRouter.route('/spots/:id').get(async (req, res) => {
   });*/
 
   const spot = { //dummy info
-
     "id": "s12345556",
     "name": "Fishing lake",
     "hobby": ["fishing","hiking"],
@@ -89,7 +88,6 @@ mainRouter.route('/spots/:id').get(async (req, res) => {
       "2138761412",
       "8237891243"
     ]
-
   }
   const reviewObjects = [{ //dummy info
     "_id": "1234567",
@@ -109,7 +107,7 @@ mainRouter.route('/spots/:id').get(async (req, res) => {
     spotDescription: spot.description,
     likesCount: spot.likes.length,
     review: reviewObjects
-  })
+  });
 });
 
 

@@ -34,18 +34,32 @@
         {{/each}}
     </ul>
 </main>
-
+<script src="/scripts/postReview.js"></script>
 <script>
     if (localStorage.getItem('accessToken') === null) {
         document.getElementById('review').style.display = 'none';
-    } else {
+    } else {    //handle making a post request, check inputs, call function in postReview file
         document.getElementById('new-review').addEventListener('submit', async function (event) {
             event.preventDefault();//obliterate default behavior
 
-            const description = document.getElementById('description').value;
-            const rating = document.getElementById('rating').value;
+            let description = document.getElementById('description').value;
+            const rating = Number(document.getElementById('rating').value);
+            const errorMessage = document.getElementById('error-message');
 
-            //TODO: validation on these fields ^^
+            if (!rating || typeof rating !== 'number' || rating < 1 || rating > 5) {
+                errorMessage.textContent = 'invalid rating';
+                errorMessage.style.display = 'block';
+                return;
+            }
+            if (!description ||
+                typeof description !== "string" ||
+                description.trim().length < 1 || description.trim().length > 500) {
+                errorMessage.textContent = 'invalid description';
+                errorMessage.style.display = 'block';
+                return;
+            }else{
+                description = description.trim();
+            }
 
             const user = localStorage.getItem('accessToken')//use this access token in link
             const refresh = localStorage.getItem('refreshToken')//use this refresh token in link
@@ -54,7 +68,7 @@
             const id = urlParams.get('id'); //get spot id from url
             try {
                 //username and timestamp for review object gets populated on backend route, not front end responsibility, use access token to find user..
-                await postReview(id,rating,description);
+                await postReview(id, rating, description);
                 errorMessage.textContent = 'successfully posted!';
                 errorMessage.style.display = 'block';
             } catch (e) {

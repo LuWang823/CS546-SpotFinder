@@ -1,4 +1,5 @@
 const postReview = async (spotID,rating,description) => {
+    console.log('inside func')
     try {
         // Send credentials to the backend
         //localhost:3000/spots/:id/reviews
@@ -16,10 +17,10 @@ const postReview = async (spotID,rating,description) => {
         });
     
         if (response.ok) {
-            
+
         } else {
             // Show error message if login failed
-            throw new Error('Invalid name, email, or password');
+            throw new Error('Internal Server Error');
         }
     } catch (e) {
         throw e
