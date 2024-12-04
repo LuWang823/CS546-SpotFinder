@@ -1,17 +1,18 @@
 <main>
     <!--TODO: add a like button, backend needs to be done FIRST!-->
-    <img src="{{image_src}}" class="spot-img">
+    <img src="{{image_src}}" class="spot-img" alt="Image of the spot">
     <div class="spot-info">
-        <h2>{{spotName}}</h2>
-        <h5>{{tagList}}</h5>
-        <span>{{spotCoordinates}}</span>
-        <p>{{spotDescription}}</p>
+        <h2>Name: {{spotName}}</h2>
+        <h5>Tags: {{tagList}}</h5>
+        <p>Coordinates: {{spotCoordinates}}</p>
+        <p>Description: {{spotDescription}}</p>
         <div class="likes">
-            <span>{{likesCount}}</span>
+            <span>Likes: {{likesCount}}</span>
         </div>
     </div>
     <ul><!--should pass in an array of objects of all the reviews, not just the review IDs!!!-->
-        <li>
+        <li id="review">
+            <h4>write your own review: </h4>
             <p id="error-message"></p>
             <form id="new-review">
                 <label for="rating">Rating: </label>
@@ -23,37 +24,43 @@
         </li>
         {{#each review}}
         <li>
-            <div style="display:flex">
-                <h4>{{this.user}}</h4>
-                <span>{{this.timestamp}}</span>
-                <span>{{this.ratings}}</span>
+            <div>
+                <h4>User: {{this.user}}</h4>
+                <p>Time: {{this.timestamp}}</p>
+                <p>Rating (1-5): {{this.ratings}}</p>
             </div>
-            <p>{{this.description}}</p>
+            <p>Review: {{this.description}}</p>
         </li>
         {{/each}}
     </ul>
 </main>
 
 <script>
-    document.getElementById('new-review').addEventListener('submit', async function (event) {
-        event.preventDefault();//obliterate default behavior
-        
-        const description = document.getElementById('description').value;
-        const rating = document.getElementById('rating').value;
+    if (localStorage.getItem('accessToken') === null) {
+        document.getElementById('review').style.display = 'none';
+    } else {
+        document.getElementById('new-review').addEventListener('submit', async function (event) {
+            event.preventDefault();//obliterate default behavior
 
-        //TODO: validation on these fields ^^
+            const description = document.getElementById('description').value;
+            const rating = document.getElementById('rating').value;
 
-        const user = localStorage.getItem('accessToken')//use this access token in link
-        const refresh = localStorage.getItem('refreshToken')//use this refresh token in link
+            //TODO: validation on these fields ^^
 
-        try {
-            //username and timestamp for review object gets populated on backend route, not front end responsibility, use access token to find user..
-            await postReview();
-            errorMessage.textContent = 'successfully posted!';
-            errorMessage.style.display = 'block';
-        } catch (e) {
-            errorMessage.textContent = e.message;
-            errorMessage.style.display = 'block';
-        }
-    });
+            const user = localStorage.getItem('accessToken')//use this access token in link
+            const refresh = localStorage.getItem('refreshToken')//use this refresh token in link
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id'); //get spot id from url
+            try {
+                //username and timestamp for review object gets populated on backend route, not front end responsibility, use access token to find user..
+                await postReview(id,rating,description);
+                errorMessage.textContent = 'successfully posted!';
+                errorMessage.style.display = 'block';
+            } catch (e) {
+                errorMessage.textContent = e.message;
+                errorMessage.style.display = 'block';
+            }
+        });
+    }
 </script>
