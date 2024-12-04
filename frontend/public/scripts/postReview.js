@@ -1,5 +1,4 @@
 const postReview = async (spotID,rating,description) => {
-    console.log('inside func')
     try {
         // Send credentials to the backend
         //localhost:3000/spots/:id/reviews

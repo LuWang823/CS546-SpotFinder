@@ -9,8 +9,11 @@
         <div class="likes">
             <span>Likes: {{likesCount}}</span>
         </div>
+        <button onclick="like()">Like This Spot</button>
+        <button onclick="save()">Save This Spot</button>
+
     </div>
-    <ul><!--should pass in an array of objects of all the reviews, not just the review IDs!!!-->
+    <ul class="review-list"><!--should pass in an array of objects of all the reviews, not just the review IDs!!!-->
         <li id="review">
             <h4>write your own review: </h4>
             <p id="error-message"></p>
@@ -35,7 +38,9 @@
     </ul>
 </main>
 <script src="/scripts/postReview.js"></script>
-<script>
+<script src="/scripts/likeSpot.js"></script>
+<script src="/scripts/saveSpot.js"></script>
+<script> //handle submitting a new review
     if (localStorage.getItem('accessToken') === null) {
         document.getElementById('review').style.display = 'none';
     } else {    //handle making a post request, check inputs, call function in postReview file
@@ -57,15 +62,16 @@
                 errorMessage.textContent = 'invalid description';
                 errorMessage.style.display = 'block';
                 return;
-            }else{
+            } else {
                 description = description.trim();
             }
 
-            const user = localStorage.getItem('accessToken')//use this access token in link
-            const refresh = localStorage.getItem('refreshToken')//use this refresh token in link
+            const user = localStorage.getItem('accessToken')//use this access token in header
+            const refresh = localStorage.getItem('refreshToken')//use this refresh token in header
 
-            const urlParams = new URLSearchParams(window.location.search);
-            const id = urlParams.get('id'); //get spot id from url
+            const currentUrl = window.location.pathname;
+            // Split the path to get the ID
+            const id = currentUrl.split('/')[2]; // spot id from current url
             try {
                 //username and timestamp for review object gets populated on backend route, not front end responsibility, use access token to find user..
                 await postReview(id, rating, description);
