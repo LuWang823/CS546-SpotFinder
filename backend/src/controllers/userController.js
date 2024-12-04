@@ -21,6 +21,8 @@ export const createUserHandler = catchAsync(async (req, res, _next) => {
   res.status(200).json({
     status: "success",
     message: "user created successfully",
+    code: user.verificationCode,//remove in prod
+    id: user.id//remove in prod
   });
 });
 
