@@ -24,19 +24,39 @@ mainRouter.route('/verify').get(async (req, res) => {
   });
 });
 mainRouter.route('/profile/:accessToken/:refreshToken').get(async (req, res) => {
-  //TODO: implement getUser(id) function to populate profile page
-    //dummy data for now...
-  return res.status(200).render('profile',{
-    title:"User Profile",
-    name: "John Doe",
-    email: "123@gmail.com",
-    verified: true,
-    hobbies: ['fishing', 'hiking', 'skateboarding'],
-    address: "123 Street Road, New York",
-    spots: [129883190,1290809120398,12498009812,912849012],//array of spot IDs that will be used to reach endpoint that gets spot based on ID
-    likedSpots: [1239881903,352145342,989298020], //array of spot id's again
-    visitedSpots: [12398231903,352145342,989798020] //array of spot id's again
-  });
+  const { accessToken, refreshToken } = req.params;
+  if (!accessToken || !refreshToken) {//test tokens
+    return res.status(400).json({ message: "Tokens are required" });
+  }
+  try {
+    console.log('here1')
+    const response = await fetch("http::localhost:3000/api/v1/users/me", { 
+      method: "GET", // Or "POST" if the endpoint expects it
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json", // Add content type header if necessary
+      },
+    });
+    if (!response.ok) {
+      res.status(500).send(`Request failed with status: ${response.status}`);
+    }
+
+    const result = await response.json();
+    return res.status(200).render('profile',{
+      title:"User Profile",
+      name: result.name,
+      email: result.email,
+      verified: result.verified,
+      hobbies: result.hobbies,
+      address: result.address,
+      spots: result.spot,//array of spot IDs that will be used to reach endpoint that gets spot based on ID
+      likedSpots: result['liked spot'], //array of spot id's again
+      visitedSpots: result['visited spot'] //array of spot id's again
+    });
+  } catch (error) {
+    res.status(500).send("request failed")
+  }
+  
 });
 
 
