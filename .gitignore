@@ -2,5 +2,4 @@ node_modules
 .rgignore
 data
 backend/package-lock.json
-backend/package-lock.json
 .DS_Store

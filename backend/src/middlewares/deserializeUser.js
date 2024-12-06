@@ -1,4 +1,5 @@
 import catchAsync from "../utils/catchAsync.js";
+import { verifyJwt } from "../utils/jwt.js";
 
 // Attaches 'user' object on response object's local field
 export const deserializeUser = catchAsync(async (req, res, next) => {

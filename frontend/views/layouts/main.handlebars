@@ -1,53 +1,47 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{title}}</title>
-    <link rel="stylesheet" href="/styles/main.css">
-</head>
+    <link rel="stylesheet" href="/styles/main.css" />
+    <script src="scripts/profile.js" type="module"></script>
+  </head>
 
-<body>
+  <body>
     <nav>
-        <span><a href="/">Spot Finder</a></span>
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/">EX1</a></li>
-            <li><a href="/">EX2</a></li>
-        </ul>
-        <ul id="profile-buttons">
-            <li id="login"><a href="/login">Login</a></li>
-            <li id="sign-up"><a href="/signUp">Sign Up</a></li>
-            <li id="profile"><a href="">Profile</a></li>
-            <!-- TODO: create route endpoint for getting user-->
-            <li id="sign-out"><a href="/">Sign Out</a></li>
-        </ul>
+      <span><a href="/">Spot Finder</a></span>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/">EX1</a></li>
+        <li><a href="/">EX2</a></li>
+      </ul>
+      <ul id="profile-buttons">
+        <li id="login"><a href="/login">Login</a></li>
+        <li id="sign-up"><a href="/signUp">Sign Up</a></li>
+        <li id="profile"><a href="">Profile</a></li>
+        <!-- TODO: create route endpoint for getting user-->
+        <li id="sign-out"><a href="/">Sign Out</a></li>
+      </ul>
     </nav>
     {{{body}}}
 
-
     <script>
-        if (localStorage.getItem('accessToken') === null) {
-            // User is not logged in, hide profile and sign-out
-            document.getElementById('profile').style.display = 'none';
-            document.getElementById('sign-out').style.display = 'none';
-        } else {
-            // User is logged in, hide login and sign-up
-            document.getElementById('login').style.display = 'none';
-            document.getElementById('sign-up').style.display = 'none';
+      if (localStorage.getItem("accessToken") === null) {
+        // User is not logged in, hide profile and sign-out
+        document.getElementById("profile").style.display = "none";
+        document.getElementById("sign-out").style.display = "none";
+      } else {
+        // User is logged in, hide login and sign-up
+        document.getElementById("login").style.display = "none";
+        document.getElementById("sign-up").style.display = "none";
 
-            //assemble link for profile page
-            const profileLink = document.getElementById('profile').querySelector('a');
-            profileLink.setAttribute('href', ('/profile/'+localStorage.getItem('accessToken')+'/'+localStorage.getItem('refreshToken')));
+      }
 
-        }
-
-        document.getElementById('sign-out').addEventListener('click', () => {
-            localStorage.removeItem('accessToken');
-            localStorage.removeItem('refreshToken');
-        });
+      document.getElementById("sign-out").addEventListener("click", () => {
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+      });
     </script>
-</body>
-
+  </body>
 </html>
