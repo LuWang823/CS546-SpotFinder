@@ -13,6 +13,7 @@
         <button onclick="save()">Save This Spot</button>
 
     </div>
+    <button id="refresh-reviews">Refresh Reviews</button>
     <ul class="review-list"><!--should pass in an array of objects of all the reviews, not just the review IDs!!!-->
         <li id="review">
             <h4>write your own review: </h4>
@@ -40,6 +41,43 @@
 <script src="/scripts/postReview.js"></script>
 <script src="/scripts/likeSpot.js"></script>
 <script src="/scripts/saveSpot.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>//ajax for refreshing review list
+    $(document).ready(() => {
+        // Refresh reviews when the button is clicked
+        $('#refresh-reviews').click(() => {
+            const currentUrl = window.location.pathname;
+            const spotId = currentUrl.split('/')[2]; // Extract spot ID from URL
+            const apiUrl = `/spots/${spotId}/reviews`;
+            $.ajax({
+                url: apiUrl,
+                method: 'GET',
+                success: (data) => {
+                    // Clear the current list
+                    $('.review-list').empty();
+
+                    // Append the updated reviews
+                    data.forEach((review) => {
+                        $('.review-list').append(`
+                            <li>
+                                <div>
+                                    <h4>User: ${review.user}</h4>
+                                    <p>Time: ${review.timestamp}</p>
+                                    <p>Rating (1-5): ${review.ratings}</p>
+                                </div>
+                                <p>Review: ${review.description}</p>
+                            </li>
+                        `);
+                    });
+                },
+                error: (err) => {
+                    console.error('Error fetching reviews:', err);
+                    alert('Could not refresh reviews. Please try again later.');
+                },
+            });
+        });
+    });
+</script>
 <script> //handle submitting a new review
     if (localStorage.getItem('accessToken') === null) {
         document.getElementById('review').style.display = 'none';
@@ -77,6 +115,35 @@
                 await postReview(id, rating, description);
                 errorMessage.textContent = 'successfully posted!';
                 errorMessage.style.display = 'block';
+                const currentUrl = window.location.pathname;
+            const spotId = currentUrl.split('/')[2]; // Extract spot ID from URL
+            const apiUrl = `/spots/${spotId}/reviews`;
+            $.ajax({
+                url: apiUrl,
+                method: 'GET',
+                success: (data) => {
+                    // Clear the current list
+                    $('.review-list').empty();
+
+                    // Append the updated reviews
+                    data.forEach((review) => {
+                        $('.review-list').append(`
+                            <li>
+                                <div>
+                                    <h4>User: ${review.user}</h4>
+                                    <p>Time: ${review.timestamp}</p>
+                                    <p>Rating (1-5): ${review.ratings}</p>
+                                </div>
+                                <p>Review: ${review.description}</p>
+                            </li>
+                        `);
+                    });
+                },
+                error: (err) => {
+                    console.error('Error fetching reviews:', err);
+                    alert('Could not refresh reviews. Please try again later.');
+                },
+            });
             } catch (e) {
                 errorMessage.textContent = e.message;
                 errorMessage.style.display = 'block';
