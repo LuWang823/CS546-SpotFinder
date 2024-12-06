@@ -8,6 +8,11 @@ mainRouter.route('/').get(async (req, res) => {
     title: "Home"
   });
 });
+mainRouter.route('/search').get(async (req, res) => {
+  return res.status(200).render('search', {
+    title: "Search"
+  });
+});
 mainRouter.route('/login').get(async (req, res) => {
   return res.status(200).render('login', {
     title: "Login"
