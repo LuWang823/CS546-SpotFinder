@@ -72,7 +72,7 @@ mainRouter.route('/spots/:id').get(async (req, res) => {
   const spot = { //dummy info
     "id": "s12345556",
     "name": "Fishing lake",
-    "hobby": ["fishing","hiking"],
+    "hobby": ["fishing", "hiking"],
     "photo": "image/theidasthenameoftheimage.jpg",
     "description": "A cozy fishing spot",
     "location": {
@@ -109,6 +109,46 @@ mainRouter.route('/spots/:id').get(async (req, res) => {
     review: reviewObjects
   });
 });
+//for refrshing reviews list with AJAX
+mainRouter.route('/spots/:id/reviews').get(async (req, res) => {
+  //TODO ID validation
 
+  //TODO IMPLEMENT THIS
+  //const spot = getSpot(req.params.id);
+  /*
+  let reviewObjects = [];
+  spot.reviews.forEach(review =>{     //iterate over list of review IDs to assemble an array of review objects
+    reviewObjects.push(getReview(review));
+  });*/
+  
+  const reviewObjects = [//dummy info
+    {
+      "_id": "1234567",
+      "spot": "s12345556",
+      "user": "123-456-789",
+      "description": "A cozy fishing spot",
+      "ratings": "4",
+      "timestamp": "1495255666921"
+    },
+    {
+      "_id": "1234567",
+      "spot": "s12345556",
+      "user": "123-456-789",
+      "description": "A cozy fishing spot",
+      "ratings": "4",
+      "timestamp": "1495255666921"
+    },
+    {
+      "_id": "1234567",
+      "spot": "s12345556",
+      "user": "123-456-789",
+      "description": "A cozy fishing spot",
+      "ratings": "4",
+      "timestamp": "1495255666921"
+    }
+  ]
+
+  return res.status(200).json(reviewObjects);
+});
 
 export default mainRouter;
