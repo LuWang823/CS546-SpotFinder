@@ -7,6 +7,7 @@ import authRouter from "./authRoute.js";
 import AppError from "../utils/appError.js";
 import mainRouter from "./mainRoute.js";
 import exphbs from 'express-handlebars';
+import reviewRouter from "./reviewRoute.js";
 
 const app = express();
 
