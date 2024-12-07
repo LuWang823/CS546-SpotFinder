@@ -2,7 +2,6 @@
 import z from "zod";
 
 const SpotBody = z.object({
-    id: z.string({ required_error: "id is required" }),
     name: z.string({ required_error: "name is required" }).max(100),
     hobby: z
       .array(z.string())

@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 
 const spotSchema = new mongoose.Schema({
-    id: { type: String, required: true, unique: true },
     name: { type: String, required: true },
     hobby: { type: [String], default: [] },
     photo: { type: String, required: true },
