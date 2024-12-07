@@ -1,18 +1,17 @@
-const postReview = async (spotID,rating,description) => {
+const postSpot = async (spotObj) => {
+    //TODO: IMPLEMENT THIS FUNCTION
+    /* most likely implementaion vv
     try {
         // Send credentials to the backend
-        //localhost:3000/spots/:id/reviews
-        const response = await fetch(('http://localhost:3000/spots/'+spotID+'/reviews'), {
+        //http://localhost:3000/api/v1/spots
+        const response = await fetch(('http://localhost:3000/api/v1/spots'), {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                 Refresh: `Bearer ${localStorage.getItem('refreshToken')}`
             },
-            body:JSON.stringify({
-                rating,
-                description
-            })
+            body:JSON.stringify(spotObj)
         });
     
         if (response.ok) {
@@ -22,5 +21,5 @@ const postReview = async (spotID,rating,description) => {
         }
     } catch (e) {
         throw e
-    }
+    }*/
 }

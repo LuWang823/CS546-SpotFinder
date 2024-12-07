@@ -6,6 +6,7 @@ import globalErrorHandler from "../controllers/errorController.js";
 import authRouter from "./authRoute.js";
 import AppError from "../utils/appError.js";
 import mainRouter from "./mainRoute.js";
+import spotRouter from "./spotRoute.js";
 import exphbs from 'express-handlebars';
 import reviewRouter from "./reviewRoute.js";
 
@@ -15,6 +16,7 @@ app.use(express.json());
 app.use("/", mainRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/sessions", authRouter);
+app.use("/api/v1/spots",spotRouter)
 
 //set rendering engine to handlebars
 app.set('view engine', 'handlebars');

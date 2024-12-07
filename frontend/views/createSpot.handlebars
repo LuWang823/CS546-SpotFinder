@@ -1,0 +1,76 @@
+<main>
+    <form id="spot-form">
+        <p id="error-message"></p>
+        <label for="spot-name">Name: </label>
+        <input type="text" id="spot-name" name="spot-name">
+
+        <label for="tags">Hobbies (separate with spaces): </label>
+        <input type="text" id="tags" name="tags">
+
+        <label for="image">Image: </label>
+        <input type="file" id="image" name="image" accept=".jpg,.jpeg,.png">
+
+        <label for="description">Description: </label>
+        <input type="text" id="description" name="description">
+
+        <label for="lat">Latitude: </label>
+        <input type="number" id="lat" name="lat" min="-90" max="90">
+
+        <label for="lon">Longitude: </label>
+        <input type="number" id="lon" name="lon" min="-180" max="180">
+    </form>
+</main>
+<script src="/scripts/frontendValidation/validateSpot.js"></script>
+<script src="/scripts/postSpot.js"></script>
+
+<script>//do validation, assemble object, pass to createSpot function
+    const errorMessage = document.getElementById('error-message');
+    if (localStorage.getItem('accessToken') === null) {
+        errorMessage.textContent = 'not logged in';
+        errorMessage.style.display = 'block';
+    } else {    //handle making a post request, check inputs, call function to create spot
+        document.getElementById('new-review').addEventListener('submit', async function (event) {
+            event.preventDefault();//obliterate default behavior
+
+            const name = document.getElementById('spot-name').value;
+            let tags = document.getElementById('tags').value;
+            const image = document.getElementById('image').files[0];
+            const description = document.getElementById('description').value;
+            const lat = Number(document.getElementById('lat').value);
+            const lon = Number(document.getElementById('lon').value);
+
+
+            try {
+                verifySpot(name, tags, image, description, lat, lon)
+                name = name.trim();
+                tags = tags.trim();
+                description = description.trim();
+
+                tags = tags.split(' ')
+
+                const newSpot = {
+                    name: name,
+                    hobby: tags,
+                    photo: image,
+                    description: description,
+                    location: {
+                        Type: 'Point',
+                        coordinates: [lat, lon],
+                    },
+                    reviews: [],
+                    likes: []
+                }
+
+                try {
+                    postSpot(newSpot);
+                } catch (e) {
+                    errorMessage.textContent = e.message;
+                    errorMessage.style.display = 'block';
+                }
+            } catch (e) {
+                errorMessage.textContent = e.message;
+                errorMessage.style.display = 'block';
+            }
+        });
+    }
+</script>

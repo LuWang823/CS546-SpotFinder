@@ -6,8 +6,8 @@ const verify = async (id, code) => {
         });
     
         if (response.ok) {
-            localStorage.removeItem("verificationCode")
-            localStorage.removeItem("id")
+            localStorage.removeItem("verificationCode");
+            localStorage.removeItem("id");
         } else {
             // Show error message if login failed
             throw new Error('Invalid name, email, or password');
