@@ -1,0 +1,103 @@
+<!--http://localhost:3000/api/v1/spots/?ratings=4&distance=10mi&category=hockey-->
+<main>
+    <form id="search-form">
+        <p id="error-message"></p>
+
+        <label for="distance">Search Distance (Miles): </label>
+        <input type="number" min='1' max='500' id="distance" name="distance">
+
+        <label for="rating-search">Search By Rating: </label>
+        <input type="number" min="1" max="5" id="rating-search" name="rating-search">
+
+        <label for="search-tag">Search By Hobby (Only 1): </label>
+        <input type="text" id="search-tag" name="search-tag">
+
+        <input type="submit" id="submit">
+    </form>
+
+    <div id="results">
+        <ul id="result-list">
+
+        </ul>
+    </div>
+</main>
+<script src="/scripts/frontendValidation/validateSearch.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="/scripts/newSearch.js"></script>
+<script>//Handle search form submission
+    const errorMessage = document.getElementById('error-message');
+    const resultList = document.getElementById('result-list');
+    
+    //ajax for adding list of results after search
+    function populateResults(data) {
+        // Clear previous results
+        resultList.innerHTML = '';
+
+        // Check if data is empty
+        if (!data || data.length === 0) {
+            const noResults = document.createElement('li');
+            noResults.textContent = 'No results found';
+            resultList.appendChild(noResults);
+            return;
+        }
+
+        // Create list items for each result
+        data.forEach((item) => {
+            const listItem = document.createElement('li');
+            listItem.innerHTML = `
+                <a href='spots/${item.id}'>
+                    <img src="${item.image}" alt="${item.name}" class='search-result-img'>
+                    <h3>${item.name}</h3>
+                    <p>Rating: ${item.rating}</p>
+                    <p>Distance: ${item.distance} miles</p>
+                </a>
+            `;
+            resultList.appendChild(listItem);
+        });
+    }
+
+    document.getElementById('search-form').addEventListener('submit', async function (event) {
+        event.preventDefault();//obliterate default behavior
+
+        const distance = Number(document.getElementById('distance').value);
+        const rating = Number(document.getElementById('rating-search').value);
+        let tag = document.getElementById('search-tag').value;
+        try {
+            validateSearch(distance, rating, tag);
+            tag = tag.trim();
+
+            if ("geolocation" in navigator) {
+                // Prompt user for permission to access their location
+                navigator.geolocation.getCurrentPosition(
+                    // Success callback function
+                    async (position) => {
+                        // Get the user's latitude and longitude coordinates
+                        const lat = position.coords.latitude;
+                        const lon = position.coords.longitude;
+
+                        try {
+                            const results = await newSearch(distance, rating, tag, lat, lon);
+                            populateResults(results);
+                        } catch (e) {
+                            errorMessage.textContent = e.message;
+                            errorMessage.style.display = 'block';
+                        }
+                    },
+                    // Error callback function
+                    (error) => {
+                        // Handle errors, e.g. user denied location sharing permissions
+                        errorMessage.textContent = error.message;
+                        errorMessage.style.display = 'block';
+                    }
+                );
+            } else {
+                errorMessage.textContent = 'could not get your geospatial coordinates';
+                errorMessage.style.display = 'block';
+            }
+        } catch (e) {
+            errorMessage.textContent = e.message;
+            errorMessage.style.display = 'block';
+        }
+    });
+
+</script>

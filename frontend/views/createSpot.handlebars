@@ -42,28 +42,31 @@
 
             try {
                 verifySpot(name, tags, image, description, lat, lon)
-            } catch (e) {
-                errorMessage.textContent = e.message;
-                errorMessage.style.display = 'block';
-            }
+                name = name.trim();
+                tags = tags.trim();
+                description = description.trim();
 
-            tags = tags.split(' ')
+                tags = tags.split(' ')
 
-            const newSpot = {
-                name: name,
-                hobby: tags,
-                photo: image,
-                description: description,
-                location: {
-                    Type: 'Point',
-                    coordinates: [lat, lon],
-                },
-                reviews: [],
-                likes: []
-            }
+                const newSpot = {
+                    name: name,
+                    hobby: tags,
+                    photo: image,
+                    description: description,
+                    location: {
+                        Type: 'Point',
+                        coordinates: [lat, lon],
+                    },
+                    reviews: [],
+                    likes: []
+                }
 
-            try {
-                postSpot(newSpot);
+                try {
+                    postSpot(newSpot);
+                } catch (e) {
+                    errorMessage.textContent = e.message;
+                    errorMessage.style.display = 'block';
+                }
             } catch (e) {
                 errorMessage.textContent = e.message;
                 errorMessage.style.display = 'block';
