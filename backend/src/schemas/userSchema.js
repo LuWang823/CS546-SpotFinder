@@ -10,6 +10,8 @@ const Body = z.object({
   password: z
     .string({ required_error: "field 'password' is required" })
     .min(6, { message: "password must contain at least six character" }),
+  image: z.string().optional(),
+  address: z.string().optional(),
 });
 
 const Params = z.object({
@@ -50,4 +52,12 @@ export const ResetPasswordSchema = z.object({
       }),
     })
     .refine((data) => mongoose.isValidObjectId(data.id)),
+});
+
+export const LikeSpotSchema = z.object({
+  params: z
+    .object({
+      spotId: z.string({ required_error: "parameter 'id' is required" }),
+    })
+    .refine((data) => mongoose.isValidObjectId(data.spotId)),
 });
