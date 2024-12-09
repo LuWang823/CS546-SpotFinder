@@ -8,7 +8,8 @@ import AppError from "../utils/appError.js";
 import { signAccessToken, signRefreshToken, verifyJwt } from "../utils/jwt.js";
 
 export const createSessionHandler = catchAsync(async (req, res, next) => {
-  const { email, password } = req.body;
+  let { email, password } = req.body;
+  email = email.toLowerCase();
   const message = "invalid email or password";
 
   const user = await User.findOne({ email }).select("+password");

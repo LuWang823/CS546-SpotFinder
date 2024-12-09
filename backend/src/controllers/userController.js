@@ -10,6 +10,7 @@ import {
 import AppError from "../utils/appError.js";
 
 export const createUserHandler = catchAsync(async (req, res, _next) => {
+  req.body.email = req.body.email.toLowerCase();
   const user = await User.create(req.body);
 
   await sendVerificationMail({
@@ -21,8 +22,8 @@ export const createUserHandler = catchAsync(async (req, res, _next) => {
   res.status(200).json({
     status: "success",
     message: "user created successfully",
-    code: user.verificationCode,//remove in prod
-    id: user.id//remove in prod
+    code: user.verificationCode, //remove in prod
+    id: user.id, //remove in prod
   });
 });
 
@@ -55,7 +56,8 @@ export const verifyUserHandler = catchAsync(async (req, res, next) => {
 });
 
 export const forgotPasswordHandler = catchAsync(async (req, res, _next) => {
-  const { email } = req.body;
+  let { email } = req.body;
+  email = email.toLowerCase();
   const message = `Password reset link will be send to email:${email} if it is a verified email address.`;
 
   const user = await User.findOne({ email });
@@ -112,5 +114,10 @@ export const resetPasswordHandler = catchAsync(async (req, res, _next) => {
 
 export const getCurrentUserHandler = catchAsync(async (_req, res, _next) => {
   const user = res.locals.user;
-  return res.send(user);
+  return res.status(200).json({
+    status: "success",
+    data: {
+      user,
+    },
+  });
 });
