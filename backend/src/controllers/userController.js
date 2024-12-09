@@ -3,6 +3,7 @@
 import catchAsync from "../utils/catchAsync.js";
 import { v4 as uuid } from "uuid";
 import User from "../modules/userModule.js";
+import Spot from "../modules/spotModule.js";
 import {
   sendResetPasswordMail,
   sendVerificationMail,
@@ -113,7 +114,45 @@ export const resetPasswordHandler = catchAsync(async (req, res, _next) => {
 });
 
 export const getCurrentUserHandler = catchAsync(async (_req, res, _next) => {
-  const user = res.locals.user;
+  const user = await User.findById(res.locals.user._id)
+    .populate("liked")
+    .select("-password -verificationCode");
+  return res.status(200).json({
+    status: "success",
+    data: {
+      user,
+    },
+  });
+});
+
+export const likeSpotHandler = catchAsync(async (req, res, next) => {
+  const spot = await Spot.findById(req.params.spotId);
+  let user = await User.findById(res.locals.user._id).select(
+    "-password -verificationCode",
+  );
+
+  if (!user) next(new AppError("please log in", 400));
+  if (!spot) next(new AppError("Spot with given id does not exist", 400));
+
+  let likedSpots = user.liked;
+  if (likedSpots && likedSpots.includes(spot._id)) {
+    return res.status(200).json({
+      status: "success",
+      data: {
+        user,
+      },
+    });
+  }
+
+  if (!likedSpots) likedSpots = [];
+  likedSpots.push(spot._id);
+
+  user = await User.findByIdAndUpdate(
+    user._id,
+    { liked: likedSpots },
+    { new: true },
+  ).select("-password -verificationCode");
+
   return res.status(200).json({
     status: "success",
     data: {
