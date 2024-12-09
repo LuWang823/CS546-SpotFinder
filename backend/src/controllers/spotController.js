@@ -10,3 +10,18 @@ export const createSpotHandler = catchAsync(async (req, res, _next) => {
       data: createSpot
     });
   });
+
+export const findSpotById = catchAsync(async (req, res, next) => {
+    let { id } = req.params;
+
+    const spotFound = await Spot.findById(id);
+  
+    if (!spotFound) {
+      return next(new AppError("Spot found", 400));
+    }
+  
+    return res.json({
+        message: "Spot found",
+        data : spotFound
+      });
+});  

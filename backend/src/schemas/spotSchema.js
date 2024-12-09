@@ -1,4 +1,4 @@
-
+import mongoose from "mongoose";
 import z from "zod";
 
 const SpotBody = z.object({
@@ -27,9 +27,14 @@ const SpotBody = z.object({
       .optional()
       .default([]),
   });
-
   
-
+  export const getSpotById = z.object({
+    params: z
+      .object({
+        id: z.string({ required_error: "parameter 'id' is required" }),
+      })
+      .refine((data) => mongoose.isValidObjectId(data.id)),
+  });
   export const CreateSpotSchema = z.object({
     body: SpotBody,
   });
