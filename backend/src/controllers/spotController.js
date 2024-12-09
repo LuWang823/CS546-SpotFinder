@@ -52,3 +52,19 @@ export const getSpotsWithin = catchAsync(async (req, res, _next) => {
     count: spots.length,
   });
 });
+
+
+export const findSpotById = catchAsync(async (req, res, next) => {
+    let { id } = req.params;
+
+    const spotFound = await Spot.findById(id);
+  
+    if (!spotFound) {
+      return next(new AppError("Spot found", 400));
+    }
+  
+    return res.status(200).json({
+        message: "Spot found",
+        data : spotFound
+      });
+});  

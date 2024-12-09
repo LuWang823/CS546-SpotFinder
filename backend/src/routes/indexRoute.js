@@ -16,7 +16,7 @@ app.use(express.json());
 app.use("/", mainRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/sessions", authRouter);
-app.use("/api/v1/spots", spotRouter);
+app.use("/api/v1/spots", spotRouter);;
 app.use("/api/v1/reviews", reviewRouter);
 
 //set rendering engine to handlebars

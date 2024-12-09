@@ -57,3 +57,14 @@ export const GetSpotsWithIn = z.object({
     r: z.number({ required_error: "r (distance in miles) is required" }),
   }),
 });
+  
+  export const getSpotById = z.object({
+    params: z
+      .object({
+        id: z.string({ required_error: "parameter 'id' is required" }),
+      })
+      .refine((data) => mongoose.isValidObjectId(data.id)),
+  });
+  
+  
+  
