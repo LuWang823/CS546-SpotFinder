@@ -1,5 +1,5 @@
 {
-  "name": "Spot Finder",
+  "name": "spot_finder",
   "version": "1.0.0",
   "main": "app.js",
   "type": "module",
