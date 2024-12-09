@@ -17,7 +17,7 @@
     <ul class="spot-list">
         <!--array of spot IDs-->
         {{#each spots}}
-        <li><a href="/spots/{{this}}">{{this}}</a></li>
+        <li><a href="/spots/{{this}}">{{this}}</a></li> <button onclick="deleteSpot({{this}})">Delete Spot</button> <a href='/spots/{{this}}/update'><button>Update Spot</button></a>
         {{/each}}
     </ul>
 
