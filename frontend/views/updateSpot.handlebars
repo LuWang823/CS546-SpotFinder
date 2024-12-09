@@ -1,5 +1,5 @@
 <main>
-    <form id="spot-form">
+    <form id="update-spot-form">
         <p id="error-message"></p>
         <label for="spot-name">Name: </label>
         <input type="text" id="spot-name" name="spot-name">
@@ -22,16 +22,16 @@
         <input type="submit">
     </form>
 </main>
-<script src="/scripts/frontendValidation/validateSpot.js"></script>
-<script src="/scripts/postSpot.js"></script>
 
-<script>//do validation, assemble object, pass to createSpot function
+<script src="/scripts/frontendValidation/validateUpdateSpot.js"></script>
+<script src="/scripts/updateSpot.js"></script>
+<script>//do validation, assemble object, pass to updateSpot function
     const errorMessage = document.getElementById('error-message');
     if (localStorage.getItem('accessToken') === null) {
         errorMessage.textContent = 'not logged in';
         errorMessage.style.display = 'block';
     } else {    //handle making a post request, check inputs, call function to create spot
-        document.getElementById('spot-form').addEventListener('submit', async function (event) {
+        document.getElementById('update-spot-form').addEventListener('submit', async function (event) {
             event.preventDefault();//obliterate default behavior
 
             const name = document.getElementById('spot-name').value;
@@ -41,31 +41,12 @@
             const lat = Number(document.getElementById('lat').value);
             const lon = Number(document.getElementById('lon').value);
 
-
             try {
-                verifySpot(name, tags, image, description, lat, lon)
-                name = name.trim();
-                tags = tags.trim();
-                description = description.trim();
-
-                tags = tags.split(' ')
-
-                const newSpot = {
-                    name: name,
-                    hobby: tags,
-                    photo: image,
-                    description: description,
-                    location: {
-                        Type: 'Point',
-                        coordinates: [lat, lon],
-                    },
-                    reviews: [],
-                    likes: []
-                }
-
+                const updatedSpot = verifyUpdateSpot(name, tags, image, description, lat, lon)
                 try {
-                    postSpot(newSpot);
-                    errorMessage.textContent = 'spot posted';
+                    
+                    updateSpot(updatedSpot);
+                    errorMessage.textContent = 'spot updated';
                     errorMessage.style.display = 'block';
                 } catch (e) {
                     errorMessage.textContent = e.message;
@@ -77,4 +58,5 @@
             }
         });
     }
+
 </script>
