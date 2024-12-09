@@ -4,7 +4,7 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development node --watch-path=./src ./src/app.js",
+    "dev": "cross-env NODE_ENV=development node --watch-path=./src --watch-path=../frontend  ./src/app.js",
     "prod": "cross-env NODE_ENV=production node app.js"
   },
   "author": "Lu Wang CWID:20029460, Brandon Penman CWID:20006301 , Shirsha Sen CWID:20031948 , Brandon Lopez CWID:20006480, Harsh Gautam CWID:20027252",
@@ -21,6 +21,7 @@
     "mongoose": "^8.7.2",
     "nodemailer": "^6.9.15",
     "uuid": "^10.0.0",
+    "multer": "^1.4.5-lts.1",
     "zod": "^3.23.8"
   }
 }
