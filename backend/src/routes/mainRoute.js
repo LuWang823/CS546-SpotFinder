@@ -64,26 +64,8 @@ route('/spots/:id').get(async (req, res) => {
     if (!response.ok) {
       return res.status(500).send(`Request failed with status: ${response.status}`);
     }
-    const spot = { //dummy info
-      "id": "s12345556",
-      "name": "Fishing lake",
-      "hobby": ["fishing", "hiking"],
-      "photo": "image/theidasthenameoftheimage.jpg",
-      "description": "A cozy fishing spot",
-      "location": {
-        "Type": "Point",
-        "coordinates": [11, 22]
-      },
-      "reviews": [
-        "1234567",
-        "1236523",
-        "9190123"
-      ],
-      "likes": [
-        "2138761412",
-        "8237891243"
-      ]
-    }
+    let body = (await response.json()).data;
+
     const reviewObjects = [{ //dummy info
       "_id": "1234567",
       "spot": "s12345556",
@@ -92,16 +74,16 @@ route('/spots/:id').get(async (req, res) => {
       "ratings": "4",
       "timestamp": "1495255666921"
     }]
-  
-    return res.status(200).render('spot', {
-      title: spot.name,
-      image_src: spot.photo,
-      spotName: spot.name,
-      tagList: spot.hobby,
-      spotCoordinates: spot.location.coordinates,
-      spotDescription: spot.description,
-      likesCount: spot.likes.length,
-      review: reviewObjects
+    console.log(body);
+    return res.status(200).render("spot", {
+      title: body.name,
+      image_src: body.photo,
+      spotName: body.name,
+      tagList: body.hobby,
+      spotCoordinates: body.location.coordinates,
+      spotDescription: body.description,
+      likesCount: body.likes.length,
+      review: reviewObjects,
     });
   }catch (error) {
     res.status(500).send("request failed")
