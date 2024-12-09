@@ -14,8 +14,11 @@ import connectToDB from "./utils/connectToDB.js";
 
 dotenv.config({ path: `./config/${process.env.NODE_ENV}.env` });
 
+console.log(dotenv.config({ path: `./backend/config/${process.env.NODE_ENV}.env` }));
+
 const port = process.env.port;
 const baseURL = process.env.baseURL;
+console.log(port, baseURL);
 
 const server = app.listen(port, async () => {
   await connectToDB();
