@@ -13,17 +13,18 @@
     <button id='verify' onclick="verify()">Verify</button>
 
 </main>
-<script src="scripts/signUp.js" type="module"></script>
-<script src="scripts/frontendValidation/email.js"></script>
-<script src="scripts/frontendValidation/password.js"></script>
-<script src="scripts/frontendValidation/name.js"></script>
-<script>
+<script src="/scripts/signUp.js" type="module"></script>
+<script src="/scripts/frontendValidation/email.js"></script>
+<script src="/scripts/frontendValidation/password.js"></script>
+<script src="/scripts/frontendValidation/name.js"></script>
+<script type="module">
+    import { signUp } from "/scripts/signUp.js";
     //make verify button invisible
     document.getElementById('verify').style.display = 'none';
 
     document.getElementById('sign-up-form').addEventListener('submit', async function (event) {
         event.preventDefault();//obliterate default behavior
-        
+
         const name = document.getElementById('name').value;
         const email = document.getElementById('email').value;
         const password = document.getElementById('pass').value;
@@ -59,11 +60,15 @@
             return;
         } catch (e) {
             errorMessage.textContent = e.message;
+            console.log(e)
             errorMessage.style.display = 'block';
             return;
         }
 
     });
+
+</script>
+<script>
     function verify() {
         window.location.href = "/verify";
     }
