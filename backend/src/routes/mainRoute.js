@@ -34,6 +34,12 @@ mainRouter.route("/verify").get(async (req, res) => {
     title: "Verify Account",
   });
 });
+mainRouter.route("/spots/:id/update").get(async (req, res) => {
+  return res.status(200).render("updateSpot", {
+    title: "Update Spot",
+  });
+});
+
 
 mainRouter.route("/profile").get(async (req, res) => {
   try {
@@ -42,6 +48,7 @@ mainRouter.route("/profile").get(async (req, res) => {
     res.status(500).send("request failed");
   }
 });
+<<<<<<< HEAD
 mainRouter.
 route('/spots/:id').get(async (req, res) => {
   //TODO ID validation 
@@ -132,5 +139,7 @@ mainRouter.route('/spots/:id/reviews').get(async (req, res) => {
 
   return res.status(200).json(reviewObjects);
 });
+=======
+>>>>>>> f6471dcf5b4cc66330a0801ecf74ceac0a090624
 
 export default mainRouter;

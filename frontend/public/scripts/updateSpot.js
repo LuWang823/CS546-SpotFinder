@@ -1,11 +1,13 @@
-const postSpot = async (spotObj) => {
+const updateSpot = async (spotObj, id) => {
     //TODO: IMPLEMENT THIS FUNCTION
     /* most likely implementaion vv
+    const currentUrl = window.location.pathname;
+    const id = currentUrl.split('/')[2]; // spot id from current url
     try {
         // Send credentials to the backend
-        //http://localhost:3000/spots/
-        const response = await fetch(('http://localhost:3000/spots'), {
-            method: 'POST',
+        //http://localhost:3000/spots/:id
+        const response = await fetch((`http://localhost:3000/spots/${id}`), {
+            method: 'PATCH',
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
