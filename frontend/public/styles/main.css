@@ -54,3 +54,8 @@ main{
     padding: 0.2em 1em 1em 1em;
     list-style-type: none;
 }
+
+form input{
+    display: block;
+    margin:1em;
+}

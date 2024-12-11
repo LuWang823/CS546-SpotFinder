@@ -34,10 +34,10 @@
         document.getElementById('spot-form').addEventListener('submit', async function (event) {
             event.preventDefault();//obliterate default behavior
 
-            const name = document.getElementById('spot-name').value;
+            let name = document.getElementById('spot-name').value;
             let tags = document.getElementById('tags').value;
             const image = document.getElementById('image').files[0];
-            const description = document.getElementById('description').value;
+            let description = document.getElementById('description').value;
             const lat = Number(document.getElementById('lat').value);
             const lon = Number(document.getElementById('lon').value);
 
