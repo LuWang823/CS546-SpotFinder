@@ -11,6 +11,14 @@ const userSchema = new mongoose.Schema(
       required: true,
       select: false,
     },
+    image: { type: String },
+    address: { type: String },
+    liked: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Spot",
+      },
+    ],
     verified: {
       type: Boolean,
       default: false,
