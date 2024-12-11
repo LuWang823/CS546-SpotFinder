@@ -1,4 +1,4 @@
-const signUp = async (name, email, password) => {
+export const signUp = async (name, email, password) => {
   try {
     // Send credentials to the backend
     const response = await fetch("http://localhost:3000/api/v1/users", {
