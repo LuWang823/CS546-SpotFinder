@@ -1,15 +1,15 @@
 <style>
-    h1{
-        display:block;
-        width:100%;
+    h1 {
+        display: block;
+        width: 100%;
     }
-    .content{
-        display:flex;
+    .content {
+        display: flex;
         justify-content: space-between;
     }
-
-    img{
-        width:700px;
+    #map {
+        width: 700px;
+        height: 500px; /* Ensure the map has a defined height */
     }
 </style>
 <main>
@@ -17,7 +17,11 @@
     <div class="content">
         <div>
             <h2>Find a Spot!</h2>
-            <img src="/images/placeholder_map.webp"><!--Replace with map implementation-->
+            <div id="map"></div>
         </div>
     </div>
 </main>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="/scripts/maps.js"></script>
