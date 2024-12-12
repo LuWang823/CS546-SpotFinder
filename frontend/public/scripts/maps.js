@@ -55,7 +55,12 @@ const addMarkersToMap = (spots) => {
         console.log('Adding marker for spot:', spot); // Debugging statement
         const marker = L.marker([spot.location.coordinates[1], spot.location.coordinates[0]])
             .addTo(map)
-            .bindPopup(`<b>${spot.name}</b><br>Rating: ${spot.ratingsAvg}<br>Distance: ${spot.distance || 'N/A'} miles`);
+            .bindPopup(`
+                <b>${spot.name}</b><br>
+                Rating: ${spot.ratingsAvg}<br>
+                Distance: ${spot.distance || 'N/A'} miles<br>
+                <a href="/spots/${spot._id}">View Details</a>
+            `);
         
         // Open the popup when the marker is clicked
         marker.on('click', () => {
