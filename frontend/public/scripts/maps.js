@@ -32,7 +32,7 @@ const fetchSpots = async () => {
         });
 
         if (response.ok) {
-            const data = await response.json();
+            let data = await response.json();
             console.log('Fetched spots data:', data); // Debugging statement
             return data.data; // Extract the array of spots from the response
         } else {
@@ -53,7 +53,7 @@ const addMarkersToMap = (spots) => {
 
     spots.forEach(spot => {
         console.log('Adding marker for spot:', spot); // Debugging statement
-        const marker = L.marker([spot.location.coordinates[1], spot.location.coordinates[0]])
+        const marker = L.marker([spot.location.coordinates[0], spot.location.coordinates[1]])
             .addTo(map)
             .bindPopup(`
                 <b>${spot.name}</b><br>
