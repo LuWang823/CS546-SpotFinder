@@ -5,10 +5,14 @@ html{
     display:block;
     margin:auto;
     font-family: sans-serif;
+    height: 100%;
 }
 body{
     margin:0;
     padding:0;
+    display: flex; /* Flexbox layout to align content */
+    flex-direction: column; /* Stack items vertically */
+    height: 100%; /* Full height */
 }
 
 /*begin navigation formatting*/
@@ -20,6 +24,9 @@ nav{
     justify-content: space-between;
     font-weight:bold;
     font-size:14pt;
+    background-color: var(--bg-color); /* Apply background color from variables */
+    color: var(--text-color); /* Apply text color from variables */
+    transition: background-color 0.4s ease, color 0.4s ease; /* Smooth transition for colors */
 }
 nav ul{
     list-style-type: none;
@@ -36,7 +43,8 @@ nav span{
 }
 nav a{
     text-decoration:none;
-    color:rgb(44, 44, 44);
+    color: var(--text-color); /* Apply text color from variables */
+    transition: color 0.4s ease; /* Smooth transition for text color */
 }
 nav a:hover{
     color:rgb(0, 0, 0);
@@ -58,4 +66,77 @@ main{
 form input{
     display: block;
     margin:1em;
+}
+
+/* Base Variables */
+:root {
+    --bg-color: #ffffff;
+    --text-color: #000000;
+}
+
+/* Dark Mode Variables */
+body.dark {
+    --bg-color: #121212;
+    --text-color: #e0e0e0;
+}
+
+/* Auto Mode */
+@media (prefers-color-scheme: dark) {
+    body.auto {
+        --bg-color: #121212;
+        --text-color: #e0e0e0;
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    body.auto {
+        --bg-color: #ffffff;
+        --text-color: #000000;
+    }
+}
+
+/* Apply theme colors */
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: Arial, sans-serif;
+    transition: background-color 0.4s ease, color 0.4s ease;
+    height: 100%;
+}
+
+header {
+    text-align: center;
+    padding: 2rem 1rem;
+}
+
+fieldset {
+    display: inline-flex;
+    gap: 1rem;
+    padding: 1rem;
+    border: 2px solid var(--text-color);
+    border-radius: 8px;
+    background-color: var(--bg-color);
+}
+
+label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+input[type="radio"] {
+    cursor: pointer;
+}
+
+
+footer {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    padding: 0.2rem;
+    text-align: center;
+    border-top: 1px solid var(--text-color);
+    transition: background-color 0.4s ease, color 0.4s ease;
+    margin-top: auto; /* Push footer to the bottom */
 }

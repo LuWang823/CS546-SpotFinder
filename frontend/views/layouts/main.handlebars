@@ -25,6 +25,22 @@
         </ul>
 
     </nav>
+    <br>
+   <fieldset>
+            <legend>Choose Color Scheme</legend>
+            <label>
+                <input type="radio" name="color-scheme" id="color-scheme-light" value="light">
+                Light
+            </label>
+            <label>
+                <input type="radio" name="color-scheme" id="color-scheme-auto" value="auto" checked>
+                Auto
+            </label>
+            <label>
+                <input type="radio" name="color-scheme" id="color-scheme-dark" value="dark">
+                Dark
+            </label>
+        </fieldset>
     {{{body}}}
 
     <script>
@@ -44,5 +60,9 @@
         localStorage.removeItem("refreshToken");
       });
     </script>
+    <script src="scripts/darkmode.js"></script>
   </body>
+  <footer>
+    <p>Group 36</p>
+</footer>
 </html>
