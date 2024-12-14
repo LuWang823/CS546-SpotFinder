@@ -17,7 +17,7 @@ const like = async () => {
         });
 
         if (response.ok) {
-
+            document.getElementById('likeSpot').style.display = 'none';
         } else {
             console.log(response);
             errorMessage.textContent = 'Internal Server error';
