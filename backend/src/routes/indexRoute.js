@@ -33,6 +33,9 @@ app.set("layoutsDir", path.join(__dirname, "../../../frontend/views/layouts"));
 //specify public folder
 app.use(express.static(path.join(__dirname, "../../../frontend/public")));
 
+// Serve static files from the 'uploads' folder
+app.use('/uploads', express.static(path.join(__dirname,'../../uploads')));
+
 app.use("*", (req, _res, next) => {
   next(new AppError(`could not find ${req.originalUrl} on this server`, 404));
 });

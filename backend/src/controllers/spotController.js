@@ -80,10 +80,9 @@ export const findSpotPageById = catchAsync(async (req, res, next) => {
   }
 
   const reviews = await Review.find({ spot: req.params.spotId });
-  console.log(spot);
   return res.status(200).render('spot', {
     title: spot.name,
-    image_src: spot.photo,
+    image_src: '/'+spot.image,
     spotName: spot.name,
     tagList: spot.hobby,
     spotCoordinates: spot.location.coordinates,
