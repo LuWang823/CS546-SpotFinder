@@ -1,5 +1,5 @@
 <main>
-    <form id="spot-form">
+    <form id="spot-form" enctype="multipart/form-data">
         <p id="error-message"></p>
         <label for="spot-name">Name: </label>
         <input type="text" id="spot-name" name="spot-name">
@@ -7,8 +7,8 @@
         <label for="tags">Hobbies (separate with spaces): </label>
         <input type="text" id="tags" name="tags">
 
-        <label for="image">Image: </label>
-        <input type="file" id="image" name="image" accept=".jpg,.jpeg,.png">
+        <label for="spot">Image: </label>
+        <input type="file" id="image" name="spot" accept=".jpg,.jpeg,.png">
 
         <label for="description">Description: </label>
         <input type="text" id="description" name="description">
@@ -62,7 +62,7 @@
                     reviews: [],
                     likes: []
                 }
-
+                console.log(newSpot);
                 try {
                     await postSpot(newSpot);
                     errorMessage.textContent = 'spot posted';
