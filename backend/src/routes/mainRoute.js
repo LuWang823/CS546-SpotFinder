@@ -1,6 +1,6 @@
 import express from "express";
 const mainRouter = express.Router();
-import fetch from 'node-fetch';
+
 import validateResource from "../middlewares/validateResource.js";
 import { findSpotById } from "../controllers/spotController.js";
 import { getSpotById } from "../schemas/spotSchema.js";
