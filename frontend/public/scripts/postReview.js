@@ -1,8 +1,8 @@
 const postReview = async (spotID,rating,description) => {
     try {
         // Send credentials to the backend
-        //localhost:3000/spots/:id/reviews
-        const response = await fetch(('http://localhost:3000/spots/'+spotID+'/reviews'), {
+        //localhost:3000/api/v1/reviews/spots/:spotId
+        const response = await fetch(('http://localhost:3000/api/v1/reviews/spots/'+spotID), {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",
