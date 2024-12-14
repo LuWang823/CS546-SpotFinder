@@ -1,7 +1,7 @@
 <main>
     <h2 id="user-name"></h2>
     <h4 id="user-email"></h4>
-    <span>Verified: {{verified}}</span>
+    <span id="verified">Verified:</span>
 
     <h3>Posted Spots</h3>
     <ul class="spot-list">
@@ -12,7 +12,7 @@
     </ul>
 
     <h3>Liked Spots</h3>
-    <ul class="spot-list">
+    <ul class="spot-list" id="liked-spots">
         <!--array of spot IDs-->
         {{#each likedSpots}}
         <li><a href="/spots/{{this}}">{{this}}</a></li>
