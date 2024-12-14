@@ -34,8 +34,24 @@ document.addEventListener("DOMContentLoaded", () => {
     if (user) {
       document.getElementById("user-name").textContent = user.name;
       document.getElementById("user-email").textContent = user.email;
+
+      document.getElementById('verified').textContent = ('Verified: ' + user.verified);
       
-      document.getElementById('verified').textContent = ('Verified: '+user.verified);
+      const ulElement = document.getElementById('liked-spots');
+
+      if (user.liked) {
+        console.log(user.liked);
+        user.liked.forEach(item => {
+          const li = document.createElement("li");
+          const anchor = document.createElement("a"); 
+
+          anchor.href = `/spots/${item._id}`;
+          anchor.textContent = item.name; 
+
+          li.appendChild(anchor); 
+          ulElement.appendChild(li); 
+        });
+      }
     }
   }
 });
