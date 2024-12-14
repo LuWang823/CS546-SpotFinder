@@ -1,5 +1,5 @@
 <main>
-    <form id="spot-form">
+    <form id="spot-form" enctype="multipart/form-data">
         <p id="error-message"></p>
         <label for="spot-name">Name: </label>
         <input type="text" id="spot-name" name="spot-name">
@@ -7,17 +7,17 @@
         <label for="tags">Hobbies (separate with spaces): </label>
         <input type="text" id="tags" name="tags">
 
-        <label for="image">Image: </label>
-        <input type="file" id="image" name="image" accept=".jpg,.jpeg,.png">
+        <label for="spot">Image: </label>
+        <input type="file" id="image" name="spot" accept=".jpg,.jpeg,.png">
 
         <label for="description">Description: </label>
         <input type="text" id="description" name="description">
 
         <label for="lat">Latitude: </label>
-        <input type="number" id="lat" name="lat" min="-90" max="90">
+        <input type="number" id="lat" name="lat" min="-90" max="90" step=".001">
 
         <label for="lon">Longitude: </label>
-        <input type="number" id="lon" name="lon" min="-180" max="180">
+        <input type="number" id="lon" name="lon" min="-180" max="180" step=".001">
 
         <input type="submit">
     </form>
@@ -53,7 +53,7 @@
                 const newSpot = {
                     name: name,
                     hobby: tags,
-                    photo: image,
+                    image: image,
                     description: description,
                     location: {
                         Type: 'Point',
@@ -62,13 +62,14 @@
                     reviews: [],
                     likes: []
                 }
-
+                console.log(newSpot);
                 try {
-                    postSpot(newSpot);
+                    await postSpot(newSpot);
                     errorMessage.textContent = 'spot posted';
                     errorMessage.style.display = 'block';
                 } catch (e) {
                     errorMessage.textContent = e.message;
+                    console.log(e);
                     errorMessage.style.display = 'block';
                 }
             } catch (e) {

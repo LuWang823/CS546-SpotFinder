@@ -1,6 +1,7 @@
 import Spot from "../modules/spotModule.js";
 import ApiFeatures from "../utils/apiFeatures.js";
 import catchAsync from "../utils/catchAsync.js";
+import Review from "../modules/reviewModule.js";
 
 export const createSpotHandler = catchAsync(async (req, res, _next) => {
   const createSpot = await Spot.create({
@@ -68,3 +69,27 @@ export const findSpotById = catchAsync(async (req, res, next) => {
         data : spotFound
       });
 });  
+
+export const findSpotPageById = catchAsync(async (req, res, next) => {
+  let { id } = req.params;
+
+  const spot = await Spot.findById(id);
+
+  if (!spot) {
+    return next(new AppError("Spot found", 400));
+  }
+
+  const reviews = await Review.find({ spot: req.params.spotId });
+  console.log(spot);
+  return res.status(200).render('spot', {
+    title: spot.name,
+    image_src: spot.photo,
+    spotName: spot.name,
+    tagList: spot.hobby,
+    spotCoordinates: spot.location.coordinates,
+    spotDescription: spot.description,
+    avgRating: spot.ratingsAvg,
+    numRatings: spot.ratingsTotal,
+    review: reviews
+  });
+}); 

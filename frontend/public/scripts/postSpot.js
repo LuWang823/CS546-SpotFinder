@@ -1,10 +1,9 @@
 const postSpot = async (spotObj) => {
-    //TODO: IMPLEMENT THIS FUNCTION
-    /* most likely implementaion vv
+
     try {
-        // Send credentials to the backend
-        //http://localhost:3000/spots/
-        const response = await fetch(('http://localhost:3000/spots'), {
+        // Send spot to the backend
+        //http://localhost:3000/api/v1/spots
+        const response = await fetch(('http://localhost:3000/api/v1/spots'), {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",
@@ -17,9 +16,10 @@ const postSpot = async (spotObj) => {
         if (response.ok) {
 
         } else {
+            console.log(response);
             throw new Error('Internal Server Error');
         }
     } catch (e) {
         throw e
-    }*/
+    }
 }

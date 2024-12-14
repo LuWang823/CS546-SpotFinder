@@ -5,11 +5,9 @@
         <h5>Tags: {{tagList}}</h5>
         <p>Coordinates: {{spotCoordinates}}</p>
         <p>Description: {{spotDescription}}</p>
-        <div class="likes">
-            <span>Likes: {{likesCount}}</span>
-        </div>
-        <button onclick="like()">Like This Spot</button>
-        <button onclick="save()">Save This Spot</button>
+        <p>Average Rating: {{avgRating}}</p>
+        <p>Number of Ratings: {{numRatings}}</p>
+        <button onclick="like()" id="likeSpot">Like This Spot (Save to Collection)</button>
 
     </div>
     <button id="refresh-reviews">Refresh Reviews</button>
@@ -39,7 +37,6 @@
 </main>
 <script src="/scripts/postReview.js"></script>
 <script src="/scripts/likeSpot.js"></script>
-<script src="/scripts/saveSpot.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>//ajax for refreshing review list
     $(document).ready(() => {
@@ -47,11 +44,12 @@
         $('#refresh-reviews').click(() => {
             const currentUrl = window.location.pathname;
             const spotId = currentUrl.split('/')[2]; // Extract spot ID from URL
-            const apiUrl = `/spots/${spotId}/reviews`;
+            const apiUrl = `http://localhost:3000/api/v1/reviews/spots/${spotId}`;
             $.ajax({
                 url: apiUrl,
                 method: 'GET',
                 success: (data) => {
+                    data = data.data;
                     // Clear the current list
                     $('.review-list').empty();
 

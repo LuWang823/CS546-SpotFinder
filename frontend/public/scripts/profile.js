@@ -34,6 +34,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (user) {
       document.getElementById("user-name").textContent = user.name;
       document.getElementById("user-email").textContent = user.email;
+      
+      document.getElementById('verified').textContent = ('Verified: '+user.verified);
     }
   }
 });
