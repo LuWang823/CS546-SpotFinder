@@ -23,8 +23,8 @@ spotRouter.post(
   "/",
   deserializeUser,
   userRequired,
-  uploadSpotsImage.single("spot"),
-  imageRequired,
+  //uploadSpotsImage.single("spot"),
+  //imageRequired,
   // validateResource(CreateSpotSchema),
   createSpotHandler,
 );

@@ -58,7 +58,6 @@ const addMarkersToMap = (spots) => {
             .bindPopup(`
                 <b>${spot.name}</b><br>
                 Rating: ${spot.ratingsAvg}<br>
-                Distance: ${spot.distance || 'N/A'} miles<br>
                 <a href="/spots/${spot._id}">View Details</a>
             `);
         

@@ -1,10 +1,10 @@
 const newSearch = async (distance, rating, tag, lat,lon) => {
     //TODO: IMPLEMENT THIS FUNCTION
     // most likely implementaion vv
-    /*try {
+    try {
         // Send info to backend and get response
         //http://localhost:3000/api/v1/spots/?ratings=4&distance=10mi&category=hockey
-        /*const response = await fetch((`http://localhost:3000/api/v1/spots/?ratings=${rating}&distance=${distance}&category=${tag}`), {
+        const response = await fetch((`http://localhost:3000/api/v1/spots/?ratings=${rating}&distance=${distance}&category=${tag}`), {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",
@@ -23,7 +23,7 @@ const newSearch = async (distance, rating, tag, lat,lon) => {
         }
     } catch (e) {
         throw e
-    }*/
+    }
 
         data = [//dummy data
             {
