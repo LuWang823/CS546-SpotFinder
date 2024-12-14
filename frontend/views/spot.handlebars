@@ -47,11 +47,12 @@
         $('#refresh-reviews').click(() => {
             const currentUrl = window.location.pathname;
             const spotId = currentUrl.split('/')[2]; // Extract spot ID from URL
-            const apiUrl = `/spots/${spotId}/reviews`;
+            const apiUrl = `http://localhost:3000/api/v1/reviews/spots/${spotId}`;
             $.ajax({
                 url: apiUrl,
                 method: 'GET',
                 success: (data) => {
+                    data = data.data;
                     // Clear the current list
                     $('.review-list').empty();
 
