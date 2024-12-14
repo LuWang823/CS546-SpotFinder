@@ -1,4 +1,3 @@
-<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -6,43 +5,39 @@
     <title>{{title}}</title>
     <link rel="stylesheet" href="/styles/main.css" />
     <script src="/scripts/profile.js" type="module"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   </head>
 
   <body>
     <nav>
 
-        <span><a href="/">Spot Finder</a></span>
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/search">Search</a></li>
-            <li><a href="/spots/create">New Spot</a></li>
-        </ul>
-        <ul id="profile-buttons">
-            <li id="login"><a href="/login">Login</a></li>
-            <li id="sign-up"><a href="/signUp">Sign Up</a></li>
-            <li id="profile"><a href="">Profile</a></li>
-            <li id="sign-out"><a href="/">Sign Out</a></li>
-        </ul>
+      <span><a href="/">Spot Finder</a></span>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/search">Search</a></li>
+        <li><a href="/spots/create">New Spot</a></li>
+      </ul>
+      <ul id="profile-buttons">
+        <li id="login"><a href="/login">Login</a></li>
+        <li id="sign-up"><a href="/signUp">Sign Up</a></li>
+        <li id="profile"><a href="">Profile</a></li>
+        <li id="sign-out"><a href="/">Sign Out</a></li>
+      </ul>
 
     </nav>
     {{{body}}}
 
     <script>
-      if (localStorage.getItem("accessToken") === null) {
-        // User is not logged in, hide profile and sign-out
-        document.getElementById("profile").style.display = "none";
-        document.getElementById("sign-out").style.display = "none";
-      } else {
-        // User is logged in, hide login and sign-up
-        document.getElementById("login").style.display = "none";
-        document.getElementById("sign-up").style.display = "none";
-
-      }
-
+      if (localStorage.getItem("accessToken") === null) { // User is not logged
+      in, hide profile and sign-out
+      document.getElementById("profile").style.display = "none";
+      document.getElementById("sign-out").style.display = "none"; } else { //
+      User is logged in, hide login and sign-up
+      document.getElementById("login").style.display = "none";
+      document.getElementById("sign-up").style.display = "none"; }
       document.getElementById("sign-out").addEventListener("click", () => {
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("refreshToken");
-      });
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken"); });
     </script>
   </body>
 </html>

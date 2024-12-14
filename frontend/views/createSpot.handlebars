@@ -26,56 +26,73 @@
 <script src="/scripts/postSpot.js"></script>
 
 <script>//do validation, assemble object, pass to createSpot function
-    const errorMessage = document.getElementById('error-message');
-    if (localStorage.getItem('accessToken') === null) {
-        errorMessage.textContent = 'not logged in';
-        errorMessage.style.display = 'block';
-    } else {    //handle making a post request, check inputs, call function to create spot
-        document.getElementById('spot-form').addEventListener('submit', async function (event) {
-            event.preventDefault();//obliterate default behavior
+const errorMessage = document.getElementById("error-message");
+if (localStorage.getItem("accessToken") === null) {
+  errorMessage.textContent = "not logged in";
+  errorMessage.style.display = "block";
+} else {
+  //handle making a post request, check inputs, call function to create spot
+  document
+    .getElementById("spot-form")
+    .addEventListener("submit", async function (event) {
+      event.preventDefault(); //obliterate default behavior
 
-            let name = document.getElementById('spot-name').value;
-            let tags = document.getElementById('tags').value;
-            const image = document.getElementById('image').files[0];
-            let description = document.getElementById('description').value;
-            const lat = Number(document.getElementById('lat').value);
-            const lon = Number(document.getElementById('lon').value);
+      let name = document.getElementById("spot-name").value;
+      let tags = document.getElementById("tags").value;
+      const image = document.getElementById("image").files[0];
+      let description = document.getElementById("description").value;
+      const lat = Number(document.getElementById("lat").value);
+      const lon = Number(document.getElementById("lon").value);
 
+      try {
+        verifySpot(name, tags, image, description, lat, lon);
+        name = name.trim();
+        tags = tags.trim();
+        description = description.trim();
 
-            try {
-                verifySpot(name, tags, image, description, lat, lon)
-                name = name.trim();
-                tags = tags.trim();
-                description = description.trim();
+        tags = tags.split(" ");
+          let location = {
+            Type: "Point",
+            coordinates: [lat, lon],
+          };
 
-                tags = tags.split(' ')
+        const newSpot = {
+          name: name,
+          hobby: tags,
+          image: image,
+          description: description,
+          location: {
+            Type: "Point",
+            coordinates: [lat, lon],
+          },
+          reviews: [],
+          likes: [],
+        };
 
-                const newSpot = {
-                    name: name,
-                    hobby: tags,
-                    image: image,
-                    description: description,
-                    location: {
-                        Type: 'Point',
-                        coordinates: [lat, lon],
-                    },
-                    reviews: [],
-                    likes: []
-                }
-                console.log(newSpot);
-                try {
-                    await postSpot(newSpot);
-                    errorMessage.textContent = 'spot posted';
-                    errorMessage.style.display = 'block';
-                } catch (e) {
-                    errorMessage.textContent = e.message;
-                    console.log(e);
-                    errorMessage.style.display = 'block';
-                }
-            } catch (e) {
-                errorMessage.textContent = e.message;
-                errorMessage.style.display = 'block';
-            }
-        });
-    }
+        const formData = new FormData();
+        formData.append("name", name);
+        formData.append("hobby", tags);
+        formData.append("spot", image);
+        formData.append("description", description);
+        formData.append("location.coordinates", lat);
+        formData.append("location.coordinates", lon);
+//        formData.append("location", { Type: "Point", coordinates: [lat, lon] });
+//        Object.keys(location).forEach(key => formData.append(key, location[key]));
+        console.log(newSpot);
+        console.log(formData);
+        try {
+          await postSpot(formData);
+          errorMessage.textContent = "spot posted";
+          errorMessage.style.display = "block";
+        } catch (e) {
+          errorMessage.textContent = e.message;
+          console.log(e);
+          errorMessage.style.display = "block";
+        }
+      } catch (e) {
+        errorMessage.textContent = e.message;
+        errorMessage.style.display = "block";
+      }
+    });
+}
 </script>
