@@ -65,7 +65,7 @@ mainRouter.route("/spots/create").get(async (req, res) => {
     return res.status(500).send("request failed");
   }
 });
-/*
+
 mainRouter.route("/spots/:id/update").get(async (req, res) => {
   try {
     return res.status(200).render("updateSpot", {
@@ -74,7 +74,7 @@ mainRouter.route("/spots/:id/update").get(async (req, res) => {
   } catch (error) {
     return res.status(500).send("request failed");
   }
-});*/
+});
 mainRouter.get("/spots/:id", validateResource(getSpotById), findSpotPageById);
 
 mainRouter.route("/profile").get(async (req, res) => {

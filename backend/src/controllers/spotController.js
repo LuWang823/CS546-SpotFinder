@@ -2,7 +2,7 @@ import Spot from "../modules/spotModule.js";
 import ApiFeatures from "../utils/apiFeatures.js";
 import catchAsync from "../utils/catchAsync.js";
 import Review from "../modules/reviewModule.js";
-
+import AppError from "../utils/appError.js";
 export const createSpotHandler = catchAsync(async (req, res, _next) => {
   const createSpot = await Spot.create({
     ...req.body,
@@ -108,3 +108,21 @@ export const findSpotPageById = catchAsync(async (req, res, next) => {
   }
   
 }); 
+export const updateSpotHandler = catchAsync(async (req, res, next) => {
+  let { id } = req.params;
+  const spot = await Spot.findById(id);
+
+  if (!spot) {
+    return next(new AppError("Spot found", 400));
+  }
+  console.log(res.locals.user._id + " " + spot.user.id);
+  if(res.locals.user._id!= spot.user.id ){
+    return next(new AppError("User doesnot match",400));
+  }
+  const updateSpot = await Spot.findByIdAndUpdate(id , req.body, { new: true });
+
+  return res.status(200).json({
+    status: "success",
+    data: updateSpot,
+  });
+});

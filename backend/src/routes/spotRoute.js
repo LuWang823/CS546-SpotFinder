@@ -4,6 +4,7 @@ import {
   CreateSpotSchema,
   GetSpotSchema,
   GetSpotsWithIn,
+  UpdateSpotSchema,
   getSpotById,
 } from "../schemas/spotSchema.js";
 import {
@@ -12,6 +13,7 @@ import {
   getSpotHandler,
   getSpotsWithin,
   findSpotById,
+  updateSpotHandler,
 } from "../controllers/spotController.js";
 import validateResource from "../middlewares/validateResource.js";
 import { imageRequired } from "../middlewares/imageRequired.js";
@@ -28,7 +30,14 @@ spotRouter.post(
   // validateResource(CreateSpotSchema),
   createSpotHandler,
 );
-
+spotRouter.patch(
+  "/:id",
+  deserializeUser,
+  userRequired,
+  uploadSpotsImage.single("spot"),
+  validateResource(UpdateSpotSchema),
+  updateSpotHandler
+);
 spotRouter.get("/within", validateResource(GetSpotsWithIn), getSpotsWithin);
 // spotRouter.get("/:id", validateResource(GetSpotSchema), getSpotHandler);
 spotRouter.get("/", getAllSpotsHandler);

@@ -19,8 +19,18 @@ const Body = z
           "field 'coordinates' must have exactly two values [longitude, latitude]",
         ),
     }),
+  });
+
+  
+  
+const Params = z
+  .object({
+    id: z.string({ required_error: "parameter 'id' is required" }),
   })
-  .refine((data) => {
+  .refine((data) => mongoose.isValidObjectId(data.id));
+
+export const CreateSpotSchema = z.object({
+  body: Body.refine((data) => {
     if (
       data.location.coordinates[0] === Infinity ||
       data.location.coordinates[1] === Infinity
@@ -34,16 +44,7 @@ const Body = z
       return false;
 
     return true;
-  });
-
-const Params = z
-  .object({
-    id: z.string({ required_error: "parameter 'id' is required" }),
-  })
-  .refine((data) => mongoose.isValidObjectId(data.id));
-
-export const CreateSpotSchema = z.object({
-  body: Body,
+  }),
 });
 
 export const GetSpotSchema = z.object({
@@ -64,6 +65,32 @@ export const GetSpotsWithIn = z.object({
         id: z.string({ required_error: "parameter 'id' is required" }),
       })
       .refine((data) => mongoose.isValidObjectId(data.id)),
+  });
+
+  
+  export const UpdateSpotSchema = z.object({
+    body: Body.deepPartial().refine((data) => {
+      if(!data.location){
+        return true;
+      }
+      if (data?.location?.coordinates[0] === Infinity ||
+        data?.location?.coordinates[1] === Infinity
+      ){
+
+        return false;
+      }
+      
+  
+      if ( isNaN(data?.location?.coordinates[0]) ||
+        isNaN(data?.location?.coordinates[1])
+      ){
+        return false;
+      }
+      console.log("jhsdgkwje");
+  
+      return true;
+    }),
+    params : Params
   });
   
   
