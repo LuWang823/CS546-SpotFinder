@@ -254,31 +254,31 @@ footer {
     max-width: fit-content; /* Adjust width dynamically to fit the content */
 }
 
-/* Dark mode styles */
-body.dark .like-button, body.dark .refresh-reviews-button,body.dark .submit-button {
-    background-color: #333; /* Darker background */
-    color: #fff; /* White text for contrast */
-    border-color: #828283; /* Subtle border */
+
+
+/* search page styling */
+.search-page-whole-container {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
 }
 
-body.dark .like-button:hover, body.dark .refresh-reviews-button:hover,body.dark .submit-button {
-    background-color: #444; /* Slightly lighter on hover */
-    border-color: #828283; /* Lighter border on hover */
+#search-form-container {
+    width: 300px; /* Sidebar width */
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px var(--border-color);
+    margin-right: 20px;
 }
 
-/* Light mode styles */
-body.light .like-button, body.light .refresh-reviews-button, body.light  .submit-button {
-    background-color: #fff; /* Light background */
-    color: #333; /* Dark text for readability */
-    border-color: #828283; /* Subtle border */
-}
 
-body.light .like-button:hover, body.light .refresh-reviews-buttoon:hover,body.light  .submit-button {
-    background-color: #f9f9f9; /* Light hover effect */
-    border-color: #828283; /* Lighter border on hover */
-}
-
-#spot img {
-    width: 50%;
-    margin-top: 2em;
+#search-results-container {
+    flex-grow: 1; /* Main content takes the rest of the space */
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px var(--border-color);
 }

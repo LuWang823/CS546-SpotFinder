@@ -1,10 +1,11 @@
 <!--http://localhost:3000/api/v1/spots/?ratings=4&distance=10mi&category=hockey-->
-<main>
+<div class="search-page-whole-container">
+<aside id="search-form-container">
     <form id="search-form">
         <p id="error-message"></p>
 
         <label for="distance">Search Distance (Miles): </label>
-        <input type="number" min='1' max='500' id="distance" name="distance">
+        <input type="number" min='1' max='500' id="search-distance" name="search-distance">
 
         <label for="rating-search">Search By Rating: </label>
         <input type="number" min="1" max="5" id="rating-search" name="rating-search">
@@ -12,15 +13,18 @@
         <label for="search-tag">Search By Hobby (Only 1): </label>
         <input type="text" id="search-tag" name="search-tag">
 
-        <input type="submit" id="submit">
+        <input type="submit" id="search-page-submit" name="search-page-submit" class="submit-button">
     </form>
+ </aside>
 
-    <div id="results">
-        <ul id="result-list">
+<main id="search-results-container">
+    <div id="search-page-results">
+        <ul id="search-page-result-list" class="search-page-result-list">
 
         </ul>
     </div>
 </main>
+</div>
 <script src="/scripts/frontendValidation/validateSearch.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="/scripts/newSearch.js"></script>
