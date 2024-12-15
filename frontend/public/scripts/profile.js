@@ -56,11 +56,16 @@ document.addEventListener("DOMContentLoaded", () => {
         user.postedSpots.forEach(item => {
           const li = document.createElement("li");
           const anchor = document.createElement("a"); 
+          const button = document.createElement("a");
 
           anchor.href = `/spots/${item._id}`;
           anchor.textContent = item.name; 
 
-          li.appendChild(anchor); 
+          button.href = `/spots/${item._id}/update`;
+          button.textContent = "  |  UPDATE SPOT"; 
+
+          li.appendChild(anchor);
+          li.appendChild(button); 
           posted.appendChild(li); 
         });
       }
