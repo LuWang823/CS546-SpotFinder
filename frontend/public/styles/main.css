@@ -6,13 +6,15 @@ html{
     margin:auto;
     font-family: sans-serif;
     height: 100%;
+    overflow-x: hidden;
 }
 body{
     margin:0;
-    padding:0;
+    padding:20px;
     display: flex; /* Flexbox layout to align content */
     flex-direction: column; /* Stack items vertically */
     height: 100%; /* Full height */
+    overflow-x: hidden;
 }
 
 /*begin navigation formatting*/
@@ -47,20 +49,56 @@ nav a{
     transition: color 0.4s ease; /* Smooth transition for text color */
 }
 nav a:hover{
-    color:rgb(0, 0, 0);
+    color:rgb(16, 152, 237);
 }
 /*end navigation formatting*/
-main{
+
+.home main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: flex-start; /* Ensures content starts from the top */
+    height: 100vh; /* Ensures the main content takes full height of the viewport */
+    flex-grow: 1; /* Allow the main to grow and fill remaining space */
+}
+
+.home.content {
+    display: block;
+    position: relative; 
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%; /* Make the content 90% of the parent container width */
+}
+
+.home #map {
+    width: 100%; /* Adjust to full width */
+    height: 75vh; /* Make map container take full height */
+    background-color: transparent;
+    border: none; /* Remove border if not necessary */
+}
+
+/* main{
     width:85%;
     display:block;
     margin:auto;
-}
+} */
 
-.review-list li{
-    background-color:#e0e0e0;
-    margin:0.5em;
+.review-list {
+    padding: 0;
+    margin: 0;
+    list-style-type: none; /* Remove list bullet points */
+    overflow-y: auto; /* Enable scrolling for the list if content exceeds the max height */
+  }
+  
+.review-list li {
+    background-color: var(--bg-color);
+    margin: 0.5em;
     padding: 0.2em 1em 1em 1em;
     list-style-type: none;
+    max-height: 500px; /* Set a max height */
+    height: auto; /* Allow the height to adjust based on content */
 }
 
 form input{
@@ -72,12 +110,14 @@ form input{
 :root {
     --bg-color: #ffffff;
     --text-color: #000000;
+    --border-color: #828283;
 }
 
 /* Dark Mode Variables */
 body.dark {
     --bg-color: #121212;
     --text-color: #e0e0e0;
+    --border-color: #828283;
 }
 
 /* Auto Mode */
@@ -85,6 +125,7 @@ body.dark {
     body.auto {
         --bg-color: #121212;
         --text-color: #e0e0e0;
+        --border-color: #828283;
     }
 }
 
@@ -92,6 +133,7 @@ body.dark {
     body.auto {
         --bg-color: #ffffff;
         --text-color: #000000;
+        --border-color: #828283;
     }
 }
 
@@ -134,7 +176,8 @@ input[type="radio"] {
 footer {
     background-color: var(--bg-color);
     color: var(--text-color);
-    padding: 0.2rem;
+    padding: 7px;  /* Reduce padding for less height */
+    font-size: 0.9rem;   /* Optionally adjust font size */
     text-align: center;
     border-top: 1px solid var(--text-color);
     transition: background-color 0.4s ease, color 0.4s ease;
@@ -166,4 +209,71 @@ footer {
     width: 900px;
     height: 600px;
     /* Ensure the map has a defined height */
+}
+
+.spot-container {
+    display: flex; /* Aligns the children (image and info) in a row */
+    align-items: flex-start; /* Aligns the items to the top of the container */
+    gap: 1em; /* Adds space between the image and the info */
+  }
+  
+.spot-img {
+    width: 450px; /* Adjust the width of the image */
+    height: auto; /* Maintain the aspect ratio */
+  }
+  
+.spot-info {
+    display: flex; /* Flexbox for vertical alignment */
+    flex-direction: column; /* Stack elements vertically */
+    justify-content: flex-start; /* Align items at the top initially */
+    flex-grow: 1; /* Expand to fill available space */
+    position: relative; /* Enable absolute positioning for the button */
+    background-color: var(--bg-color); /* Optional: Visualize the space */
+    padding: 1em; /* Optional: Add padding to the info box */
+  }
+
+
+/* Base styling for the buttons */
+.like-button, .refresh-reviews-button, .submit-button {
+    margin-top: auto; /* Push the button to the bottom */
+    padding: 5px 10px; /* More comfortable padding for usability */
+    background-color: var(--bg-color); /* Background based on theme */
+    color: var(--text-color); /* Text color based on theme */
+    font-size: 12px; /* Font size */
+    text-transform: uppercase; /* Uppercase for stylistic choice */
+    letter-spacing: 1px; /* Spacing between letters */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease, border-color 0.3s ease; /* Smooth hover effects */
+    outline: none; /* Remove focus outline */
+    display: inline-flex; /* Flexbox for alignment */
+    align-items: center; /* Vertically center the content */
+    justify-content: center; /* Horizontally center the content */
+    position: relative; /* For positioning effects (like icons or hover animations) */
+    border: 1px solid var(--border-color); /* Add border for structure */
+    border-radius: 4px; /* Rounded corners for a modern look */
+    max-width: fit-content; /* Adjust width dynamically to fit the content */
+}
+
+/* Dark mode styles */
+body.dark .like-button, body.dark .refresh-reviews-button,body.dark .submit-button {
+    background-color: #333; /* Darker background */
+    color: #fff; /* White text for contrast */
+    border-color: #828283; /* Subtle border */
+}
+
+body.dark .like-button:hover, body.dark .refresh-reviews-button:hover,body.dark .submit-button {
+    background-color: #444; /* Slightly lighter on hover */
+    border-color: #828283; /* Lighter border on hover */
+}
+
+/* Light mode styles */
+body.light .like-button, body.light .refresh-reviews-button, body.light  .submit-button {
+    background-color: #fff; /* Light background */
+    color: #333; /* Dark text for readability */
+    border-color: #828283; /* Subtle border */
+}
+
+body.light .like-button:hover, body.light .refresh-reviews-buttoon:hover,body.light  .submit-button {
+    background-color: #f9f9f9; /* Light hover effect */
+    border-color: #828283; /* Lighter border on hover */
 }
