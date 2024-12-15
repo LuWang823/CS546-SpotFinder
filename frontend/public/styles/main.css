@@ -277,3 +277,8 @@ body.light .like-button:hover, body.light .refresh-reviews-buttoon:hover,body.li
     background-color: #f9f9f9; /* Light hover effect */
     border-color: #828283; /* Lighter border on hover */
 }
+
+#spot img {
+    width: 50%;
+    margin-top: 2em;
+}
