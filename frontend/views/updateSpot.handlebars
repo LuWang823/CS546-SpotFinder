@@ -34,19 +34,58 @@
         document.getElementById('update-spot-form').addEventListener('submit', async function (event) {
             event.preventDefault();//obliterate default behavior
 
-            const name = document.getElementById('spot-name').value;
+            let name = document.getElementById('spot-name').value;
             let tags = document.getElementById('tags').value;
             const image = document.getElementById('image').files[0];
-            const description = document.getElementById('description').value;
-            const lat = Number(document.getElementById('lat').value);
-            const lon = Number(document.getElementById('lon').value);
+            let description = document.getElementById('description').value;
+            let lat = Number(document.getElementById('lat').value);
+            let lon = Number(document.getElementById('lon').value);
 
             try {
-                const updatedSpot = verifyUpdateSpot(name, tags, image, description, lat, lon)
+                name = name.trim();
+                console.log("i am here")
+                tags = tags.trim();
+                description = description.trim();
+                const formData = new FormData();
+                let location = {
+                    Type: "Point",
+                    coordinates: [lat, lon],
+                };
+                if(name){
+                    console.log("i am here")
+                   formData.append("name", name); 
+                }
+                if(tags){
+                    const tagArray = tags.split(" "); 
+                    tagArray.forEach(tag => {
+                        formData.append("hobby", tag);
+                    });
+                }
+                if(image){
+                    formData.append("spot", image);
+                }
+                if(description){
+                    formData.append("description", description);
+                }
+                if(lat && !lon){
+                    errorMessage.textContent = 'Only longitude cannot be updated. Please provide latitude';
+                    errorMessage.style.display = 'block';
+                    return;
+                }
+                else if(!lat && lon){
+                    errorMessage.textContent = 'Only latitude cannot be updated. Please provide longitude';
+                    errorMessage.style.display = 'block';
+                    return;
+                }
+                else if (lat && lon) {
+                    formData.append("location.coordinates", lat);
+                    formData.append("location.coordinates", lon);
+                }
+                
+                console.log(formData);
                 try {
-                    
-                    updateSpot(updatedSpot);
-                    errorMessage.textContent = 'spot updated';
+                    await updateSpot(formData);
+                    errorMessage.textContent = 'Spot Updated';
                     errorMessage.style.display = 'block';
                 } catch (e) {
                     errorMessage.textContent = e.message;
