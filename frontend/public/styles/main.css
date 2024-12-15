@@ -273,6 +273,7 @@ footer {
     margin-right: 20px;
 }
 
+
 #search-results-container {
     flex-grow: 1; /* Main content takes the rest of the space */
     background-color: var(--bg-color);
