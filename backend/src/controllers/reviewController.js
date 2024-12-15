@@ -1,9 +1,34 @@
 import Review from "../modules/reviewModule.js";
 import catchAsync from "../utils/catchAsync.js";
 import AppError from "../utils/appError.js";
+import Spot from "../modules/spotModule.js";
 
 export const createReview = catchAsync(async (req, res, _next) => {
+  const existingReview = await Review.findOne({ user: req.body.user, spot: req.body.spot });
+  if (existingReview) {
+    return res.status(400).json({ message: 'User already made a comment' });
+  }
   const review = await Review.create(req.body);
+  const reviewsOfSpot = await Review.find({ spot: req.body.spot });
+  let ratingsAvg = 0;
+  const ratingsTotal = reviewsOfSpot.length;
+  if (ratingsTotal > 0) {
+    // Calculate the average rating
+    reviewsOfSpot.forEach(review => {
+      ratingsAvg += review.ratings;
+    });
+    ratingsAvg = ratingsAvg / ratingsTotal;
+  
+    // Update the spot with the new ratings
+    try {
+      await Spot.updateOne(
+        { _id: req.body.spot },  // The condition to find the document
+        { $set: { ratingsAvg: ratingsAvg, ratingsTotal: ratingsTotal } }  // The fields you want to update
+      );
+    } catch (err) {
+      return res.status(400).json({ message: 'Error updating spot ratings' });
+    }
+  }
   return res.status(200).json({
     status: "success",
     data: review,

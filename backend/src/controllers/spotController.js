@@ -80,15 +80,31 @@ export const findSpotPageById = catchAsync(async (req, res, next) => {
   }
 
   const reviews = await Review.find({ spot: req.params.spotId });
-  return res.status(200).render('spot', {
-    title: spot.name,
-    image_src: '/'+spot.image,
-    spotName: spot.name,
-    tagList: spot.hobby,
-    spotCoordinates: spot.location.coordinates,
-    spotDescription: spot.description,
-    avgRating: spot.ratingsAvg,
-    numRatings: spot.ratingsTotal,
-    review: reviews
-  });
+
+  if(spot.image){
+    return res.status(200).render('spot', {
+      title: spot.name,
+      image_src: '/'+spot.image,
+      spotName: spot.name,
+      tagList: spot.hobby,
+      spotCoordinates: spot.location.coordinates,
+      spotDescription: spot.description,
+      avgRating: spot.ratingsAvg,
+      numRatings: spot.ratingsTotal,
+      review: reviews
+    });
+  }else{
+    return res.status(200).render('spot', {
+      title: spot.name,
+      image_src: '/uploads/spots/undefined.jpeg',
+      spotName: spot.name,
+      tagList: spot.hobby,
+      spotCoordinates: spot.location.coordinates,
+      spotDescription: spot.description,
+      avgRating: spot.ratingsAvg,
+      numRatings: spot.ratingsTotal,
+      review: reviews
+    });
+  }
+  
 }); 
