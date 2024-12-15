@@ -38,9 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById('verified').textContent = ('Verified: ' + user.verified);
       
       const ulElement = document.getElementById('liked-spots');
-
       if (user.liked) {
-        console.log(user.liked);
         user.liked.forEach(item => {
           const li = document.createElement("li");
           const anchor = document.createElement("a"); 
@@ -50,6 +48,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
           li.appendChild(anchor); 
           ulElement.appendChild(li); 
+        });
+      }
+
+      const posted = document.getElementById('posted-spots');
+      if (user.postedSpots) {
+        user.postedSpots.forEach(item => {
+          const li = document.createElement("li");
+          const anchor = document.createElement("a"); 
+
+          anchor.href = `/spots/${item._id}`;
+          anchor.textContent = item.name; 
+
+          li.appendChild(anchor); 
+          posted.appendChild(li); 
+        });
+      }
+
+      const postedReviews = document.getElementById('posted-reviews');
+      if (user.postedReviews) {
+        user.postedReviews.forEach(item => {
+          const li = document.createElement("li");
+          const anchor = document.createElement("a"); 
+
+          anchor.href = `/spots/${item.spot._id}`;
+          anchor.textContent = (`Rating: ${item.ratings} | ${item.spot.name}`); 
+
+          li.appendChild(anchor); 
+          postedReviews.appendChild(li); 
         });
       }
     }

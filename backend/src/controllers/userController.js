@@ -4,6 +4,7 @@ import catchAsync from "../utils/catchAsync.js";
 import { v4 as uuid } from "uuid";
 import User from "../modules/userModule.js";
 import Spot from "../modules/spotModule.js";
+import Review from "../modules/reviewModule.js";
 import {
   sendResetPasswordMail,
   sendVerificationMail,
@@ -114,9 +115,20 @@ export const resetPasswordHandler = catchAsync(async (req, res, _next) => {
 });
 
 export const getCurrentUserHandler = catchAsync(async (_req, res, _next) => {
-  const user = await User.findById(res.locals.user._id)
+  let user = await User.findById(res.locals.user._id)
     .populate("liked")
-    .select("-password -verificationCode");
+    .select("-password -verificationCode")
+    .lean();
+
+  const postedSpots = await Spot.find({ user: res.locals.user._id });
+  console.log("Posted Spots:", postedSpots, '\n\n');
+  user.postedSpots = postedSpots;
+
+  const postedReviews = await Review.find({ user: res.locals.user._id });
+  console.log("Posted Reviews:", postedReviews, '\n\n');
+  user.postedReviews = postedReviews;
+
+  console.log(user);
   return res.status(200).json({
     status: "success",
     data: {
