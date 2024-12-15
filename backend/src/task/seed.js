@@ -106,17 +106,17 @@ const seedData = async () => {
 
         const spots = [
             {
-                name: "Hiking Paradise",
-                hobby: ["Hiking", "Photography"],
-                image: "uploads/spots/0f8a56e3-17c1-480f-9e94-3ad064408c9f.jpeg",
-                description: "A beautiful spot for hiking enthusiasts with stunning views.",
+                name: "Stephen R. Gregg Park",
+                hobby: ["Walking", "Picnicking", "Jogging", "Birdwatching", "Biking"],
+                image: "uploads/spots/7f55a26f-2b1c-461e-98cc-2d25ab18d35a.jpeg",
+                description: "Stephen R. Gregg Park is a large urban park in Bayonne, NJ, offering scenic views, walking trails, playgrounds, and sports facilities. It is a popular spot for outdoor activities, family gatherings, and relaxation, with beautiful waterfront areas and ample green spaces.",
                 location: {
-                  coordinates: [-120.1234, 38.5678],
-                  address: "123 Mountain Trail, Adventure City, CA",
+                  coordinates: [40.684677919807264, -74.11497449418061],
+                  address: "930 John F. Kennedy Blvd, Bayonne, NJ 07002",
                 },
                 ratingsAvg: 4.8,
                 ratingsTotal: 150,
-                user: "507f1f77bcf86cd799439011",
+                user: user5._id.toString(),
             },
             {
                 name: "Artistic Haven",
