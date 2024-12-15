@@ -1,22 +1,21 @@
 <main>
-    <h2 id="user-name"></h2>
-    <h4 id="user-email"></h4>
+    <h2 id="user-name">Username</h2>
+    <h4 id="user-email">User Email</h4>
     <span id="verified">Verified:</span>
 
     <h3>Posted Spots</h3>
-    <ul class="spot-list">
+    <ul class="spot-list" id="posted-spots">
         <!--array of spot IDs-->
-        {{#each spots}}
-        <li><a href="/spots/{{this}}">{{this}}</a></li> <button onclick="deleteSpot({{this}})">Delete Spot</button> <a href='/spots/{{this}}/update'><button>Update Spot</button></a>
-        {{/each}}
     </ul>
 
-    <h3>Liked Spots</h3>
-    <ul class="spot-list" id="liked-spots">
+    <h3>Posted Reviews</h3>
+    <ul class="spot-list" id="posted-reviews">
         <!--array of spot IDs-->
-        {{#each likedSpots}}
-        <li><a href="/spots/{{this}}">{{this}}</a></li>
-        {{/each}}
+    </ul>
+
+    <h3>Personal Collection (Favorites/Likes) </h3>
+    <ul class="spot-list" id="liked-spots">
+        
     </ul>
 
 </main>

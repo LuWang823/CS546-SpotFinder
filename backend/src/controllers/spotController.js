@@ -84,12 +84,12 @@ export const findSpotPageById = catchAsync(async (req, res, next) => {
   if(spot.image){
     return res.status(200).render('spot', {
       title: spot.name,
-      image_src: '/'+spot.image,
+      image_src: '/'+spot.image.replace(/\\/g, '/'),
       spotName: spot.name,
       tagList: spot.hobby,
       spotCoordinates: spot.location.coordinates,
       spotDescription: spot.description,
-      avgRating: spot.ratingsAvg,
+      avgRating: Math.round((spot.ratingsAvg) * 100) / 100,
       numRatings: spot.ratingsTotal,
       review: reviews
     });
@@ -101,7 +101,7 @@ export const findSpotPageById = catchAsync(async (req, res, next) => {
       tagList: spot.hobby,
       spotCoordinates: spot.location.coordinates,
       spotDescription: spot.description,
-      avgRating: spot.ratingsAvg,
+      avgRating: Math.round((spot.ratingsAvg) * 100) / 100,
       numRatings: spot.ratingsTotal,
       review: reviews
     });

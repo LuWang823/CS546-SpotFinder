@@ -38,9 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById('verified').textContent = ('Verified: ' + user.verified);
       
       const ulElement = document.getElementById('liked-spots');
-
       if (user.liked) {
-        console.log(user.liked);
         user.liked.forEach(item => {
           const li = document.createElement("li");
           const anchor = document.createElement("a"); 
@@ -51,6 +49,53 @@ document.addEventListener("DOMContentLoaded", () => {
           li.appendChild(anchor); 
           ulElement.appendChild(li); 
         });
+      }
+
+      const posted = document.getElementById('posted-spots');
+      if (user.postedSpots) {
+        user.postedSpots.forEach(item => {
+          const li = document.createElement("li");
+          const anchor = document.createElement("a"); 
+          const button = document.createElement("a");
+
+          anchor.href = `/spots/${item._id}`;
+          anchor.textContent = item.name; 
+
+          button.href = `/spots/${item._id}/update`;
+          button.textContent = "UPDATE SPOT"; 
+          button.style.color = '#ffffff';
+          button.style.backgroundColor = "#C62FE0";
+          button.style.fontWeight = "bold";
+          button.style.marginLeft = "1em";
+
+          li.appendChild(anchor);
+          li.appendChild(button); 
+          posted.appendChild(li); 
+        });
+      }
+
+      const postedReviews = document.getElementById('posted-reviews');
+      if (user.postedReviews) {
+        user.postedReviews.forEach(item => {
+          const li = document.createElement("li");
+          const anchor = document.createElement("a"); 
+
+          anchor.href = `/spots/${item.spot._id}`;
+          anchor.textContent = (`Rating: ${item.ratings} | ${item.spot.name}`); 
+
+          li.appendChild(anchor); 
+          postedReviews.appendChild(li); 
+        });
+      }
+
+      if (localStorage.getItem("accessToken") === null) {
+        // User is not logged in, hide profile and sign-out
+        document.getElementById("profile").style.display = "none";
+        document.getElementById("sign-out").style.display = "none";
+      } else {
+        // User is logged in, hide login and sign-up
+        document.getElementById("login").style.display = "none";
+        document.getElementById("sign-up").style.display = "none";
       }
     }
   }

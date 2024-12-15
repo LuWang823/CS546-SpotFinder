@@ -1,66 +1,71 @@
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{title}}</title>
-    <link rel="stylesheet" href="/styles/main.css" />
-    <script src="/scripts/profile.js" type="module"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  </head>
 
-  <body>
-    <nav>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{title}}</title>
+  <link rel="stylesheet" href="/styles/main.css">
+  <script src="/scripts/profile.js" type="module"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+</head>
 
-      <span><a href="/">Spot Finder</a></span>
-      <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/search">Search</a></li>
-        <li><a href="/spots/create">New Spot</a></li>
-      </ul>
-      <ul id="profile-buttons">
-        <li id="login"><a href="/login">Login</a></li>
-        <li id="sign-up"><a href="/signUp">Sign Up</a></li>
-        <li id="profile"><a href="">Profile</a></li>
-        <li id="sign-out"><a href="/">Sign Out</a></li>
-      </ul>
+<body>
+  <nav>
 
-    </nav>
-    <br>
-   <fieldset>
-            <legend>Choose Color Scheme</legend>
-            <label>
-                <input type="radio" name="color-scheme" id="color-scheme-light" value="light">
-                Light
-            </label>
-            <label>
-                <input type="radio" name="color-scheme" id="color-scheme-auto" value="auto" checked>
-                Auto
-            </label>
-            <label>
-                <input type="radio" name="color-scheme" id="color-scheme-dark" value="dark">
-                Dark
-            </label>
-        </fieldset>
-    {{{body}}}
+    <span><a href="/">Spot Finder</a></span>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/search">Search</a></li>
+      <li><a href="/spots/create">New Spot</a></li>
+    </ul>
+    <ul id="profile-buttons">
+      <li id="login"><a href="/login">Login</a></li>
+      <li id="sign-up"><a href="/signUp">Sign Up</a></li>
+      <li id="profile"><a href="">Profile</a></li>
+      <li id="sign-out"><a href="/">Sign Out</a></li>
+    </ul>
 
-    <script>
-      if (localStorage.getItem("accessToken") === null) {
-        // User is not logged in, hide profile and sign-out
-        document.getElementById("profile").style.display = "none";
-        document.getElementById("sign-out").style.display = "none";
-      } else {
-        // User is logged in, hide login and sign-up
-        document.getElementById("login").style.display = "none";
-        document.getElementById("sign-up").style.display = "none";
-      }
-      document.getElementById("sign-out").addEventListener("click", () => {
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("refreshToken");
-      });
-    </script>
-    <script src="/scripts/darkmode.js"></script>
-  </body>
+  </nav>
+  <br>
+  <fieldset>
+    <legend>Choose Color Scheme</legend>
+    <label>
+      <input type="radio" name="color-scheme" id="color-scheme-light" value="light">
+      Light
+    </label>
+    <label>
+      <input type="radio" name="color-scheme" id="color-scheme-auto" value="auto" checked>
+      Auto
+    </label>
+    <label>
+      <input type="radio" name="color-scheme" id="color-scheme-dark" value="dark">
+      Dark
+    </label>
+  </fieldset>
+  {{{body}}}
+
+  <script>
+    if (localStorage.getItem("accessToken") === null) {
+      // User is not logged in, hide profile and sign-out
+      document.getElementById("profile").style.display = "none";
+      document.getElementById("sign-out").style.display = "none";
+    } else {
+      // User is logged in, hide login and sign-up
+      document.getElementById("login").style.display = "none";
+      document.getElementById("sign-up").style.display = "none";
+    }
+    document.getElementById("sign-out").addEventListener("click", () => {
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+    });
+  </script>
+  <script src="/scripts/darkmode.js"></script>
+
   <footer>
-    <p>Group 36</p>
-</footer>
+    <p>CS 546: Web Programming | Group 36</p>
+  </footer>
+</body>
+
 </html>

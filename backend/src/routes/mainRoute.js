@@ -79,7 +79,7 @@ mainRouter.get("/spots/:id", validateResource(getSpotById), findSpotPageById);
 
 mainRouter.route("/profile").get(async (req, res) => {
   try {
-    return res.status(200).render("profile", {});
+    return res.status(200).render("profile", {title: 'Profile'});
   } catch (error) {
     res.status(500).send("request failed");
   }

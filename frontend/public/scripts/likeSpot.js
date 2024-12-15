@@ -17,7 +17,10 @@ const like = async () => {
         });
 
         if (response.ok) {
-            document.getElementById('likeSpot').style.display = 'none';
+            // document.getElementById('likeSpot').style.display = 'none';
+            document.getElementById('likeSpot').textContent = 'Saved';
+            document.getElementById('likeSpot').disabled = true; 
+
         } else {
             errorMessage.textContent = 'Internal Server error';
             errorMessage.style.display = 'block';
