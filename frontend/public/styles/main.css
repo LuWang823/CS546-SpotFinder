@@ -290,7 +290,7 @@ footer {
     width: 140px;
     text-align: center;
     vertical-align: middle;
-    margin-right: 1; 
+    margin-right: 1px; 
 }
 
 #distance-unit {
@@ -298,7 +298,7 @@ footer {
     font-weight: bold;
     margin-left: 5px;  /* Optional: adds a small space between the number and the unit */
     vertical-align: middle;
-    margin-left: 10;
+    margin-left: 10px;
 }
 
 #rating-search, #rating-value {
@@ -308,7 +308,7 @@ footer {
 
 #rating-search {
     width: 150px;
-    margin-right: 5;
+    margin-right: 5px;
 }
 
 #rating-value {
@@ -316,6 +316,6 @@ footer {
     font-weight: bold;
     width: 40px;
     text-align: center;
-    margin-left: 10;
+    margin-left: 10px;
 }
 
