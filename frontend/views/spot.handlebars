@@ -6,28 +6,34 @@
 </style>
 
 <main>
+    <div class="spot-container">
     <img src="{{image_src}}" class="spot-img" alt="Image of the spot">
     <div class="spot-info">
         <h2>Name: {{spotName}}</h2>
-        <h5>Tags: {{tagList}}</h5>
+        <p>Tags: {{tagList}}</p>
         <p>Coordinates: {{spotCoordinates}}</p>
         <p>Description: {{spotDescription}}</p>
         <p>Average Rating: {{avgRating}}</p>
         <p>Number of Ratings: {{numRatings}}</p>
-        <button onclick="like()" id="likeSpot">Like This Spot (Save to Collection)</button>
-
+        <br>
+        <button onclick="like()" class="like-button" id="likeSpot">Like This Spot (Save to Collection)</button>
     </div>
-    <button id="refresh-reviews">Refresh Reviews</button>
+    </div>
+    <br>
+
+    <hr>
+    <br>
+    <button class="refresh-reviews-button" id="refresh-reviews">Refresh Reviews</button>
     <ul class="review-list"><!--should pass in an array of objects of all the reviews, not just the review IDs!!!-->
         <li id="review">
-            <h4>write your own review: </h4>
+            <h4>Write your own review: </h4>
             <p id="error-message"></p>
             <form id="new-review">
                 <label for="rating">Rating: </label>
                 <input type="number" min="1" max="5" id="rating" name="rating">
                 <label for="description">Review: </label>
                 <input type="text" id="description" name="description">
-                <input type="submit" id="submit" name="submit">
+                <input type="submit" class="submit-button" id="submit" name="submit">
             </form>
         </li>
     </ul>
