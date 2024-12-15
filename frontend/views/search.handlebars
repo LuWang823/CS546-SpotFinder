@@ -4,11 +4,12 @@
     <form id="search-form">
         <p id="error-message"></p>
 
-        <label for="distance">Search Distance (Miles): </label>
-        <input type="number" min='1' max='500' id="search-distance" name="search-distance">
+        <label for="distance">Search Distance (Max 500 Miles): </label>
+        <input type="number" min='1' max='500' id="search-distance" name="search-distance"><span id="distance-unit">miles</span>
+
 
         <label for="rating-search">Search By Rating: </label>
-        <input type="number" min="1" max="5" id="rating-search" name="rating-search">
+        <input type="range" min="1" max="5" id="rating-search" value="3" name="rating-search"><span id="rating-value"> average no less than 3</span>
 
         <label for="search-tag">Search By Hobby (Only 1): </label>
         <input type="text" id="search-tag" name="search-tag">
