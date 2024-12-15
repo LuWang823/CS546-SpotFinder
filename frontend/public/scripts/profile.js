@@ -87,6 +87,16 @@ document.addEventListener("DOMContentLoaded", () => {
           postedReviews.appendChild(li); 
         });
       }
+
+      if (localStorage.getItem("accessToken") === null) {
+        // User is not logged in, hide profile and sign-out
+        document.getElementById("profile").style.display = "none";
+        document.getElementById("sign-out").style.display = "none";
+      } else {
+        // User is logged in, hide login and sign-up
+        document.getElementById("login").style.display = "none";
+        document.getElementById("sign-up").style.display = "none";
+      }
     }
   }
 });
