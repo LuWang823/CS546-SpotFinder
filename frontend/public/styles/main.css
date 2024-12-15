@@ -254,8 +254,6 @@ footer {
     max-width: fit-content; /* Adjust width dynamically to fit the content */
 }
 
-
-
 /* search page styling */
 .search-page-whole-container {
     display: flex;
@@ -264,7 +262,7 @@ footer {
 }
 
 #search-form-container {
-    width: 300px; /* Sidebar width */
+    width: 400px; /* Sidebar width */
     background-color: var(--bg-color);
     color: var(--text-color);
     padding: 20px;
@@ -282,3 +280,42 @@ footer {
     border-radius: 8px;
     box-shadow: 0 2px 5px var(--border-color);
 }
+
+#search-distance, #distance-unit {
+    display: inline; /* Ensures both elements are on the same line */
+    vertical-align: middle; /* Aligns the unit with the number */
+}
+
+#search-distance {
+    width: 140px;
+    text-align: center;
+    vertical-align: middle;
+    margin-right: 1; 
+}
+
+#distance-unit {
+    font-size: 16px;
+    font-weight: bold;
+    margin-left: 5px;  /* Optional: adds a small space between the number and the unit */
+    vertical-align: middle;
+    margin-left: 10;
+}
+
+#rating-search, #rating-value {
+    display: inline; /* Ensures both elements are on the same line */
+    vertical-align: middle; /* Aligns the unit with the number */
+}
+
+#rating-search {
+    width: 150px;
+    margin-right: 5;
+}
+
+#rating-value {
+    font-size: 16px;
+    font-weight: bold;
+    width: 40px;
+    text-align: center;
+    margin-left: 10;
+}
+

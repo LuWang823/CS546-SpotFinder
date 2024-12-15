@@ -1,9 +1,22 @@
+const ratingInput = document.getElementById('rating-search');
+const ratingValue = document.getElementById('rating-value');
+        // Update the displayed value when the slider changes
+ratingInput.addEventListener('input', function() {
+    ratingValue.textContent = `average no less than ${ratingInput.value}`;
+    console.log(ratingInput.value);
+});
+        
+ratingValue.textContent = `average no less than ${ratingInput.value}`;
+
+
 const newSearch = async (distance, rating, tag, lat,lon) => {
     //TODO: IMPLEMENT THIS FUNCTION
     // most likely implementaion vv
     try {
         // Send info to backend and get response
         //http://localhost:3000/api/v1/spots/?ratings=4&distance=10mi&category=hockey
+        
+
         const response = await fetch((`http://localhost:3000/api/v1/spots/?ratings=${rating}&distance=${distance}&category=${tag}`), {
             method: 'POST',
             headers: {
@@ -25,6 +38,7 @@ const newSearch = async (distance, rating, tag, lat,lon) => {
         throw e
     }
 
+    
         data = [//dummy data
             {
                 id: '123532235235',
@@ -42,4 +56,7 @@ const newSearch = async (distance, rating, tag, lat,lon) => {
             }
         ];
         return data
+
+        
+
 }
