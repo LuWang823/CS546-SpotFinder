@@ -13,6 +13,7 @@ const Body = z
   .object({
     spot: z.string(),
     user: z.string(),
+    username: z.string(),
     description: z.string().max(100),
     ratings: z.number().min(1).max(5),
   })

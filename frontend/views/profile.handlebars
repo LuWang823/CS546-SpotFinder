@@ -1,17 +1,7 @@
 <main>
     <h2 id="user-name"></h2>
     <h4 id="user-email"></h4>
-    <span>Verified: {{verified}}</span>
-    <h3>Saved Hobbies:</h3>
-    <!--Array of strings passed into this-->
-    <ul class="hobby-list">
-        {{#each hobbies}}
-        <li>{{this}}</li>
-        {{/each}}
-    </ul>
-
-    <h3>Saved Address:</h3>
-    <p>{{address}}</p>
+    <span id="verified">Verified:</span>
 
     <h3>Posted Spots</h3>
     <ul class="spot-list">
@@ -22,17 +12,9 @@
     </ul>
 
     <h3>Liked Spots</h3>
-    <ul class="spot-list">
+    <ul class="spot-list" id="liked-spots">
         <!--array of spot IDs-->
         {{#each likedSpots}}
-        <li><a href="/spots/{{this}}">{{this}}</a></li>
-        {{/each}}
-    </ul>
-
-    <h3>Visited Spots</h3>
-    <ul class="spot-list">
-        <!--array of spot IDs-->
-        {{#each visitedSpots}}
         <li><a href="/spots/{{this}}">{{this}}</a></li>
         {{/each}}
     </ul>

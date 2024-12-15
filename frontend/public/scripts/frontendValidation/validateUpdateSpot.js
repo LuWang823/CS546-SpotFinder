@@ -73,7 +73,7 @@ function verifyUpdateSpot(name, hobby, photo, description, latitude, longitude) 
     }
     
     if(photo != null){
-        updateSpot['photo'] = photo;
+        updateSpot['image'] = photo;
     }
 
 
