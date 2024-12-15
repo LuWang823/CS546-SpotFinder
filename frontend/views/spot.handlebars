@@ -1,6 +1,7 @@
 <style>
-    img{
+    img {
         width: 50%;
+        margin-top: 2em;
     }
 </style>
 
@@ -29,55 +30,54 @@
                 <input type="submit" id="submit" name="submit">
             </form>
         </li>
-        {{#each review}}
-        <li>
-            <div>
-                <h4>User: {{this.user}}</h4>
-                <p>Time: {{this.timestamp}}</p>
-                <p>Rating (1-5): {{this.ratings}}</p>
-            </div>
-            <p>Review: {{this.description}}</p>
-        </li>
-        {{/each}}
     </ul>
 </main>
 <script src="/scripts/postReview.js"></script>
 <script src="/scripts/likeSpot.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>//ajax for refreshing review list
-    $(document).ready(() => {
-        // Refresh reviews when the button is clicked
-        $('#refresh-reviews').click(() => {
-            const currentUrl = window.location.pathname;
-            const spotId = currentUrl.split('/')[2]; // Extract spot ID from URL
-            const apiUrl = `http://localhost:3000/api/v1/reviews/spots/${spotId}`;
-            $.ajax({
-                url: apiUrl,
-                method: 'GET',
-                success: (data) => {
-                    data = data.data;
-                    // Clear the current list
-                    $('.review-list').empty();
+    const errorMessage = document.getElementById('error-message');
 
-                    // Append the updated reviews
-                    data.forEach((review) => {
-                        $('.review-list').append(`
+
+    function getReviews() {
+        const currentUrl = window.location.pathname;
+        const spotId = currentUrl.split('/')[2]; // Extract spot ID from URL
+        const apiUrl = `http://localhost:3000/api/v1/reviews/spots/${spotId}`;
+        $.ajax({
+            url: apiUrl,
+            method: 'GET',
+            success: (data) => {
+                data = data.data;
+                // Clear the current list
+                const $ul = $('.review-list');  // Select the <ul> element using jQuery
+                // Remove all <li> elements except the first one
+                $ul.find('li').not(':first').remove();
+
+                // Append the updated reviews
+                data.forEach((review) => {
+                    $('.review-list').append(`
                             <li>
                                 <div>
-                                    <h4>User: ${review.user}</h4>
-                                    <p>Time: ${review.timestamp}</p>
-                                    <p>Rating (1-5): ${review.ratings}</p>
+                                    <h4>User: ${review.user.name}</h4>
+                                    <p>Rating: ${review.ratings}</p>
                                 </div>
                                 <p>Review: ${review.description}</p>
                             </li>
                         `);
-                    });
-                },
-                error: (err) => {
-                    console.error('Error fetching reviews:', err);
-                    alert('Could not refresh reviews. Please try again later.');
-                },
-            });
+                });
+            },
+            error: (err) => {
+                errorMessage.textContent = 'Error fetching reviews:' + err.message;
+                errorMessage.style.display = 'block';
+            },
+        });
+    }
+
+    $(document).ready(() => {
+        getReviews();
+        // Refresh reviews when the button is clicked
+        $('#refresh-reviews').click(() => {
+            getReviews();
         });
     });
 </script>
@@ -118,35 +118,10 @@
                 await postReview(id, rating, description);
                 errorMessage.textContent = 'successfully posted!';
                 errorMessage.style.display = 'block';
-                const currentUrl = window.location.pathname;
-            const spotId = currentUrl.split('/')[2]; // Extract spot ID from URL
-            const apiUrl = `/spots/${spotId}/reviews`;
-            $.ajax({
-                url: apiUrl,
-                method: 'GET',
-                success: (data) => {
-                    // Clear the current list
-                    $('.review-list').empty();
+                getReviews();
+                document.getElementById('review').remove();
+                
 
-                    // Append the updated reviews
-                    data.forEach((review) => {
-                        $('.review-list').append(`
-                            <li>
-                                <div>
-                                    <h4>User: ${review.user}</h4>
-                                    <p>Time: ${review.timestamp}</p>
-                                    <p>Rating (1-5): ${review.ratings}</p>
-                                </div>
-                                <p>Review: ${review.description}</p>
-                            </li>
-                        `);
-                    });
-                },
-                error: (err) => {
-                    console.error('Error fetching reviews:', err);
-                    alert('Could not refresh reviews. Please try again later.');
-                },
-            });
             } catch (e) {
                 errorMessage.textContent = e.message;
                 errorMessage.style.display = 'block';
