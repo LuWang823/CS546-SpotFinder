@@ -13,10 +13,10 @@
         <label for="description">Description: </label>
         <input type="text" id="description" name="description">
 
-        <label for="lat">Latitude: </label>
+        <label for="lat">Latitude: *User's location set by default* </label>
         <input type="number" id="lat" name="lat" min="-90" max="90" step=".001">
 
-        <label for="lon">Longitude: </label>
+        <label for="lon">Longitude: *User's location set by default*</label>
         <input type="number" id="lon" name="lon" min="-180" max="180" step=".001">
 
         <input type="submit">
@@ -27,6 +27,33 @@
 <script src="/scripts/updateSpot.js"></script>
 <script>//do validation, assemble object, pass to updateSpot function
     const errorMessage = document.getElementById('error-message');
+
+    //
+    const latInput = document.getElementById('lat');
+    const lonInput = document.getElementById('lon');
+
+    // Function to get user location
+    const getUserLocation = () => {
+        return new Promise((resolve, reject) => {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(resolve, reject);
+            } else {
+                reject(new Error('Geolocation is not supported by this browser.'));
+            }
+        });
+    };
+
+    // Set default coordinates to user's location
+    getUserLocation().then(position => {
+        const { latitude, longitude } = position.coords;
+        latInput.value = latitude.toFixed(3);
+        lonInput.value = longitude.toFixed(3);
+    }).catch(error => {
+        console.error('Error getting user location:', error);
+        errorMessage.textContent = 'Unable to retrieve your location. Please enter coordinates manually.';
+        errorMessage.style.display = 'block';
+    });
+    //
     if (localStorage.getItem('accessToken') === null) {
         errorMessage.textContent = 'not logged in';
         errorMessage.style.display = 'block';
@@ -38,8 +65,10 @@
             let tags = document.getElementById('tags').value;
             const image = document.getElementById('image').files[0];
             let description = document.getElementById('description').value;
-            let lat = Number(document.getElementById('lat').value);
-            let lon = Number(document.getElementById('lon').value);
+            {{!-- let lat = Number(document.getElementById('lat').value);
+            let lon = Number(document.getElementById('lon').value); --}}
+            let lat = Number(latInput.value);
+            let lon = Number(lonInput.value);
 
             try {
                 name = name.trim();
