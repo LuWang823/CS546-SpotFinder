@@ -31,3 +31,5 @@ function validateSearch(distance, rating, tag) {
         }
     }
 }
+
+module.exports = validateSearch;
