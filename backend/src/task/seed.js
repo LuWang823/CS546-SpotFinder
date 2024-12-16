@@ -6,6 +6,7 @@ import User from "../modules/userModule.js";
 import Spot from "../modules/spotModule.js";
 import Session from "../modules/sessionModule.js";
 import Review from "../modules/reviewModule.js";
+import Hobbyset from "../modules/hobbyModule.js";
 
 
 // Load environment variables dynamically based on NODE_ENV
@@ -36,6 +37,8 @@ const seedData = async () => {
     await Review.deleteMany();
     console.log("Previous Review data cleared!");
 
+    await Hobbyset.deleteMany();
+    console.log("Previous Hobby set data cleared!");
     
 
     try {
@@ -89,6 +92,8 @@ const seedData = async () => {
                 address: "Hoboken, NJ",
                             
             });
+
+        console.log("Seed user data inserted successfully!");
         
         
 
@@ -114,6 +119,12 @@ const seedData = async () => {
                 valid: true,
             },
         ];
+
+        
+
+            // Insert seed session data
+    await Session.insertMany(sessions);
+    console.log("Seed session data inserted successfully!");
 
       
 
@@ -214,7 +225,7 @@ const seedData = async () => {
         const spot7 = await Spot.create (
             {
                 name: "Artistic Haven",
-                hobby: ["Art", "Sketching"],
+                hobby: ["Arts", "Sketching"],
                 image: "uploads/spots/guilin.jpg",
                 description: "A tranquil spot for artists to find inspiration.",
                 location: {
@@ -272,6 +283,8 @@ const seedData = async () => {
                 ratingsTotal: 1,
                 user: user1._id.toString(),
             });
+
+        console.log("Seed spot data inserted successfully!");
 
         const review1 = await Review.create(
             {
@@ -371,13 +384,13 @@ const seedData = async () => {
             
             });
         
+        console.log("Seed review data inserted successfully!");
+        
     
        
 
 
-    // Insert seed user data
-    await Session.insertMany(sessions);
-    console.log("Seed session data inserted successfully!");
+
 
 }
     catch(error) {
