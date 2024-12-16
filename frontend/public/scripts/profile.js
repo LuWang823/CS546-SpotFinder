@@ -35,60 +35,61 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("user-name").textContent = user.name;
       document.getElementById("user-email").textContent = user.email;
 
-      document.getElementById('verified').textContent = ('Verified: ' + user.verified);
-      
-      const ulElement = document.getElementById('liked-spots');
+      document.getElementById("verified").textContent =
+        "Verified: " + user.verified;
+
+      const ulElement = document.getElementById("liked-spots");
       if (user.liked) {
-        user.liked.forEach(item => {
+        user.liked.forEach((item) => {
           const li = document.createElement("li");
-          const anchor = document.createElement("a"); 
+          const anchor = document.createElement("a");
 
           anchor.href = `/spots/${item._id}`;
-          anchor.textContent = item.name; 
+          anchor.textContent = item.name;
 
-          li.appendChild(anchor); 
-          ulElement.appendChild(li); 
+          li.appendChild(anchor);
+          ulElement.appendChild(li);
         });
       }
 
-      const posted = document.getElementById('posted-spots');
+      const posted = document.getElementById("posted-spots");
       if (user.postedSpots) {
-        user.postedSpots.forEach(item => {
+        user.postedSpots.forEach((item) => {
           const li = document.createElement("li");
-          const anchor = document.createElement("a"); 
+          const anchor = document.createElement("a");
           const button = document.createElement("a");
 
           anchor.href = `/spots/${item._id}`;
-          anchor.textContent = item.name; 
+          anchor.textContent = item.name;
 
           button.href = `/spots/${item._id}/update`;
-          button.textContent = "Update Spot"; 
-          button.style.color = '#ffffff';
+          button.textContent = "Update Spot";
+          button.style.color = "#ffffff";
           button.style.backgroundColor = "#00BFF5";
           button.style.fontWeight = "bold";
           button.style.fontSize = "9pt";
           button.style.marginLeft = "1em";
-          button.style.padding = '0.1em';
-          button.style.borderRadius = '0.2em';
-          button.style.textDecoration = 'none';
+          button.style.padding = "0.1em";
+          button.style.borderRadius = "0.2em";
+          button.style.textDecoration = "none";
 
           li.appendChild(anchor);
-          li.appendChild(button); 
-          posted.appendChild(li); 
+          li.appendChild(button);
+          posted.appendChild(li);
         });
       }
 
-      const postedReviews = document.getElementById('posted-reviews');
+      const postedReviews = document.getElementById("posted-reviews");
       if (user.postedReviews) {
-        user.postedReviews.forEach(item => {
+        user.postedReviews.forEach((item) => {
           const li = document.createElement("li");
-          const anchor = document.createElement("a"); 
+          const anchor = document.createElement("a");
 
           anchor.href = `/spots/${item.spot._id}`;
-          anchor.textContent = (`Rating: ${item.ratings} | ${item.spot.name}`); 
+          anchor.textContent = `Rating: ${item.ratings} | ${item.spot.name}`;
 
-          li.appendChild(anchor); 
-          postedReviews.appendChild(li); 
+          li.appendChild(anchor);
+          postedReviews.appendChild(li);
         });
       }
 
