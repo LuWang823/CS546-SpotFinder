@@ -1,9 +1,18 @@
+import xss from "xss";
 import Collection from "../modules/collectionsModule.js";
 import User from "../modules/userModule.js";
 import catchAsync from "../utils/catchAsync.js";
+import AppError from "../utils/appError.js";
 
-export const createCollectionHandler = catchAsync(async (req, res, _next) => {
-  const { spots, sharedWith } = req.body;
+export const createCollectionHandler = catchAsync(async (req, res, next) => {
+  let { spots, sharedWith } = req.body;
+
+  // for (let i = 0; i < spots.length; i++) {
+  //   spots[i].name = xss(spots[i].name);
+  //   spots[i].spot = xss(spots[i].spot);
+  // }
+
+  console.log(spots);
   const collection = await Collection.create({
     creater_name: res?.locals?.user?.name,
     creater_id: res?.locals?.user?._id,
@@ -12,8 +21,9 @@ export const createCollectionHandler = catchAsync(async (req, res, _next) => {
   });
 
   // const user_creater = await User.findById(res.locals.user._id);
-  const user_sharedWith = await User.findById(sharedWith);
+  const user_sharedWith = await User.findByIdAndUpdate(sharedWith);
 
+  if (!user_sharedWith) next(new AppError("fail to create collection"));
   // user_creater.collection.push(collection._id);
   user_sharedWith.sharedCollection.push(collection._id);
 
