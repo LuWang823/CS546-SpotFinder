@@ -2,10 +2,13 @@
 
 import express from "express";
 import {
+  addFriendHandler,
   createUserHandler,
+  findUser,
   forgotPasswordHandler,
   getCurrentUserHandler,
   likeSpotHandler,
+  removeLikeSpotHandler,
   resetPasswordHandler,
   verifyUserHandler,
 } from "../controllers/userController.js";
@@ -56,6 +59,17 @@ userRouter.patch(
   likeSpotHandler,
 );
 
+userRouter.delete(
+  "/like/:spotId",
+  deserializeUser,
+  userRequired,
+  validateResource(LikeSpotSchema),
+  removeLikeSpotHandler,
+);
+
 userRouter.get("/me", deserializeUser, userRequired, getCurrentUserHandler);
+
+userRouter.patch("/:id", deserializeUser, userRequired, addFriendHandler);
+userRouter.get("/", findUser);
 
 export default userRouter;

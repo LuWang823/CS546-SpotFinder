@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 
 const userSchema = new mongoose.Schema(
   {
-    name: { type: String, required: true },
+    name: { type: String, unique: true, required: true },
     email: { type: String, unique: true, required: true },
     password: {
       type: String,
@@ -19,6 +19,21 @@ const userSchema = new mongoose.Schema(
         ref: "Spot",
       },
     ],
+    sharedCollection: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Collection",
+      },
+    ],
+    friend: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
+    hobby: {
+      type: String,
+    },
     verified: {
       type: Boolean,
       default: false,
@@ -35,6 +50,13 @@ const userSchema = new mongoose.Schema(
 );
 
 userSchema.index({ email: 1 });
+
+userSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: "friend",
+  });
+  next();
+});
 
 userSchema.pre("save", async function (next) {
   // skip hashing if not modified
