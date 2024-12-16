@@ -1,4 +1,3 @@
-// being moved to newSearch.js
 function validateSearch(distance, rating, tag) {
     // if (distance == null && rating == null && tag == null) {
     //     throw new Error('At least one search parameter must be provided');
