@@ -62,11 +62,15 @@ document.addEventListener("DOMContentLoaded", () => {
           anchor.textContent = item.name; 
 
           button.href = `/spots/${item._id}/update`;
-          button.textContent = "UPDATE SPOT"; 
+          button.textContent = "Update Spot"; 
           button.style.color = '#ffffff';
-          button.style.backgroundColor = "#C62FE0";
+          button.style.backgroundColor = "#00BFF5";
           button.style.fontWeight = "bold";
+          button.style.fontSize = "9pt";
           button.style.marginLeft = "1em";
+          button.style.padding = '0.1em';
+          button.style.borderRadius = '0.2em';
+          button.style.textDecoration = 'none';
 
           li.appendChild(anchor);
           li.appendChild(button); 

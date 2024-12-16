@@ -78,15 +78,20 @@
                     return;
                 }
                 else if (lat && lon) {
-                    formData.append("location.coordinates", lat);
                     formData.append("location.coordinates", lon);
+                    formData.append("location.coordinates", lat);
                 }
                 
                 console.log(formData);
                 try {
-                    await updateSpot(formData);
-                    errorMessage.textContent = 'Spot Updated';
-                    errorMessage.style.display = 'block';
+                    if(name || lat || lon || tags || image || description){
+                        await updateSpot(formData);
+                        errorMessage.textContent = 'Spot Updated';
+                        errorMessage.style.display = 'block';
+                    }else{
+                        errorMessage.textContent = 'Nothing to update';
+                        errorMessage.style.display = 'block';
+                    }
                 } catch (e) {
                     errorMessage.textContent = e.message;
                     errorMessage.style.display = 'block';

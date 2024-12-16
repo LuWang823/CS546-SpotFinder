@@ -16,9 +16,11 @@ const updateSpot = async (formData) => {
     );
     return data;
             
-} catch (e) {
-    console.error("Axios error: ", e.response ? e.response.data : e.message);;
-    throw e;
+}  catch (e) {
+    if(e?.response?.data)
+      throw e?.response?.data;
+    else
+      throw e
   }
 };
         

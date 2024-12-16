@@ -31,9 +31,11 @@ export const getAllSpotsHandler = catchAsync(async (req, res, _next) => {
     .searchByHobby()
     .sort()
     .pagination()
-    .limitFields().queryPromise;
+    .limitFields()
+    .queryPromise;
 
   const spots = await promise;
+  console.log(spots.length);
   return res.status(200).json({
     status: "success",
     data: spots,
