@@ -138,7 +138,7 @@ const seedData = async () => {
                   coordinates: [-74.11497449418061, 40.684677919807264,],
                   address: "930 John F. Kennedy Blvd, Bayonne, NJ 07002",
                 },
-                ratingsAvg: 5,
+                ratingsAvg: 4,
                 ratingsTotal: 2,
                 user: user5._id.toString(),
             });
