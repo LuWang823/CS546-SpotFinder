@@ -17,8 +17,8 @@ let reqallsearch = {
 };
 
 $.ajax(reqallsearch).then(function(responseMessage){
-    console.log(responseMessage["data"]);
     if (responseMessage['data']) {
+        console.log(responseMessage['data']);
         const resultlist=responseMessage['data'];
         resultlist.map((item) => {
         let element = $(
