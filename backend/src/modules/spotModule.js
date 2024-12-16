@@ -40,12 +40,14 @@ spotSchema.pre(/^find/, function (next) {
 });
 
 async function updateGlobalHobbies(newHobbies) {
+  const filteredHobbies = newHobbies.filter(hobby => !hobby.includes(","));
+
   const updatedDocument = await globalUniqueHobbies.findOneAndUpdate(
     {}, // Find the document
-    { $addToSet: { hobbies: { $each: newHobbies } } }, // Add new hobbies to the set
+    { $addToSet: { hobbies: { $each: filteredHobbies } } }, // Add new hobbies to the set
     { new: true, upsert: true } // Create the document if it doesn't exist
   );
-  return globalUniqueHobbies;
+  return updatedDocument;
 }
 
 spotSchema.post("save", async function () {
