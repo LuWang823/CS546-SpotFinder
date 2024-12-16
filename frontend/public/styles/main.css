@@ -262,7 +262,7 @@ footer {
 }
 
 #search-form-container {
-    width: 400px; /* Sidebar width */
+    width: 350px; /* Sidebar width */
     background-color: var(--bg-color);
     color: var(--text-color);
     padding: 20px;
@@ -273,7 +273,7 @@ footer {
 
 
 #search-results-container {
-    flex-grow: 1; /* Main content takes the rest of the space */
+    width: 2000px; /* Main content takes the rest of the space */
     background-color: var(--bg-color);
     color: var(--text-color);
     padding: 20px;
@@ -320,8 +320,6 @@ footer {
 }
 
 
-
-
 #search-page-results {
     display: flex;
     flex-direction: column; /* Stack results vertically */
@@ -331,7 +329,7 @@ footer {
 
 .search-result-text{
     height: 300px;
-    width: 600px; 
+    width: 400px; 
     float: left;
     margin-left: 10px;
 
@@ -348,3 +346,32 @@ footer {
     margin-left: 10px;
 }
 
+#search-tag {
+    display: block;
+}
+
+#search-tag input[type="radio"] {
+    display: inline-block; /* Ensure radio buttons are inline */
+    margin-right: 10px; /* Add some space between the radio button and label */
+}
+
+#search-tag label {
+    display: inline-block; /* Label will be inline with radio button */
+    font-size: 16px;
+}
+
+
+#collection-hobby-tags{
+    display: block;
+}
+
+
+#collection-hobby-tags input[type="checkbox"] {
+    display: inline-block; /* Ensure radio buttons are inline */
+    margin-right: 10px; /* Add some space between the radio button and label */
+}
+
+#collection-hobby-tags label {
+    display: inline-block; /* Label will be inline with radio button */
+    font-size: 16px;
+}

@@ -1,6 +1,40 @@
 
 (function ($) {
 
+    function validateSearch(distance, rating, tag) {
+        // if (distance == null && rating == null && tag == null) {
+        //     throw new Error('At least one search parameter must be provided');
+        // }
+        if (distance !== null) {
+            if (typeof distance !== 'number') {
+                throw new Error('distance must be a number')
+            }
+            if (distance <= 0 || distance > 500) {
+                throw new Error('distance out of range')
+            }
+        }
+    
+        if (rating !== null) {
+            if (typeof rating !== 'number') {
+                throw new Error('rating must be a number')
+            }
+            if (rating < 1 || rating > 5) {
+                throw new Error('rating out of range')
+            }
+        }
+    
+        if (tag !== null) {
+            if(tag.trim() === ''){
+                throw new Error('tag cannot be empty string')
+            }
+            tag = tag.trim()
+            const regex = /^\s*[a-zA-Z0-9_-]+\s*$/;
+            if (!regex.test(tag)) {
+                throw new Error("tag must be a single alphanumeric term with optional dashes or underscores");
+            }
+        }
+    }
+
 const ratingInput = document.getElementById('rating-search');
 const ratingValue = document.getElementById('rating-value');
         // Update the displayed value when the slider changes
@@ -18,7 +52,7 @@ let reqallsearch = {
 
 $.ajax(reqallsearch).then(function(responseMessage){
     if (responseMessage['data']) {
-        console.log(responseMessage['data']);
+        // console.log(responseMessage['data']);
         const resultlist=responseMessage['data'];
         resultlist.map((item) => {
         let element = $(
@@ -36,10 +70,61 @@ $.ajax(reqallsearch).then(function(responseMessage){
 
 })
 
+let tagarea=$('#search-tag');
+let tagsurl={
+    method: "GET",
+    url: '/api/hobbies',
+}
+
+$.ajax(tagsurl).then(function(responseMessage){
+    if (responseMessage['hobbies']) {
+    const taglist=responseMessage['hobbies'];
+
+    tagarea.empty(); // Clear existing content
+
+    // Append each hobby as an <li> element
+    taglist.forEach(function (hobby, index) {
+    const tagElement = document.createElement("input");
+          tagElement.setAttribute("type", "radio");
+          tagElement.setAttribute("name", "hobby"); // Group all radio buttons
+          tagElement.setAttribute("id", `hobby-${index}`); // Unique ID for each radio
+          tagElement.setAttribute("value", hobby);
+          // Create a label for the radio button
+          const label = document.createElement("label");
+          label.setAttribute("for", `hobby-${index}`); // Associate label with radio
+          label.textContent = hobby;
+
+          // Append the radio button and label to the tag area
+          tagarea.append(tagElement);
+          tagarea.append(label);
+          tagarea.append("<br>");
+    });
+    }})
+
+let distance=$('#search-distance');
+let rating=$('rating-search');
+let hobbyselected=document.querySelector('input[name="hobby"]:checked');
+
+
+if ((distance != null || rating != null || hobbyselected != null)) {
+    validateSearch(parseInt(distance), parseInt(rating), hobbyselected);
+    searchResult.empty();
+    let reqrawsearch = {
+        method:'GET',
+        url: '/api/v1/spots',
+    };
+
+    
+}
+
+
+
+
+
 })(window.jQuery);
 
 
-// const allsearch=async()=>{
+// const allsearch=async()=>
 //     try {
 //         const response = await fetch((`http://localhost:3000/api/v1/spots/`), {
 //             method: 'GET',
