@@ -16,7 +16,7 @@ import {
   updateSpotHandler,
 } from "../controllers/spotController.js";
 import validateResource from "../middlewares/validateResource.js";
-import { imageRequired } from "../middlewares/imageRequired.js";
+import { checkImage, imageRequired } from "../middlewares/imageRequired.js";
 import { uploadSpotsImage } from "../utils/uploadImage.js";
 import { deserializeUser } from "../middlewares/deserializeUser.js";
 import { userRequired } from "../middlewares/userRequired.js";
@@ -35,7 +35,7 @@ spotRouter.patch(
   deserializeUser,
   userRequired,
   uploadSpotsImage.single("spot"),
-  imageRequired,
+  checkImage,
   validateResource(UpdateSpotSchema),
   updateSpotHandler
 );

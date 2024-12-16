@@ -9,3 +9,7 @@ export const imageRequired = catchAsync(async (req, _res, next) => {
   }
   next();
 });
+export const checkImage = catchAsync(async (req, _res, next) => {
+  req.body.image = req?.file?.path;
+  next();
+});
