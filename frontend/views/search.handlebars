@@ -22,6 +22,7 @@
     <div id="search-page-results">
         <ul id="search-page-result-list" class="search-page-result-list">
 
+
         </ul>
     </div>
 </main>
@@ -82,6 +83,7 @@
 
                         try {
                             const results = await newSearch(distance, rating, tag, lat, lon);
+                            console.log(results);
                             populateResults(results);
                         } catch (e) {
                             errorMessage.textContent = e.message;
