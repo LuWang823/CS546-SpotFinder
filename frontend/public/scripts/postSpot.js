@@ -30,6 +30,9 @@ const postSpot = async (formData) => {
     //   throw new Error("Internal Server Error");
     // }
   } catch (e) {
-    throw e;
+    if(e?.response?.data)
+      throw e?.response?.data;
+    else
+      throw e
   }
 };
