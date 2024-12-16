@@ -121,10 +121,10 @@ const seedData = async () => {
             {
                 name: "Stephen R. Gregg Park",
                 hobby: ["Walking", "Picnicking", "Jogging", "Birdwatching", "Biking"],
-                image: "uploads/spots/park.jpeg",
+                image: "uploads/spots/park.jpg",
                 description: "Stephen R. Gregg Park is a large urban park in Bayonne, NJ, offering scenic views, walking trails, playgrounds, and sports facilities. It is a popular spot for outdoor activities, family gatherings, and relaxation, with beautiful waterfront areas and ample green spaces.",
                 location: {
-                  coordinates: [-74.11497449418061, 40.684677919807264],
+                  coordinates: [-74.11497449418061, 40.684677919807264,],
                   address: "930 John F. Kennedy Blvd, Bayonne, NJ 07002",
                 },
                 ratingsAvg: 5,
@@ -199,7 +199,7 @@ const seedData = async () => {
             {
                 name: "San Francisco Zoo",
                 hobby: ["Family", "Birdwatching", "Photographing"],
-                image: "uploads/spots/zoo.jpeg",
+                image: "uploads/spots/zoo.jpg",
                 description: "The San Francisco Zoo is an ideal destination for nature enthusiasts, photographers, and families, offering diverse animal exhibits, lush botanical gardens, and scenic walking paths across its 100-acre property. Wildlife lovers can explore habitats featuring over 2,000 animals, while photography and gardening hobbyists will appreciate the vibrant landscapes and plant integration. Educational activities like animal talks, feedings, and behind-the-scenes tours cater to learners of all ages, while families can enjoy the Fisher Family Children’s Zoo, the Elinor Friend Playground, and the Little Puffer Miniature Steam Train. With its tranquil setting near Ocean Beach, the zoo provides a perfect blend of recreation, education, and outdoor fun.",
                 location: {
                   coordinates: [-122.50077335159972, 37.738125517669914],
@@ -236,7 +236,6 @@ const seedData = async () => {
                 location: {
                     coordinates: [104.90657083023795, 11.555449786861468],
                     address: "GWX5+H35, Phnom Penh, Cambodia",
-
                 },
                 ratingsAvg: 2,
                 ratingsTotal: 1,
