@@ -83,22 +83,36 @@ class ApiFeatures {
     return this;
   }
 
+// <<<<<<< Lu
   
 
-  geospatialFilter() {
-    const { x, y, r } = this.queryObject;
+//   geospatialFilter() {
+//     const { x, y, r } = this.queryObject;
 
-    if (x && y && r) {
-      const longitude = parseFloat(x);
-      const latitude = parseFloat(y);
-      const radius = parseFloat(r) / 3963.2; // Convert miles to radians
+//     if (x && y && r) {
+//       const longitude = parseFloat(x);
+//       const latitude = parseFloat(y);
+//       const radius = parseFloat(r) / 3963.2; // Convert miles to radians
+
+//       this.queryPromise.find({
+//         location: {
+//           $geoWithin: {
+//             $centerSphere: [[longitude, latitude], radius],
+//           },
+//         },
+// =======
+  within() {
+    if (
+      "x" in this.queryObject &&
+      "y" in this.queryObject &&
+      "r" in this.queryObject
+    ) {
+      let x = Number(this.queryObject.x);
+      let y = Number(this.queryObject.y);
+      let r = Number(this.queryObject.r);
 
       this.queryPromise.find({
-        location: {
-          $geoWithin: {
-            $centerSphere: [[longitude, latitude], radius],
-          },
-        },
+        location: { $geoWithin: { $centerSphere: [[x, y], r / 3963.2] } },
       });
     }
 

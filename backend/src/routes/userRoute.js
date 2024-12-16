@@ -8,6 +8,7 @@ import {
   findUser,
   forgotPasswordHandler,
   getCurrentUserHandler,
+  getUserById,
   likeSpotHandler,
   rejectFriendRequest,
   removeLikeSpotHandler,
@@ -37,6 +38,11 @@ userRouter.post(
 );
 
 userRouter.post(
+  "/verify/:id/:verificationCode",
+  validateResource(VerifyUserSchema),
+  verifyUserHandler,
+);
+userRouter.get(
   "/verify/:id/:verificationCode",
   validateResource(VerifyUserSchema),
   verifyUserHandler,
@@ -93,4 +99,5 @@ userRouter.patch(
   rejectFriendRequest,
 );
 
+userRouter.get("/getUserById/:id", getUserById);
 export default userRouter;

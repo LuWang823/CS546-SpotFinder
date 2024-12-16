@@ -53,6 +53,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         h4.innerText = `Shared by ${c.creater_name}`;
         li.appendChild(h4);
         c?.spots?.forEach((s) => {
+          console.log(s);
+
           let a = document.createElement("a");
           a.href = `/spots/${s.spot}`;
           a.style.display = "block";
@@ -64,7 +66,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       let friendRequest = document.getElementById("friend-request-list");
       user?.requestReceived.forEach((req) => {
-        console.log(req);
         if (req.status === "pending") {
           let li = document.createElement("li");
           li.innerHTML = `<div>Name: ${req.sender_name}</div>
@@ -129,7 +130,12 @@ document.addEventListener("DOMContentLoaded", async () => {
       });
 
       let friendList = document.getElementById("friend-list");
-      user?.friend?.forEach((f) => {
+      user?.friend?.forEach(async (f) => {
+        const { data } = await axios.get(
+          `http://localhost:3000/api/v1/users/getUserById/${f}`,
+        );
+        f = data.data.user;
+        console.log(f);
         let label = document.createElement("label");
         label.innerHTML = `<input type="radio" id=${f._id} name=${f.name} value=${f._id} />${f.name}`;
         friendList.appendChild(label);
@@ -153,7 +159,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         let likedList = [];
         for (const item of nodeList) {
-          likedList.push(item.value);
+          likedList.push({ spot: item.value, name: item.name });
         }
 
         // try to refresh access token

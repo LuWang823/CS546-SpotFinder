@@ -10,10 +10,13 @@ import spotRouter from "./spotRoute.js";
 import exphbs from "express-handlebars";
 import reviewRouter from "./reviewRoute.js";
 import hobbyRouter from "./hobbyRoute.js";
+import mongoSanitize from "express-mongo-sanitize";
 
 const app = express();
 
 app.use(express.json({ limit: "50mb" }));
+app.use(mongoSanitize());
+
 app.use("/", mainRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/sessions", authRouter);

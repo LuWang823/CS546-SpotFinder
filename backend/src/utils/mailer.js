@@ -1,12 +1,13 @@
 import nodemailer from "nodemailer";
 
 const smtp = {
-  host: "smtp.ethereal.email",
-  port: 587,
-  secure: false, // true for port 465, false for other ports
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true,
+  service: "gmail",
   auth: {
-    user: "kncsapvmgoffkyhd@ethereal.email",
-    pass: "nB9NhrDtdbUhzDwnEd",
+    user: "harsh99gautam@gmail.com",
+    pass: "weapurvzyeqfmrei",
   },
 };
 

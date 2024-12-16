@@ -8,12 +8,14 @@ function populatePeople(peoples) {
     list.removeChild(list.firstChild);
   }
   peoples.forEach((people) => {
-    let li = document.createElement("li");
-    li.innerHTML = `<div>Name: ${people.name}</div>
+    if (user._id !== people._id) {
+      let li = document.createElement("li");
+      li.innerHTML = `<div>Name: ${people.name}</div>
     <div>Address: ${people.address}</div>
     <a id="${people._id}" href="">send friend request</a>
     `;
-    list.appendChild(li);
+      list.appendChild(li);
+    }
   });
 
   for (let item of list.getElementsByTagName("a")) {
@@ -43,21 +45,35 @@ function populatePeople(peoples) {
 
 document.addEventListener("DOMContentLoaded", async () => {
   await refreshToken();
+  const errorMessage = document.getElementById('error-message');
   if (window.location.href === "http://localhost:3000/people") {
     let form = document.getElementById("search-people-form");
     form.addEventListener("submit", async (e) => {
       try {
         e.preventDefault();
+
+        
         let formData = new FormData(form);
-
+        let searchname = formData.get('name');
+        if(!searchname || typeof searchname !== 'string'){
+          errorMessage.textContent = "must provide a search name";
+          errorMessage.style.display = 'block';
+          return
+        }
+        if(searchname.trim() === ''){
+          errorMessage.textContent = "must provide a non-empty string";
+          errorMessage.style.display = 'block';
+          return
+        }
+        searchname = searchname.trim();
         const { data } = await axios.get(
-          `http://localhost:3000/api/v1/users/?name=${formData.get("name")}`,
+          `http://localhost:3000/api/v1/users/?name=${searchname}`,
         );
-
-        console.log(data);
         populatePeople(data.data);
       } catch (e) {
         console.log(e);
+        errorMessage.textContent = e.message;
+        errorMessage.style.display = 'block';
       }
     });
   }
