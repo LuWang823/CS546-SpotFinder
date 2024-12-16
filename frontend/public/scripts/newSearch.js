@@ -22,12 +22,13 @@ $.ajax(reqallsearch).then(function(responseMessage){
         const resultlist=responseMessage['data'];
         resultlist.map((item) => {
         let element = $(
-          `<a href='/api/v1/spots/${item.id}'>
+          `<a href='/spots/${item._id}'>
                     <img src="${item.image}" alt="${item.name}" class='search-result-img'></a>
-                    <h3>${item.name}</h3>
-                    <p>Rating: ${item.ratingsAvg}</p>
-                    <p>Location: ${item.location.address}</p>
-                `
+           <div class="search-result-text">         
+           <h3>${item.name}</h3>
+           <p>Rating: ${item.ratingsAvg}</p>
+           <p>Location: ${item.location.address}</p>
+           </div>`
         );
         //append the todo to the page
         searchResult.append(element);
