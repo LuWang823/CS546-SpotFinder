@@ -35,6 +35,7 @@ spotRouter.patch(
   deserializeUser,
   userRequired,
   uploadSpotsImage.single("spot"),
+  imageRequired,
   validateResource(UpdateSpotSchema),
   updateSpotHandler
 );

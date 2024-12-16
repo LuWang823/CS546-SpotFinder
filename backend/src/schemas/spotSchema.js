@@ -86,7 +86,6 @@ export const GetSpotsWithIn = z.object({
       ){
         return false;
       }
-      console.log("jhsdgkwje");
   
       return true;
     }),
