@@ -40,4 +40,4 @@ function verifySpot(name, hobby, photo, description, latitude, longitude) {
     return true;
 }
 
-// module.exports = verifySpot;
+module.exports = verifySpot;
