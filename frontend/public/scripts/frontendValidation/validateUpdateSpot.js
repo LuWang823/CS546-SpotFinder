@@ -57,7 +57,7 @@ function verifyUpdateSpot(name, hobby, photo, description, latitude, longitude) 
             throw new Error('longitude out of range');
         }
 
-        updateSpot['location']['coordinates'][1] = longitude;
+        updateSpot['location']['coordinates'][0] = longitude;
     }
 
     if(latitude != null && longitude !== 0){
@@ -69,7 +69,7 @@ function verifyUpdateSpot(name, hobby, photo, description, latitude, longitude) 
             throw new Error('latitude out of range');
         }
 
-        updateSpot['location']['coordinates'][0] = latitude;
+        updateSpot['location']['coordinates'][1] = latitude;
     }
     
     if(photo != null){

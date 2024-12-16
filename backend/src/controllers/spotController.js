@@ -34,6 +34,7 @@ export const getAllSpotsHandler = catchAsync(async (req, res, _next) => {
     .limitFields().queryPromise;
 
   const spots = await promise;
+  console.log(spots.length);
   return res.status(200).json({
     status: "success",
     data: spots,

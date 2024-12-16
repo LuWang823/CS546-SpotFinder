@@ -78,8 +78,8 @@
                     return;
                 }
                 else if (lat && lon) {
-                    formData.append("location.coordinates", lat);
                     formData.append("location.coordinates", lon);
+                    formData.append("location.coordinates", lat);
                 }
                 
                 console.log(formData);

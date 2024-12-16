@@ -63,7 +63,7 @@
             description: description,
             location: {
               Type: "Point",
-              coordinates: [lat, lon],
+              coordinates: [lon, lat],
             },
             reviews: [],
             likes: [],
@@ -77,8 +77,8 @@
           formData.append("hobby", tags);
           formData.append("spot", image);
           formData.append("description", description);
-          formData.append("location.coordinates", lat);
           formData.append("location.coordinates", lon);
+          formData.append("location.coordinates", lat);
           //        formData.append("location", { Type: "Point", coordinates: [lat, lon] });
           //        Object.keys(location).forEach(key => formData.append(key, location[key]));
           console.log(newSpot);
