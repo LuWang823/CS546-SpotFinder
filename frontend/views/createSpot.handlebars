@@ -4,8 +4,11 @@
     <label for="spot-name">Name: </label>
     <input type="text" id="spot-name" name="spot-name">
 
-    <label for="tags">Hobbies (separate with spaces): </label>
-    <input type="text" id="tags" name="tags">
+    <p>Hobby Tags for the Spot :</p>
+    <div id="collection-hobby-tags"></div>
+
+    <label for="customized-hobby-tags">Add Your Hobbies (separate with spaces): </label>
+    <input type="text" id="customized-hobby-tags" name="customized-hobby-tags">
 
     <label for="image">Image: </label>
     <input type="file" id="image" name="spot" accept=".jpg,.jpeg,.png">
@@ -23,6 +26,7 @@
   </form>
 </main>
 <script src="/scripts/frontendValidation/validateSpot.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="/scripts/postSpot.js"></script>
 
 <script>//do validation, assemble object, pass to createSpot function
@@ -41,6 +45,9 @@
       }
     });
   };
+
+
+
 
   // Set default coordinates to user's location
   getUserLocation().then(position => {
@@ -64,7 +71,7 @@
         event.preventDefault(); //obliterate default behavior
 
         let name = document.getElementById("spot-name").value;
-        let tags = document.getElementById("tags").value;
+        let tags = document.getElementById("customized-hobby-tags").value;
         const image = document.getElementById("image").files[0];
         let description = document.getElementById("description").value;
         {{!-- const lat = Number(document.getElementById("lat").value);
@@ -79,6 +86,7 @@
           description = description.trim();
 
           tags = tags.split(" ");
+
           let location = {
             Type: "Point",
             coordinates: [lat, lon],
@@ -100,8 +108,14 @@
           const formData = new FormData();
           formData.append("name", name);
           tags.forEach(tag => {
-            formData.append("hobby", tag);
+            formData.append("hobby[]", tag);
           });
+
+          $('input[name="hobby"]:checked').each(function() {
+            formData.append("hobby[]", $(this).val());
+          });
+
+
           formData.append("hobby", tags);
           formData.append("spot", image);
           formData.append("description", description);
@@ -109,8 +123,8 @@
           formData.append("location.coordinates", lat);
           //        formData.append("location", { Type: "Point", coordinates: [lat, lon] });
           //        Object.keys(location).forEach(key => formData.append(key, location[key]));
-          console.log(newSpot);
-          console.log(formData);
+          // console.log(newSpot);
+         //  console.log(formData);
           try {
             await postSpot(formData);
             errorMessage.textContent = "spot posted";
