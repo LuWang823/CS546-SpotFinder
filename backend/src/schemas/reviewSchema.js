@@ -1,12 +1,12 @@
 import mongoose from "mongoose";
 import z from "zod";
-
+import xss from "xss";
 const Body = z
   .object({
-    spot: z.string(),
-    user: z.string(),
-    username: z.string(),
-    description: z.string().max(100),
+    spot: z.string().transform((spot) => xss(spot)),
+    user: z.string().transform((user) => xss(user)),
+    username: z.string().transform((username) => xss(username)),
+    description: z.string().max(100).transform((description) => xss(description)),
     ratings: z.number().min(1).max(5),
   })
   .refine(
@@ -22,7 +22,7 @@ export const CreateReviewSchema = z.object({
 export const GetAllReviewsSchema = z.object({
   params: z
     .object({
-      spotId: z.string(),
+      spotId: z.string().transform((spotId) => xss(spotId)),
     })
     .refine((data) => mongoose.isValidObjectId(data.spotId)),
 });
@@ -30,7 +30,7 @@ export const GetAllReviewsSchema = z.object({
 export const GetReviewsByIdSchema = z.object({
   params: z
     .object({
-      id: z.string(),
+      id: z.string().transform((id) => xss(id)),
     })
     .refine((data) => mongoose.isValidObjectId(data.id)),
 });

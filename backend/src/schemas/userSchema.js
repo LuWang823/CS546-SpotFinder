@@ -1,17 +1,17 @@
 import mongoose from "mongoose";
 import z from "zod";
-
+import xss from "xss";
 // Rules for valid user input data
 const Body = z.object({
-  name: z.string({ required_error: "field 'name' is required" }).max(50),
+  name: z.string({ required_error: "field 'name' is required" }).max(50).transform((name) => xss(name)),
   email: z
     .string({ required_error: "field 'email' is required" })
-    .email("Please enter a valid email"),
+    .email("Please enter a valid email").transform((email) => xss(email)),
   password: z
     .string({ required_error: "field 'password' is required" })
     .min(6, { message: "password must contain at least six character" }),
-  image: z.string().optional(),
-  address: z.string().optional(),
+  image: z.string().optional().transform((image) => image ? xss(image) : image),
+  address: z.string().optional().transform((address) => address ? xss(address) : address),
 });
 
 const Params = z.object({
