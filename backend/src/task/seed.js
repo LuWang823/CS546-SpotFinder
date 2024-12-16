@@ -138,7 +138,7 @@ const seedData = async () => {
                 image: "uploads/spots/b2ce37c4-8b0f-4eae-8ce7-e139214a72f5.jpeg",
                 description: "A spot for food lovers to explore and savor flavors.",
                 location: {
-                    coordinates: [34.0522, -118.2437],
+                    coordinates: [34.0522, -90],
                     address: "789 Flavor Blvd, Food City, CA",
                 },
                 ratingsAvg: 4.7,
@@ -152,7 +152,7 @@ const seedData = async () => {
                 image: "uploads/spots/fa3670d6-55c9-42b1-b249-2bc379af835d.jpeg", // Updated image path
                 description: "A place for food enthusiasts to explore new recipes and flavors.",
                 location: {
-                    coordinates: [37.7749,-122.4194], 
+                    coordinates: [-122.4194,37.7749], 
                     address: "101 Culinary Lane, San Francisco, CA",
                 },
                 ratingsAvg: 4.9,
@@ -165,7 +165,7 @@ const seedData = async () => {
                 image: "uploads/spots/1d977e73-e834-45de-81d1-db9a1dbdfaab.jpeg", // Updated image path
                 description: "A spot to indulge in unique food tasting experiences and discover hidden gems.",
                 location: {
-                    coordinates: [34.0522, -118.2453], // Changed coordinates (Los Angeles, CA)
+                    coordinates: [-118.2453,34.0522], // Changed coordinates (Los Angeles, CA)
                     address: "456 Savory Street, Los Angeles, CA",
                 },
                 ratingsAvg: 4.8,
