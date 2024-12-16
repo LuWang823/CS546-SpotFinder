@@ -6,7 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{title}}</title>
   <link rel="stylesheet" href="/styles/main.css">
+  <script src="/scripts/collection.js" type="module"></script>
   <script src="/scripts/profile.js" type="module"></script>
+  <script src="/scripts/people.js" type="module"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
 </head>
@@ -24,6 +26,8 @@
       <li id="login"><a href="/login">Login</a></li>
       <li id="sign-up"><a href="/signUp">Sign Up</a></li>
       <li id="profile"><a href="">Profile</a></li>
+      <li id="collection"><a href="">Collection</a></li>
+      <li id="people"><a href="/people">People</a></li>
       <li id="sign-out"><a href="/">Sign Out</a></li>
     </ul>
 
@@ -48,14 +52,13 @@
 
   <script>
     if (localStorage.getItem("accessToken") === null) {
-      // User is not logged in, hide profile and sign-out
       document.getElementById("profile").style.display = "none";
       document.getElementById("sign-out").style.display = "none";
     } else {
-      // User is logged in, hide login and sign-up
       document.getElementById("login").style.display = "none";
       document.getElementById("sign-up").style.display = "none";
     }
+
     document.getElementById("sign-out").addEventListener("click", () => {
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");

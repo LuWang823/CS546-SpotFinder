@@ -79,10 +79,25 @@ mainRouter.get("/spots/:id", validateResource(getSpotById), findSpotPageById);
 
 mainRouter.route("/profile").get(async (req, res) => {
   try {
-    return res.status(200).render("profile", {title: 'Profile'});
+    return res.status(200).render("profile", { title: "Profile" });
   } catch (error) {
     res.status(500).send("request failed");
   }
 });
 
+mainRouter.route("/collection").get(async (req, res) => {
+  try {
+    return res.status(200).render("collection", { title: "Collection" });
+  } catch (error) {
+    res.status(500).send("request failed");
+  }
+});
+
+mainRouter.route("/people").get(async (req, res) => {
+  try {
+    return res.status(200).render("people", { title: "People" });
+  } catch (error) {
+    res.status(500).send("request failed");
+  }
+});
 export default mainRouter;

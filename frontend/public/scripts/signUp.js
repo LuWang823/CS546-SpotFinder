@@ -28,7 +28,7 @@ export const refreshToken = async () => {
   if (localStorage.refreshToken) {
     try {
       // Send credentials to the backend
-      const response = await fetch("api/v1/sessions/refresh", {
+      const response = await fetch("/api/v1/sessions/refresh", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

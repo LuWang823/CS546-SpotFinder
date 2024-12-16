@@ -1,6 +1,4 @@
-
 (function ($) {
-
     function validateSearch(distance, rating, tag) {
         // if (distance == null && rating == null && tag == null) {
         //     throw new Error('At least one search parameter must be provided');
@@ -55,6 +53,7 @@ $.ajax(reqallsearch).then(function(responseMessage){
         // console.log(responseMessage['data']);
         const resultlist=responseMessage['data'];
         resultlist.map((item) => {
+
         let element = $(
           `<a href='/spots/${item._id}'>
                     <img src="${item.image}" alt="${item.name}" class='search-result-img'></a>
@@ -62,7 +61,7 @@ $.ajax(reqallsearch).then(function(responseMessage){
            <h3>${item.name}</h3>
            <p>Rating: ${item.ratingsAvg}</p>
            <p>Location: ${item.location.address}</p>
-           </div>`
+           </div>`,
         );
         //append the todo to the page
         searchResult.append(element);
@@ -143,14 +142,12 @@ if ((distance != null || rating != null || hobbyselected != null)) {
 //     }
 // };
 
-
 // const newSearch = async (distance, rating, tag, lat,lon) => {
 //     //TODO: IMPLEMENT THIS FUNCTION
 //     // most likely implementaion vv
 //     try {
 //         // Send info to backend and get response
 //         //http://localhost:3000/api/v1/spots/?ratings=4&distance=10mi&category=hockey
-        
 
 //         const response = await fetch((`http://localhost:3000/api/v1/spots/?ratings=${rating}&distance=${distance}&category=${tag}`), {
 //             method: 'POST',
@@ -160,7 +157,7 @@ if ((distance != null || rating != null || hobbyselected != null)) {
 //                 'lon': lon
 //             }
 //         });
-    
+
 //         if (response.ok) {
 //             //const data = await response.json();
 //             //response should be an array of spots, each with the spot ID, the image, rating, distance, and the spot name
@@ -174,7 +171,6 @@ if ((distance != null || rating != null || hobbyselected != null)) {
 //         throw e
 //     }
 
-    
 //         data = [//dummy data
 //             {
 //                 id: '123532235235',
@@ -188,11 +184,9 @@ if ((distance != null || rating != null || hobbyselected != null)) {
 //                 image: '/13879183.jpeg',
 //                 name: 'Hiking spot',
 //                 rating: 4,
-//                 distance: 4 
+//                 distance: 4
 //             }
 //         ];
 //         return data
-
-        
 
 // }

@@ -20,6 +20,7 @@ app.use("/api/v1/sessions", authRouter);
 app.use("/api/v1/spots", spotRouter);
 app.use("/api/v1/reviews", reviewRouter);
 app.use("/api/hobbies", hobbyRouter);
+app.use("/api/v1/collections", collectionRouter);
 
 //set rendering engine to handlebars
 app.set("view engine", "handlebars");
@@ -27,6 +28,7 @@ app.set("view engine", "handlebars");
 //set default handlebars layout directory
 import path from "path";
 import { fileURLToPath } from "url";
+import collectionRouter from "./collectionRoute.js";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 app.engine("handlebars", exphbs.engine({ defaultLayout: "main" }));
 app.set("views", path.join(__dirname, "../../../frontend/views"));
@@ -36,7 +38,7 @@ app.set("layoutsDir", path.join(__dirname, "../../../frontend/views/layouts"));
 app.use(express.static(path.join(__dirname, "../../../frontend/public")));
 
 // Serve static files from the 'uploads' folder
-app.use('/uploads', express.static(path.join(__dirname,'../../uploads')));
+app.use("/uploads", express.static(path.join(__dirname, "../../uploads")));
 
 app.use("*", (req, _res, next) => {
   next(new AppError(`could not find ${req.originalUrl} on this server`, 404));
