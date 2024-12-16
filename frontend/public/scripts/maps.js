@@ -53,7 +53,7 @@ const addMarkersToMap = (spots) => {
 
     spots.forEach(spot => {
         console.log('Adding marker for spot:', spot); // Debugging statement
-        const marker = L.marker([spot.location.coordinates[0], spot.location.coordinates[1]])
+        const marker = L.marker([spot.location.coordinates[1], spot.location.coordinates[0]])
             .addTo(map)
             .bindPopup(`
                 <b>${spot.name}</b><br>

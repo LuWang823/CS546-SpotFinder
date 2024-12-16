@@ -138,7 +138,7 @@ const seedData = async () => {
                 image: "uploads/spots/b2ce37c4-8b0f-4eae-8ce7-e139214a72f5.jpeg",
                 description: "A spot for food lovers to explore and savor flavors.",
                 location: {
-                    coordinates: [34.0522, -90],
+                    coordinates: [-118.24, 37.7749],
                     address: "789 Flavor Blvd, Food City, CA",
                 },
                 ratingsAvg: 4.7,
