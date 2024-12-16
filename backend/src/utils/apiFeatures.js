@@ -36,6 +36,11 @@ class ApiFeatures {
       ),
     );
 
+    if (this.queryObject['ratings']) {
+      queryObject.ratingsAvg = { $gte: this.queryObject['ratings'] };
+      delete queryObject['ratings'];
+    }
+
     this.queryPromise.find(queryObject);
 
     return this;
@@ -77,6 +82,29 @@ class ApiFeatures {
 
     return this;
   }
+
+  
+
+  geospatialFilter() {
+    const { x, y, r } = this.queryObject;
+
+    if (x && y && r) {
+      const longitude = parseFloat(x);
+      const latitude = parseFloat(y);
+      const radius = parseFloat(r) / 3963.2; // Convert miles to radians
+
+      this.queryPromise.find({
+        location: {
+          $geoWithin: {
+            $centerSphere: [[longitude, latitude], radius],
+          },
+        },
+      });
+    }
+
+    return this;
+  }
+
 }
 
 export default ApiFeatures;
