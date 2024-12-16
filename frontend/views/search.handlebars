@@ -4,15 +4,16 @@
     <form id="search-form">
         <p id="error-message"></p>
 
-        <label for="distance">Search Distance (Max 500 Miles): </label>
+        <label for="search-distance">Search Distance (Max 500 Miles): </label>
         <input type="number" min='1' max='500' id="search-distance" name="search-distance"><span id="distance-unit">miles</span>
 
 
         <label for="rating-search">Search By Rating: </label>
         <input type="range" min="1" max="5" id="rating-search" value="3" name="rating-search"><span id="rating-value"> average no less than 3</span>
 
-        <label for="search-tag">Search By Hobby (Only 1): </label>
-        <input type="text" id="search-tag" name="search-tag">
+        <p>Search By Hobby:</p>
+        <div id="search-tag"></div>
+        
 
         <input type="submit" id="search-page-submit" name="search-page-submit" class="submit-button">
     </form>
@@ -27,7 +28,7 @@
     </div>
 </main>
 </div>
-<script src="/scripts/frontendValidation/validateSearch.js"></script>
+{{!-- <script src="/scripts/frontendValidation/validateSearch.js"></script> --}}
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="/scripts/newSearch.js"></script>
 <script>//Handle search form submission
