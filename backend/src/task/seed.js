@@ -111,7 +111,7 @@ const seedData = async () => {
                 image: "uploads/spots/7f55a26f-2b1c-461e-98cc-2d25ab18d35a.jpeg",
                 description: "Stephen R. Gregg Park is a large urban park in Bayonne, NJ, offering scenic views, walking trails, playgrounds, and sports facilities. It is a popular spot for outdoor activities, family gatherings, and relaxation, with beautiful waterfront areas and ample green spaces.",
                 location: {
-                  coordinates: [40.684677919807264, -74.11497449418061],
+                  coordinates: [-74.11497449418061, 40.684677919807264],
                   address: "930 John F. Kennedy Blvd, Bayonne, NJ 07002",
                 },
                 ratingsAvg: 4.8,
