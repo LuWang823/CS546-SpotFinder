@@ -49,7 +49,7 @@ nav a{
     transition: color 0.4s ease; /* Smooth transition for text color */
 }
 nav a:hover{
-    color:rgb(16, 152, 237);
+    color:rgb(132, 227, 210);
 }
 /*end navigation formatting*/
 
@@ -316,6 +316,35 @@ footer {
     font-weight: bold;
     width: 40px;
     text-align: center;
+    margin-left: 10px;
+}
+
+
+
+
+#search-page-results {
+    display: flex;
+    flex-direction: column; /* Stack results vertically */
+    gap: 15px; /* Add spacing between results */
+    display: grid;
+}
+
+.search-result-text{
+    height: 300px;
+    width: 600px; 
+    float: left;
+    margin-left: 10px;
+
+}
+
+
+/* Image styling */
+.search-result-img {
+    width: 400px; /* Set desired width */
+    height: 250px; /* Set desired height */
+    border-radius: 8px;
+    background-color: var(--bg-color); /* Add background to frame the image */
+    float: left;
     margin-left: 10px;
 }
 
