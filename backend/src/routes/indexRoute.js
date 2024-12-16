@@ -9,6 +9,7 @@ import mainRouter from "./mainRoute.js";
 import spotRouter from "./spotRoute.js";
 import exphbs from "express-handlebars";
 import reviewRouter from "./reviewRoute.js";
+import hobbyRouter from "./hobbyRoute.js";
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use("/api/v1/users", userRouter);
 app.use("/api/v1/sessions", authRouter);
 app.use("/api/v1/spots", spotRouter);
 app.use("/api/v1/reviews", reviewRouter);
+app.use("/api/hobbies", hobbyRouter);
 
 //set rendering engine to handlebars
 app.set("view engine", "handlebars");

@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import globalUniqueHobbies from "./hobbyModule.js";
 
 const spotSchema = new mongoose.Schema(
   {
@@ -36,6 +37,19 @@ spotSchema.pre(/^find/, function (next) {
     select: "-password -verificationCode",
   });
   next();
+});
+
+async function updateGlobalHobbies(newHobbies) {
+  const updatedDocument = await globalUniqueHobbies.findOneAndUpdate(
+    {}, // Find the document
+    { $addToSet: { hobbies: { $each: newHobbies } } }, // Add new hobbies to the set
+    { new: true, upsert: true } // Create the document if it doesn't exist
+  );
+  return globalUniqueHobbies;
+}
+
+spotSchema.post("save", async function () {
+  await updateGlobalHobbies(this.hobby); // Pass the hobby array from the new spot
 });
 
 export default mongoose.model("Spot", spotSchema);
