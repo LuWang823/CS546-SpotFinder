@@ -25,7 +25,18 @@ const seedData = async () => {
 
     // Clear existing data
     await User.deleteMany();
+    console.log("Previous User data cleared!");
+
+    await Session.deleteMany();
+    console.log("Previous Session data cleared!");
+
+    await Spot.deleteMany();
     console.log("Previous Spot data cleared!");
+
+    await Review.deleteMany();
+    console.log("Previous Review data cleared!");
+
+    
 
     try {
 
@@ -104,112 +115,263 @@ const seedData = async () => {
             },
         ];
 
-        const spots = [
+      
+
+        const spot1 = await Spot.create (
             {
                 name: "Stephen R. Gregg Park",
                 hobby: ["Walking", "Picnicking", "Jogging", "Birdwatching", "Biking"],
-                image: "uploads/spots/7f55a26f-2b1c-461e-98cc-2d25ab18d35a.jpeg",
+                image: "uploads/spots/park.jpeg",
                 description: "Stephen R. Gregg Park is a large urban park in Bayonne, NJ, offering scenic views, walking trails, playgrounds, and sports facilities. It is a popular spot for outdoor activities, family gatherings, and relaxation, with beautiful waterfront areas and ample green spaces.",
                 location: {
                   coordinates: [-74.11497449418061, 40.684677919807264],
                   address: "930 John F. Kennedy Blvd, Bayonne, NJ 07002",
                 },
-                ratingsAvg: 4.8,
-                ratingsTotal: 150,
+                ratingsAvg: 5,
+                ratingsTotal: 2,
                 user: user5._id.toString(),
-            },
+            });
+
+        const spot2 = await Spot.create (
+            {
+                name: "Pier A Pergola",
+                hobby: ["Walking", "Picnicking", "Jogging"],
+                image: "uploads/spots/pergola.png",
+                description: "The Pier A Pergola, often referred to as the gazebo, is a notable feature situated at the eastern end of Pier A Park in Hoboken, New Jersey. This structure provides visitors with a shaded area to relax and enjoy panoramic views of the Manhattan skyline across the Hudson River. The park itself, located at 100 Sinatra Drive, offers amenities such as a great lawn, fishing areas, and tree-lined pathways, making it a popular destination for both locals and tourists.",
+                location: {
+                  coordinates: [-74.02502120108159, 40.73707619378764],
+                  address: "Pier A Park, Hoboken, NJ 07030",
+                },
+                ratingsAvg: 4,
+                ratingsTotal: 1,
+                user: user5._id.toString(),
+            });
+
+
+        const spot3 = await Spot.create (
+            {
+                name: "Gateway South, Stevens Institute of Technology",
+                hobby: ["Study"],
+                image: "uploads/spots/GatewaySouth.jpg",
+                description: "The Gateway Academic Center is a state-of-the-art facility that opened in 2019. The center comprises two buildings—South Hall and Gianforte Family Hall—connected by a glass skybridge. Spanning 89,500 square feet over four stories, it features 10 technology-rich classrooms, 13 laboratories, and 45 faculty offices.",
+                location: {
+                  coordinates: [-74.02786138250296, 40.7432219381947],
+                  address: "1 Castle Point Terrace, Hoboken, NJ 07030",
+                },
+                ratingsAvg: 5,
+                ratingsTotal: 3,
+                user: user5._id.toString(),
+            });
+
+
+        const spot4 = await Spot.create (
+            {
+                name: "Philadelphia Museum of Art",
+                hobby: ["Arts", "Sketching"],
+                image: "uploads/spots/PhillyMuseum.jpg",
+                description: "The Philadelphia Museum of Art is a world-renowned institution housing over 240,000 works of art, spanning 2,000 years, and featuring masterpieces by Van Gogh, Duchamp, and Rodin. Its iconic Greek Revival building serves as a cultural landmark at the end of the Benjamin Franklin Parkway in Philadelphia.",
+                location: {
+                  coordinates: [-75.18085338839663, 39.96682456054716],
+                  address: "2600 Benjamin Franklin Pkwy, Philadelphia, PA 19130",
+                },
+                ratingsAvg: 3,
+                ratingsTotal: 0,
+                user: user5._id.toString(),
+            });
+        
+        const spot5 = await Spot.create (
+            {
+                name: "Puʻuloa Beach Park",
+                hobby: ["Walking", "Picnicking", "Jogging", "Swimming"],
+                image: "uploads/spots/honolulu.png",
+                description: "The park features amenities such as restrooms, picnic tables, a covered pavilion, and a basketball court, making it suitable for family outings and gatherings.",
+                location: {
+                  coordinates: [-157.9928832872145, 21.32112039817308],
+                  address: "91-027 Fort Weaver Rd, Ewa Beach, HI 96706",
+                },
+                ratingsAvg: 4,
+                ratingsTotal: 1,
+                user: user5._id.toString(),
+            });
+
+
+        const spot6 = await Spot.create (
+            {
+                name: "San Francisco Zoo",
+                hobby: ["Family", "Birdwatching", "Photographing"],
+                image: "uploads/spots/zoo.jpeg",
+                description: "The San Francisco Zoo is an ideal destination for nature enthusiasts, photographers, and families, offering diverse animal exhibits, lush botanical gardens, and scenic walking paths across its 100-acre property. Wildlife lovers can explore habitats featuring over 2,000 animals, while photography and gardening hobbyists will appreciate the vibrant landscapes and plant integration. Educational activities like animal talks, feedings, and behind-the-scenes tours cater to learners of all ages, while families can enjoy the Fisher Family Children’s Zoo, the Elinor Friend Playground, and the Little Puffer Miniature Steam Train. With its tranquil setting near Ocean Beach, the zoo provides a perfect blend of recreation, education, and outdoor fun.",
+                location: {
+                  coordinates: [-122.50077335159972, 37.738125517669914],
+                  address: "Sloat Blvd &, Upper Great Hwy, San Francisco, CA 94132",
+                },
+                ratingsAvg: 5,
+                ratingsTotal: 1,
+                user: user2._id.toString(),
+            });
+
+
+        const spot7 = await Spot.create (
             {
                 name: "Artistic Haven",
                 hobby: ["Art", "Sketching"],
-                image: "uploads/spots/1f0f1546-4d76-4e66-8637-2b243117bec9.jpeg",
+                image: "uploads/spots/guilin.jpg",
                 description: "A tranquil spot for artists to find inspiration.",
                 location: {
-                    coordinates: [-74.0059, 40.7128],
-                    address: "456 Creative Lane, Art City, NY",
+                    coordinates: [110.29037246574518, 25.274648472169233],
+                    address: "2 Binjiang Rd, Xiangshan District, Guilin, Guilin, Guangxi, China, 541002",
                 },
-                ratingsAvg: 4.5,
-                ratingsTotal: 80,
-                user:"5f8e14b9b9b85f16e9d39de4", 
+                ratingsAvg: 3,
+                ratingsTotal: 0,
+                user:user2._id.toString(), 
 
-            },
+            });
+
+        const spot8 = await Spot.create (
             {
                 name: "Culinary Delight",
                 hobby: ["Cooking", "Food Tasting"],
-                image: "uploads/spots/b2ce37c4-8b0f-4eae-8ce7-e139214a72f5.jpeg",
+                image: "uploads/spots/restaurant.jpg",
                 description: "A spot for food lovers to explore and savor flavors.",
                 location: {
-                    coordinates: [-118.24, 37.7749],
-                    address: "789 Flavor Blvd, Food City, CA",
-                },
-                ratingsAvg: 4.7,
-                ratingsTotal: 120,
-                user:"6037f721d7e6f28a1d2e6a1b",
+                    coordinates: [104.90657083023795, 11.555449786861468],
+                    address: "GWX5+H35, Phnom Penh, Cambodia",
 
-            },
-            {
-                name: "Gastronomy Haven",
-                hobby: ["Cooking", "Food Exploration", "Baking"],
-                image: "uploads/spots/fa3670d6-55c9-42b1-b249-2bc379af835d.jpeg", // Updated image path
-                description: "A place for food enthusiasts to explore new recipes and flavors.",
-                location: {
-                    coordinates: [-122.4194,37.7749], 
-                    address: "101 Culinary Lane, San Francisco, CA",
                 },
-                ratingsAvg: 4.9,
-                ratingsTotal: 200,
-                user: "60ca1f9f86f8d8a2b02cc496",
-            },
+                ratingsAvg: 2,
+                ratingsTotal: 1,
+                user:user2._id.toString(),
+
+            });
+            
+        const spot9 = await Spot.create (
+            {
+                name: "Mukti's Kitchen",
+                hobby: ["Cooking"],
+                image: "uploads/spots/kitchen.jpg", // Updated image path
+                description: "Mukti's Kitchen, founded by Mukti Banerjee, offers authentic Indian cooking classes in Brooklyn, New York. Since 2010, Mukti has shared her culinary expertise, teaching both vegetarian and non-vegetarian dishes. Classes are hands-on and interactive, providing participants with the skills to prepare healthy and delicious Indian meals. The studio is located at 816 Beverley Rd, Brooklyn, NY 11218.",
+                location: {
+                    coordinates: [-73.99971712585591, 40.8375235146539], 
+                    address: "816 Beverley Rd, Brooklyn, NY 11218",
+                },
+                ratingsAvg: 2,
+                ratingsTotal: 1,
+                user: user1._id.toString(),
+            });
+
+        const spot10 = await Spot.create (
             {
                 name: "Tasteful Adventures",
                 hobby: ["Food Tasting", "Baking", "Exploring Local Cuisine"],
-                image: "uploads/spots/1d977e73-e834-45de-81d1-db9a1dbdfaab.jpeg", // Updated image path
+                image: "uploads/spots/food.jpg", // Updated image path
                 description: "A spot to indulge in unique food tasting experiences and discover hidden gems.",
                 location: {
-                    coordinates: [-118.2453,34.0522], // Changed coordinates (Los Angeles, CA)
+                    coordinates: [-118.2453, 34.0522], // Changed coordinates (Los Angeles, CA)
                     address: "456 Savory Street, Los Angeles, CA",
                 },
-                ratingsAvg: 4.8,
-                ratingsTotal: 150,
-                user: "602b7b48d79b4b93b0f9036f",
-            },
-        ];
+                ratingsAvg: 1,
+                ratingsTotal: 1,
+                user: user1._id.toString(),
+            });
 
-        const reviews = [
+        const review1 = await Review.create(
             {
-                spot: "60b6a6fabc13f35db407f7c4",
-                user: "602b7b48d79b4b93b0f9036f",
+                spot: spot1._id.toString(),
+                user: user5._id.toString(),
                 description: "This is a beautiful spot with breathtaking views. Highly recommend it!",
                 ratings: 5,
-            },
+            });
+
+        const review2 = await Review.create(
             {
-                spot: "60b6a6fabc13f35db407f7c4",
-                user: "602b7b48d79b4b93b0f9036f",
-                description: "A great spot for food lovers! The ambiance is perfect for a casual outing, and the food is delicious. I did think the service could have been a bit quicker, but overall, it was a great experience. The chocolate lava cake is a must-try!",
+                spot: spot1._id.toString(),
+                user: user1._id.toString(),
+                description: "I walk my dog here every day",
+                ratings: 3,
+            });
+        const review3 = await Review.create(
+            {
+                spot: spot2._id.toString(),
+                user: user1._id.toString(),
+                description: "A great spot for view",
+                ratings: 4,
+
+            });
+
+        const review4 = await Review.create(
+
+            {
+                spot: spot3._id.toString(),
+                user: user1._id.toString(),
+                description: "I study here",
                 ratings: 5,
 
-            },
+            });
+
+        const review5 = await Review.create(
             {
-                spot: "60b6a6fabc13f35db407f7c4",
-                user: "602b7b48d79b4b93b0f9036f",
-                description: "This place is absolutely amazing! The variety of dishes is incredible, and the flavors are unbeatable. I especially loved the grilled salmon—it was cooked to perfection. Highly recommend to anyone who loves gourmet food",
+                spot: spot3._id.toString(),
+                user: user5._id.toString(),
+                description: "I conduct research here",
                 ratings: 5,
 
-            },
+            });
+
+        const review6 = await Review.create(
             {
-                spot: "60b6a6fabc13f35db407f7cb",
-                user: "602b7b48d79b4b93b0f9036f",
-                description: "This is a beautiful spot with breathtaking views. Highly recommend it!",
+                spot: spot3._id.toString(),
+                user: user2._id.toString(),
+                description: "I chase my dream here",
                 ratings: 5,
 
-            },
-            {
-                spot: "60b6a6fabc13f35db407f7cb",
-                user: "60ca1f9f86f8d8a2b02cc496",
-                description: "A wonderful place for a family dinner! The kids loved the pasta, and I had an amazing steak. The staff was friendly and attentive. The only downside was the long wait, but the food definitely made up for it. Will be coming back soon!",
-                ratings: 5,
+            });
 
-            },
-        ];
+        const review7 = await Review.create(
+            {
+                spot: spot5._id.toString(),
+                user: user2._id.toString(),
+                description: "Nice place. Thanks for sharing.",
+                ratings: 4,
+    
+            });
+            
+
+        const review8 = await Review.create(
+            {
+                spot: spot6._id.toString(),
+                user: user2._id.toString(),
+                description: "A wonderful place for a family activities! The kids loved the animals!",
+                ratings: 5,
+        
+            });
+            
+        const review9 = await Review.create(
+            {
+                spot: spot8._id.toString(),
+                user: user2._id.toString(),
+                description: "A wonderful place though but too far for me to travel. I took one day to get there.",
+                ratings: 2,
+        
+            });
+            
+        const review10 = await Review.create(
+            {
+                spot: spot9._id.toString(),
+                user: user1._id.toString(),
+                description: "Too professional for me to learn! Not for novice.",
+                ratings: 2,
+        
+            });
+            
+        const review11 = await Review.create(
+            {
+                spot: spot10._id.toString(),
+                user: user5._id.toString(),
+                description: "A wonderful place but it was really hard to find",
+                ratings: 1,
+            
+            });
+        
     
        
 
@@ -218,15 +380,6 @@ const seedData = async () => {
     await Session.insertMany(sessions);
     console.log("Seed session data inserted successfully!");
 
-
-    // Insert seed spot data
-    await Spot.insertMany(spots);
-    console.log("Seed spot data inserted successfully!");
-
-
-    // Insert seed spot data
-    await Review.insertMany(reviews);
-    console.log("Seed review data inserted successfully!");
 }
     catch(error) {
         console.error("Error seeding data:", error);
