@@ -1,13 +1,21 @@
 import Collection from "../modules/collectionsModule.js";
 import User from "../modules/userModule.js";
 import catchAsync from "../utils/catchAsync.js";
+import mongoose from "mongoose";
+import Spot from "../modules/spotModule.js"
 
 export const createCollectionHandler = catchAsync(async (req, res, _next) => {
   const { spots, sharedWith } = req.body;
+
+  const spotObjects = await Spot.find(
+    { _id: spots },
+    { _id: 1, name: 1 }
+  )
+  console.log(spotObjects)
   const collection = await Collection.create({
     creater_name: res?.locals?.user?.name,
     creater_id: res?.locals?.user?._id,
-    spots,
+    spots: spotObjects,
     sharedWith,
   });
 

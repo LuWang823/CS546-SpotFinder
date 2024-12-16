@@ -179,7 +179,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           message.textContent = "";
         }, 5000);
       } catch (e) {
-        throw e;
+        document.getElementById('error-message').innerHTML = e
       }
     });
   }
