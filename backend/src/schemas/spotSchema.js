@@ -4,8 +4,10 @@ import mongoose from "mongoose";
 const Body = z
   .object({
     name: z.string({ required_error: "name is required" }).max(20),
-    hobby: z.array(z.string()).nonempty({ message: "hobby is required" }),
-    image: z.string({ required_error: "image is required" }),
+    hobby: z
+    .union([z.array(z.string()), z.string()])
+    .transform((hobby) => (typeof hobby === "string" ? [hobby] : hobby))
+    .refine((hobby) => hobby.length > 0, { message: "hobby is required" }),
     description: z
       .string({ required_error: "description is required" })
       .max(500),
@@ -67,7 +69,7 @@ export const GetSpotsWithIn = z.object({
       .refine((data) => mongoose.isValidObjectId(data.id)),
   });
 
-  
+
   export const UpdateSpotSchema = z.object({
     body: Body.deepPartial().refine((data) => {
       if(!data.location){
