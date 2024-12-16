@@ -1,16 +1,20 @@
 import z from "zod";
 import mongoose from "mongoose";
+import xss from "xss"
 
 const Body = z
   .object({
-    name: z.string({ required_error: "name is required" }).max(20),
+    name: z.string({ required_error: "name is required" }).max(20).transform((name) => xss(name)),
     hobby: z
     .union([z.array(z.string()), z.string()])
-    .transform((hobby) => (typeof hobby === "string" ? [hobby] : hobby))
-    .refine((hobby) => hobby.length > 0, { message: "hobby is required" }),
+    .transform((hobby) => {
+      const sanitizedHobby = typeof hobby === "string" ? xss(hobby) : hobby.map((item) => xss(item));
+      return sanitizedHobby;
+    }).refine((hobby) => hobby.length > 0, { message: "hobby is required" }),
     description: z
       .string({ required_error: "description is required" })
-      .max(500),
+      .max(500)
+      .transform((description) => xss(description)),
     location: z.object({
       coordinates: z
         .array(z.number(), {
