@@ -77,6 +77,24 @@ class ApiFeatures {
 
     return this;
   }
+
+  within() {
+    if (
+      "x" in this.queryObject &&
+      "y" in this.queryObject &&
+      "r" in this.queryObject
+    ) {
+      let x = Number(this.queryObject.x);
+      let y = Number(this.queryObject.y);
+      let r = Number(this.queryObject.r);
+
+      this.queryPromise.find({
+        location: { $geoWithin: { $centerSphere: [[x, y], r / 3963.2] } },
+      });
+    }
+
+    return this;
+  }
 }
 
 export default ApiFeatures;

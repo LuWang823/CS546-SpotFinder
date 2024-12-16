@@ -122,6 +122,7 @@ export const getCurrentUserHandler = catchAsync(async (_req, res, _next) => {
     .lean();
 
   const postedSpots = await Spot.find({ user: res.locals.user._id });
+
   console.log("Posted Spots:", postedSpots, "\n\n");
   user.postedSpots = postedSpots;
 
@@ -129,7 +130,6 @@ export const getCurrentUserHandler = catchAsync(async (_req, res, _next) => {
   console.log("Posted Reviews:", postedReviews, "\n\n");
   user.postedReviews = postedReviews;
 
-  console.log(user);
   return res.status(200).json({
     status: "success",
     data: {
@@ -269,8 +269,8 @@ export const acceptFriendRequest = catchAsync(async (req, res, next) => {
   if (res.locals.user._id === req.body.sender) {
     return next(new AppError("can not send yourself a request"));
   }
-  const user = await User.findByIdAndUpdate(res.locals.user._id);
-  const sender = await User.findByIdAndUpdate(req.body.sender);
+  const user = await User.findById(res.locals.user._id);
+  const sender = await User.findById(req.body.sender);
   const key = req.body.key;
   let valid = false;
 
@@ -291,7 +291,7 @@ export const acceptFriendRequest = catchAsync(async (req, res, next) => {
     if (sender.requestSent[i].key === key) {
       sender.requestSent[i].status = "accepted";
       sender.friend.push(user._id);
-      await user.save();
+      await sender.save();
       break;
     }
   }
@@ -307,8 +307,8 @@ export const acceptFriendRequest = catchAsync(async (req, res, next) => {
 });
 
 export const rejectFriendRequest = catchAsync(async (req, res, next) => {
-  const user = await User.findByIdAndUpdate(res.locals.user._id);
-  const sender = await User.findByIdAndUpdate(req.body.sender);
+  const user = await User.findById(res.locals.user._id);
+  const sender = await User.findById(req.body.sender);
   const key = req.body.key;
   let valid = false;
 
@@ -327,7 +327,7 @@ export const rejectFriendRequest = catchAsync(async (req, res, next) => {
   for (let i = 0; i < sender.requestSent.length; i++) {
     if (sender.requestSent[i].key === key) {
       sender.requestSent[i].status = "rejected";
-      await user.save();
+      await sender.save();
       break;
     }
   }
@@ -340,4 +340,12 @@ export const rejectFriendRequest = catchAsync(async (req, res, next) => {
   } else {
     return next(new AppError("could not reject request"));
   }
+});
+
+export const getUserById = catchAsync(async (req, res, next) => {
+  const user = await User.findById(req.params.id);
+  return res.status(200).json({
+    message: "success",
+    data: { user },
+  });
 });

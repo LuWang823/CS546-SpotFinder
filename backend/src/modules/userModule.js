@@ -90,10 +90,17 @@ const userSchema = new mongoose.Schema(
 
 userSchema.index({ email: 1 });
 
+// userSchema.pre(/^find/, function (next) {
+//   this.populate({
+//     path: "friend",
+//   }).populate({
+//     path: "sharedCollection",
+//   });
+//   next();
+// });
+
 userSchema.pre(/^find/, function (next) {
   this.populate({
-    path: "friend",
-  }).populate({
     path: "sharedCollection",
   });
   next();

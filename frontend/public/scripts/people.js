@@ -8,12 +8,14 @@ function populatePeople(peoples) {
     list.removeChild(list.firstChild);
   }
   peoples.forEach((people) => {
-    let li = document.createElement("li");
-    li.innerHTML = `<div>Name: ${people.name}</div>
+    if (user._id !== people._id) {
+      let li = document.createElement("li");
+      li.innerHTML = `<div>Name: ${people.name}</div>
     <div>Address: ${people.address}</div>
     <a id="${people._id}" href="">send friend request</a>
     `;
-    list.appendChild(li);
+      list.appendChild(li);
+    }
   });
 
   for (let item of list.getElementsByTagName("a")) {
@@ -54,7 +56,6 @@ document.addEventListener("DOMContentLoaded", async () => {
           `http://localhost:3000/api/v1/users/?name=${formData.get("name")}`,
         );
 
-        console.log(data);
         populatePeople(data.data);
       } catch (e) {
         console.log(e);
