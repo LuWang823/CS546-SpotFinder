@@ -2,14 +2,17 @@
 
 import express from "express";
 import {
+  acceptFriendRequest,
   addFriendHandler,
   createUserHandler,
   findUser,
   forgotPasswordHandler,
   getCurrentUserHandler,
   likeSpotHandler,
+  rejectFriendRequest,
   removeLikeSpotHandler,
   resetPasswordHandler,
+  sendFriendRequest,
   verifyUserHandler,
 } from "../controllers/userController.js";
 import validateResource from "../middlewares/validateResource.js";
@@ -69,7 +72,25 @@ userRouter.delete(
 
 userRouter.get("/me", deserializeUser, userRequired, getCurrentUserHandler);
 
-userRouter.patch("/:id", deserializeUser, userRequired, addFriendHandler);
+// userRouter.patch("/:id", deserializeUser, userRequired, addFriendHandler);
 userRouter.get("/", findUser);
+userRouter.patch(
+  "/sendFriendRequest/:id",
+  deserializeUser,
+  userRequired,
+  sendFriendRequest,
+);
+userRouter.patch(
+  "/acceptFriendRequest",
+  deserializeUser,
+  userRequired,
+  acceptFriendRequest,
+);
+userRouter.patch(
+  "/rejectFriendRequest",
+  deserializeUser,
+  userRequired,
+  rejectFriendRequest,
+);
 
 export default userRouter;

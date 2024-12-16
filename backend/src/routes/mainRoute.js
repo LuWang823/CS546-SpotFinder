@@ -92,4 +92,12 @@ mainRouter.route("/collection").get(async (req, res) => {
     res.status(500).send("request failed");
   }
 });
+
+mainRouter.route("/people").get(async (req, res) => {
+  try {
+    return res.status(200).render("people", { title: "People" });
+  } catch (error) {
+    res.status(500).send("request failed");
+  }
+});
 export default mainRouter;

@@ -228,3 +228,116 @@ export const findUser = catchAsync(async (req, res, _next) => {
     count: users.length,
   });
 });
+
+export const sendFriendRequest = catchAsync(async (req, res, next) => {
+  const sender = await User.findByIdAndUpdate(res.locals.user._id);
+  const receiver = await User.findByIdAndUpdate(req.params.id);
+
+  for (let friendReq of sender.requestSent) {
+    if (String(friendReq.to_id) === receiver.id) {
+      return res.status(200).json({
+        status: "success",
+        data: { sender },
+      });
+    }
+  }
+
+  const key = uuid();
+  sender.requestSent.push({
+    to_name: receiver.name,
+    to_id: receiver._id,
+    key,
+    status: "pending",
+  });
+  receiver.requestReceived.push({
+    sender_name: sender.name,
+    sender_id: sender._id,
+    key,
+    status: "pending",
+  });
+
+  await sender.save();
+  await receiver.save();
+
+  return res.status(200).json({
+    status: "success",
+    data: { sender },
+  });
+});
+
+export const acceptFriendRequest = catchAsync(async (req, res, next) => {
+  if (res.locals.user._id === req.body.sender) {
+    return next(new AppError("can not send yourself a request"));
+  }
+  const user = await User.findByIdAndUpdate(res.locals.user._id);
+  const sender = await User.findByIdAndUpdate(req.body.sender);
+  const key = req.body.key;
+  let valid = false;
+
+  for (let i = 0; i < user.requestReceived.length; i++) {
+    if (user.requestReceived[i].key === key) {
+      if (user.requestReceived[i].status !== "pending") {
+        return next(new AppError("could not accept request"));
+      }
+      user.requestReceived[i].status = "accepted";
+      user.friend.push(sender._id);
+      await user.save();
+      valid = true;
+      break;
+    }
+  }
+
+  for (let i = 0; i < sender.requestSent.length; i++) {
+    if (sender.requestSent[i].key === key) {
+      sender.requestSent[i].status = "accepted";
+      sender.friend.push(user._id);
+      await user.save();
+      break;
+    }
+  }
+
+  if (valid) {
+    return res.status(200).json({
+      status: "success",
+      data: { user },
+    });
+  } else {
+    return next(new AppError("could not accept request"));
+  }
+});
+
+export const rejectFriendRequest = catchAsync(async (req, res, next) => {
+  const user = await User.findByIdAndUpdate(res.locals.user._id);
+  const sender = await User.findByIdAndUpdate(req.body.sender);
+  const key = req.body.key;
+  let valid = false;
+
+  for (let i = 0; i < user.requestReceived.length; i++) {
+    if (user.requestReceived[i].key === key) {
+      if (user.requestReceived[i].status !== "pending") {
+        return next(new AppError("cound not reject request"));
+      }
+      user.requestReceived[i].status = "rejected";
+      await user.save();
+      valid = true;
+      break;
+    }
+  }
+
+  for (let i = 0; i < sender.requestSent.length; i++) {
+    if (sender.requestSent[i].key === key) {
+      sender.requestSent[i].status = "rejected";
+      await user.save();
+      break;
+    }
+  }
+
+  if (valid) {
+    return res.status(200).json({
+      status: "success",
+      data: { user },
+    });
+  } else {
+    return next(new AppError("could not reject request"));
+  }
+});

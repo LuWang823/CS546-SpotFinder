@@ -5,7 +5,8 @@ import catchAsync from "../utils/catchAsync.js";
 export const createCollectionHandler = catchAsync(async (req, res, _next) => {
   const { spots, sharedWith } = req.body;
   const collection = await Collection.create({
-    creater: res?.locals?.user?._id,
+    creater_name: res?.locals?.user?.name,
+    creater_id: res?.locals?.user?._id,
     spots,
     sharedWith,
   });
@@ -28,7 +29,7 @@ export const createCollectionHandler = catchAsync(async (req, res, _next) => {
 export const getMyCollectionHandler = catchAsync(async (_req, res, _next) => {
   const collections = await Collection.find({
     creater: res?.locals?.user?._id,
-  }).populate("spots");
+  });
 
   return res.status(200).json({
     status: "success",
@@ -38,7 +39,9 @@ export const getMyCollectionHandler = catchAsync(async (_req, res, _next) => {
 
 export const getSharedCollectionHandler = catchAsync(
   async (_req, res, _next) => {
-    const user = await User.findById(res?.locals?.user?._id).populate("spots");
+    const user = await User.findById(res?.locals?.user?._id).populate(
+      "sharedCollection",
+    );
 
     return res.status(200).json({
       status: "success",

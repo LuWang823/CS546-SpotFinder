@@ -35,11 +35,90 @@ document.addEventListener("DOMContentLoaded", async () => {
       await refreshToken();
       let user = JSON.parse(localStorage.getItem("user"));
 
+      axios.defaults.headers.common["Authorization"] =
+        `Bearer ${localStorage.getItem("accessToken")}`;
+      const { data } = await axios.get(
+        "http://localhost:3000/api/v1/collections/sharedCollections",
+
+        {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      );
+
       let collectionList = document.getElementById("collection-list");
-      user?.sharedCollection?.forEach((s) => {
-        let label = document.createElement("label");
-        label.innerHTML = `<input type="radio" id=${s._id} name=${s.name} value=${s._id} />${s.name}`;
-        collectionList.appendChild(label);
+      data?.data?.collections?.forEach((c) => {
+        let li = document.createElement("li");
+        let h4 = document.createElement("h4");
+        h4.innerText = `Shared by ${c.creater_name}`;
+        li.appendChild(h4);
+        c?.spots?.forEach((s) => {
+          let a = document.createElement("a");
+          a.href = `/spots/${s.spot}`;
+          a.style.display = "block";
+          a.innerText = s.name;
+          li.appendChild(a);
+        });
+        collectionList.appendChild(li);
+      });
+
+      let friendRequest = document.getElementById("friend-request-list");
+      user?.requestReceived.forEach((req) => {
+        console.log(req);
+        if (req.status === "pending") {
+          let li = document.createElement("li");
+          li.innerHTML = `<div>Name: ${req.sender_name}</div>
+    <a class="accept" href="">accept friend request</a>
+    <a class="reject" href="">reject friend request</a>
+    `;
+          friendRequest.appendChild(li);
+
+          for (let item of li.getElementsByTagName("a")) {
+            if (item.classList.contains("accept")) {
+              item.addEventListener("click", async (e) => {
+                e.preventDefault();
+                const { data } = await axios.patch(
+                  "http://localhost:3000/api/v1/users/acceptFriendRequest",
+                  {
+                    key: req.key,
+                    sender: req.sender_id,
+                  },
+                  {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+                  },
+                );
+
+                item.style.display = "none";
+                item.nextElementSibling.style.display = "none";
+                let div = document.createElement("div");
+                div.textContent = "Request Accepted";
+                item.parentNode.append(div);
+              });
+            } else {
+              item.addEventListener("click", async (e) => {
+                e.preventDefault();
+                const { data } = await axios.patch(
+                  "http://localhost:3000/api/v1/users/rejectFriendRequest",
+                  {
+                    key: req.key,
+                    sender: req.sender_id,
+                  },
+                  {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+                  },
+                );
+
+                item.style.display = "none";
+                item.previousElementSibling.style.display = "none";
+                let div = document.createElement("div");
+                div.textContent = "Request Rejected";
+                item.parentNode.append(div);
+              });
+            }
+          }
+        }
       });
 
       let likedList = document.getElementById("liked-list");
@@ -91,7 +170,6 @@ document.addEventListener("DOMContentLoaded", async () => {
           {
             "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-            Refresh: `Bearer ${localStorage.getItem("refreshToken")}`,
           },
         );
 

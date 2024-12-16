@@ -31,6 +31,45 @@ const userSchema = new mongoose.Schema(
         ref: "User",
       },
     ],
+    requestReceived: [
+      {
+        sender_id: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User",
+          required: true,
+        },
+        sender_name: { type: String, required: true },
+        key: { type: String, required: true },
+        status: {
+          type: String,
+          enum: ["accepted", "rejected", "pending"],
+          default: "pending",
+        },
+
+        _id: false,
+      },
+    ],
+    requestSent: [
+      {
+        to_id: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User",
+          required: true,
+        },
+        to_name: {
+          type: String,
+          required: true,
+        },
+        key: { type: String, required: true },
+        status: {
+          type: String,
+          enum: ["accepted", "rejected", "pending"],
+          default: "pending",
+        },
+        _id: false,
+      },
+    ],
+
     hobby: {
       type: String,
     },
@@ -54,6 +93,8 @@ userSchema.index({ email: 1 });
 userSchema.pre(/^find/, function (next) {
   this.populate({
     path: "friend",
+  }).populate({
+    path: "sharedCollection",
   });
   next();
 });
