@@ -45,20 +45,35 @@ function populatePeople(peoples) {
 
 document.addEventListener("DOMContentLoaded", async () => {
   await refreshToken();
+  const errorMessage = document.getElementById('error-message');
   if (window.location.href === "http://localhost:3000/people") {
     let form = document.getElementById("search-people-form");
     form.addEventListener("submit", async (e) => {
       try {
         e.preventDefault();
+
+        
         let formData = new FormData(form);
-
+        let searchname = formData.get('name');
+        if(!searchname || typeof searchname !== 'string'){
+          errorMessage.textContent = "must provide a search name";
+          errorMessage.style.display = 'block';
+          return
+        }
+        if(searchname.trim() === ''){
+          errorMessage.textContent = "must provide a non-empty string";
+          errorMessage.style.display = 'block';
+          return
+        }
+        searchname = searchname.trim();
         const { data } = await axios.get(
-          `http://localhost:3000/api/v1/users/?name=${formData.get("name")}`,
+          `http://localhost:3000/api/v1/users/?name=${searchname}`,
         );
-
         populatePeople(data.data);
       } catch (e) {
         console.log(e);
+        errorMessage.textContent = e.message;
+        errorMessage.style.display = 'block';
       }
     });
   }
