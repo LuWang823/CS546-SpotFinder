@@ -3,7 +3,7 @@ import { refreshToken } from "./signUp.js";
 function populatePeople(peoples) {
   let list = document.getElementById("people-list");
   let user = JSON.parse(localStorage.getItem("user"));
-  console.log(user._id);
+  // console.log(user._id);
   while (list.firstChild) {
     list.removeChild(list.firstChild);
   }
