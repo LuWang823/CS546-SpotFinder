@@ -375,3 +375,23 @@ footer {
     display: inline-block; /* Label will be inline with radio button */
     font-size: 16px;
 }
+
+.create-spot-image-container{
+    width: 400px;
+  height: 100%;
+}
+.create-spot-form-container {
+    width: 400px;
+  height: 100%;
+
+}
+#image-preview{
+    width: auto;
+  height: 70vh;
+}
+
+.create-spot-form-container, .create-spot-image-container {
+    display: inline-block;
+    vertical-align: top;
+
+}

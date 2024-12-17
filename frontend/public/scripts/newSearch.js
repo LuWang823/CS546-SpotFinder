@@ -100,21 +100,145 @@ $.ajax(tagsurl).then(function(responseMessage){
     });
     }})
 
-let distance=$('#search-distance');
-let rating=$('rating-search');
+let distance=$('#search-distance').val();
+let rating=$('#rating-search').val();
 let hobbyselected=document.querySelector('input[name="hobby"]:checked');
 
 
-if ((distance != null || rating != null || hobbyselected != null)) {
+
+
+if ((distance || rating || hobbyselected )) {
+    try{
     validateSearch(parseInt(distance), parseInt(rating), hobbyselected);
-    searchResult.empty();
-    let reqrawsearch = {
-        method:'GET',
-        url: '/api/v1/spots',
+
+    const params = new URLSearchParams();
+
+
+    const handleSearch = async () => {
+        if (distance) {
+          try {
+            // Get user location
+            const position = await getUserLocation();
+            const { latitude, longitude } = position.coords;
+            params.append('x', longitude.toFixed(3));
+            params.append('y', latitude.toFixed(3));
+            params.append('r', parseInt(distance));
+          } catch (error) {
+            console.error('Error getting user location:', error);
+            $('#error-message').html(
+              '<p>Unable to retrieve your location. Distance-based search will not be available.</p>'
+            );
+          }
+        }
+  
+        // Append other search parameters
+        if (rating) params.append('rating', parseInt(rating));
+        if (hobbyselected) params.append('hobby', hobbyselected.value);
+  
+        // Send AJAX request
+        const reqrawsearch = {
+          method: 'GET',
+          url: `/spots/?${params.toString()}`,
+        };
+        console.log(reqrawsearch);
+
+        $.ajax(reqrawsearch)
+        .done((data) => {
+          const searchResult = $('#search-page-result-list');
+          searchResult.empty();
+
+          if (data.length === 0) {
+            searchResult.append('<p>No spots found matching your criteria.</p>');
+          } else {
+            data.forEach((spot) => {
+              searchResult.append(`
+                <div class="spot-card">
+                  <h3>${spot.name}</h3>
+                  <p>${spot.description}</p>
+                  <p>Rating: ${spot.ratingsAvg}</p>
+                  <p>Hobby: ${spot.hobby.join(', ')}</p>
+                </div>
+              `);
+            });
+          }
+        })
+        .fail((error) => {
+          console.error('Error fetching search results:', error);
+          $('#error-message').html('<p>An error occurred while fetching results.</p>');
+        });
     };
 
+    handleSearch();
+
+
+
+    // if (distance) {
+    //     const getUserLocation = () => {
+    //         return new Promise((resolve, reject) => {
+    //           if (navigator.geolocation) {
+    //             navigator.geolocation.getCurrentPosition(resolve, reject);
+    //           } else {
+    //             reject(new Error('Geolocation is not supported by this browser.'));
+    //           }
+    //         });
+    //       };
+        
+    //       // Set default coordinates to user's location
+    //     getUserLocation().then(position => {
+    //         const { latitude, longitude } = position.coords;
+    //         latInput.value = latitude.toFixed(3);
+    //         params.append('x', latInput.value);
+    //         lonInput.value = longitude.toFixed(3);
+    //         params.append('y', lonInput.value);
+    //         params.append('r', parseInt(distance)); 
+
+    //       }).catch(error => {
+    //         console.error('Error getting user location:', error);
+    //         errorMessage.textContent = 'Unable to retrieve your location. The distance search would be not available';
+    //         errorMessage.style.display = 'block';
+    //       });
+    // }
+
+
+
+    // if (rating) params.append('rating[gte]', parseInt(rating));
+
+    // if (hobbyselected) params.append('hobby', hobbyselected.value);
+
+
+
+    // let searchResult=$('#search-page-result-list');
+    // searchResult.empty();
+
+    // let reqrawsearch = {
+    //     method:'GET',
+    //     url: '/api/v1/spots',
+    //     data: {},
+    // };
+
+
     
-}
+
+
+
+
+
+} catch (e) {
+    // Handle validation errors
+    let errorArea = $('#error-message');
+    errorArea.empty();
+    errorArea.append(`<p>${e.message || e}</p>`);
+  }
+
+  
+
+    
+} else {
+    // Handle the case where no input is provided
+    let errorArea = $('#error-message');
+    errorArea.empty();
+    errorArea.append('<p>Please provide at least one search criterion.</p>');
+  }
 
 
 
