@@ -40,6 +40,10 @@ const postSpot = async (formData) => {
 };
 
 
+
+
+
+
 (function ($) {
 
 let tagarea=$('#collection-hobby-tags');
