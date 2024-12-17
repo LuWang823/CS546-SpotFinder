@@ -50,7 +50,7 @@ function verifyUpdateSpot(name, hobby, photo, description, latitude, longitude) 
         const validatedHobby = validateStringField(hobby, 'hobby', 2000);
         const regex = /^\s*[a-zA-Z0-9_-]+(?:\s+[a-zA-Z0-9_-]+)*\s*$/;
         if (!regex.test(validatedHobby)) {
-            throw new Error("hobbies needs to be in the format 'hobby1 hobby_2 hobb-3");
+            throw new Error("hobbies needs to be in the format 'hobby1 hobby2 hobby3");
         }
         updateSpot['hobby'] = validatedHobby.split(' ');
     }

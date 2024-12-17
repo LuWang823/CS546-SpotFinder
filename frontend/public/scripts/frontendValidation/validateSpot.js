@@ -30,7 +30,7 @@ function verifySpot(name, hobby, photo, description, latitude, longitude) {
     // Regex to match alphanumeric terms with dashes or underscores, separated by spaces
     const regex = /^\s*[a-zA-Z0-9_-]+(?:\s+[a-zA-Z0-9_-]+)*\s*$/;
     if (!regex.test(hobby)) {
-        throw new Error("hobbies needs to be in the format 'hobby1 hobby_2 hobb-3");
+        throw new Error("hobbies needs to be in the format 'hobby1 hobby2 hobby3");
     }
 
     if (description.length > 2000 || description.length < 1) {

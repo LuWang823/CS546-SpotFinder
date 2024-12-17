@@ -25,37 +25,9 @@ export const getSpotHandler = catchAsync(async (req, res, _next) => {
 });
 
 export const getAllSpotsHandler = catchAsync(async (req, res, _next) => {
-// <<<<<<< Lu
-//   let query = Spot.find();
-
-//   // Geospatial filtering
-//   const { x, y, r } = req.query;
-//   if (x && y && r) {
-//     query = query.find({
-//       location: {
-//         $geoWithin: {
-//           $centerSphere: [[parseFloat(x), parseFloat(y)], parseFloat(r) / 3963.2], // Convert radius to radians
-//         },
-//       },
-//     });
-//   }
-
-//   // Other query filters
-//   const features = new ApiFeatures(query, req.query)
-//     .filter() // Handles rating[gte] and other filters
-//     .searchByHobby() // Handles hobby search
-//     .sort() // Handles sorting
-//     .pagination() // Handles pagination
-//     .limitFields() // Limits fields in the response
-//     .geospatialFilter();
-
-//   const spots = await features.queryPromise;
-
-//   // Send response
-
   const promise = new ApiFeatures(Spot.find(), req.query)
-    // .within()
-    .filter()
+    .within()
+    // .filter()
     .searchByName()
     .searchByHobby()
     .sort()
@@ -68,21 +40,6 @@ export const getAllSpotsHandler = catchAsync(async (req, res, _next) => {
     status: "success",
     data: spots,
     count: spots.length,
-  // const promise = new ApiFeatures(Spot.find(), req.query)
-  //   .filter()
-  //   .searchByName()
-  //   .searchByHobby()
-  //   .sort()
-  //   .pagination()
-  //   .limitFields()
-  //   .queryPromise;
-
-  // const spots = await promise;
-  // console.log(spots.length);
-  // return res.status(200).json({
-  //   status: "success",
-  //   data: spots,
-  //   count: spots.length,
   });
 });
 
