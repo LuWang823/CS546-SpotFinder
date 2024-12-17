@@ -1,4 +1,5 @@
-<main>
+<main id="creatSpotPage">
+  <section id="create-spot-section" class="create-spot-form-container">
   <form id="spot-form" enctype="multipart/form-data">
     <p id="error-message"></p>
     <label for="spot-name">Name: </label>
@@ -11,7 +12,7 @@
     <input type="text" id="customized-hobby-tags" name="customized-hobby-tags">
 
     <label for="image">Image: </label>
-    <input type="file" id="image" name="spot" accept=".jpg,.jpeg,.png">
+    <input type="file" id="image" name="spot" accept=".jpg,.jpeg,.png" onChange="handleImageUpload()">
 
     <label for="description">Description: </label>
     <input type="text" id="description" name="description">
@@ -24,12 +25,42 @@
 
     <input type="submit">
   </form>
+</section>
+
+  <section id="image-preview-section" class="create-spot-image-container">
+      <h3>Image Preview:</h3>
+      <div id="image-preview-container">
+        <img id="image-preview" src="" alt="Image Preview" hidden>
+      </div>
+  </section>
 </main>
 <script src="/scripts/frontendValidation/validateSpot.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="/scripts/postSpot.js"></script>
 
 <script>//do validation, assemble object, pass to createSpot function
+function handleImageUpload() {
+    var image = document.getElementById("image").files[0];  // Get the selected file
+    var preview = document.getElementById("image-preview"); // Image preview element
+
+    // If no image is selected, hide the preview
+    if (!image) {
+        $('#image-preview').hide();  // Use the correct element ID to hide the preview
+        preview.src = '';  // Clear the image source
+        return;
+    }
+
+    var reader = new FileReader();
+    reader.onload = function(e) {
+        preview.src = e.target.result;  // Set the image preview source to the uploaded file
+        $('#image-preview').show();  // Show the preview element
+    }
+    reader.readAsDataURL(image);  // Read the image file
+}
+
+
+
+
   const errorMessage = document.getElementById("error-message");
 
   const latInput = document.getElementById("lat");
@@ -78,6 +109,7 @@
         const lon = Number(document.getElementById("lon").value); --}}
         const lat = Number(latInput.value);
         const lon = Number(lonInput.value);
+     
 
         try {
           verifySpot(name, tags, image, description, lat, lon);
