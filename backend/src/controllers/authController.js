@@ -6,9 +6,13 @@ import User from "../modules/userModule.js";
 import Session from "../modules/sessionModule.js";
 import AppError from "../utils/appError.js";
 import { signAccessToken, signRefreshToken, verifyJwt } from "../utils/jwt.js";
+import xss from "xss";
 
 export const createSessionHandler = catchAsync(async (req, res, next) => {
   let { email, password } = req.body;
+  email = xss(email);
+  password = xss(password);
+
   email = email.toLowerCase();
   const message = "invalid email or password";
 
@@ -46,8 +50,10 @@ export const createSessionHandler = catchAsync(async (req, res, next) => {
 });
 
 export const refreshAccessTokenHandler = catchAsync(async (req, res, next) => {
-  const refreshToken = _.get(req, "headers.x-refresh");
+  let refreshToken = _.get(req, "headers.x-refresh");
   const message = "could not refresh access token";
+
+  refreshToken = xss(refreshToken);
 
   if (!refreshToken) {
     return next(new AppError(message, 400));

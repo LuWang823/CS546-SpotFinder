@@ -60,3 +60,18 @@
 ## Honor Pledge
 
 We pledge our honor that we have abided by the Stevens Honor System.
+
+## Run Instructions
+
+- Clone the github repository 
+  - $ git clone git@github.com:LuWang823/CS546-SpotFinder.git
+  - $ cd CS546-SpotFinder/backend/
+  - $ npm i
+- Start the mongoDB server (currently in backend directory)
+  - $ mkdir -p data/db
+  - $ mongod --dbpath data/db/
+- Seed Data
+  - $ npm run seed
+- Start the express server
+  - Open another terminal and cd into backend directory
+  - $ npm run dev

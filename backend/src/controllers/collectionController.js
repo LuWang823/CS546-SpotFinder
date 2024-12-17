@@ -1,21 +1,17 @@
+import xss from "xss";
 import Collection from "../modules/collectionsModule.js";
 import User from "../modules/userModule.js";
 import catchAsync from "../utils/catchAsync.js";
 import mongoose from "mongoose";
-import Spot from "../modules/spotModule.js"
+import Spot from "../modules/spotModule.js";
+import AppError from "../utils/appError.js";
 
-export const createCollectionHandler = catchAsync(async (req, res, _next) => {
+export const createCollectionHandler = catchAsync(async (req, res, next) => {
   const { spots, sharedWith } = req.body;
-
-  const spotObjects = await Spot.find(
-    { _id: spots },
-    { _id: 1, name: 1 }
-  )
-  console.log(spotObjects)
   const collection = await Collection.create({
     creater_name: res?.locals?.user?.name,
     creater_id: res?.locals?.user?._id,
-    spots: spotObjects,
+    spots,
     sharedWith,
   });
 
@@ -23,6 +19,7 @@ export const createCollectionHandler = catchAsync(async (req, res, _next) => {
   const user_sharedWith = await User.findById(sharedWith);
 
   // user_creater.collection.push(collection._id);
+  if (!user_sharedWith) next(new AppError("user does not exist"));
   user_sharedWith.sharedCollection.push(collection._id);
 
   // await user_creater.save();

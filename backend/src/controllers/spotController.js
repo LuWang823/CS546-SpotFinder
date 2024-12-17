@@ -25,32 +25,45 @@ export const getSpotHandler = catchAsync(async (req, res, _next) => {
 });
 
 export const getAllSpotsHandler = catchAsync(async (req, res, _next) => {
-  let query = Spot.find();
+// <<<<<<< Lu
+//   let query = Spot.find();
 
-  // Geospatial filtering
-  const { x, y, r } = req.query;
-  if (x && y && r) {
-    query = query.find({
-      location: {
-        $geoWithin: {
-          $centerSphere: [[parseFloat(x), parseFloat(y)], parseFloat(r) / 3963.2], // Convert radius to radians
-        },
-      },
-    });
-  }
+//   // Geospatial filtering
+//   const { x, y, r } = req.query;
+//   if (x && y && r) {
+//     query = query.find({
+//       location: {
+//         $geoWithin: {
+//           $centerSphere: [[parseFloat(x), parseFloat(y)], parseFloat(r) / 3963.2], // Convert radius to radians
+//         },
+//       },
+//     });
+//   }
 
-  // Other query filters
-  const features = new ApiFeatures(query, req.query)
-    .filter() // Handles rating[gte] and other filters
-    .searchByHobby() // Handles hobby search
-    .sort() // Handles sorting
-    .pagination() // Handles pagination
-    .limitFields() // Limits fields in the response
-    .geospatialFilter();
+//   // Other query filters
+//   const features = new ApiFeatures(query, req.query)
+//     .filter() // Handles rating[gte] and other filters
+//     .searchByHobby() // Handles hobby search
+//     .sort() // Handles sorting
+//     .pagination() // Handles pagination
+//     .limitFields() // Limits fields in the response
+//     .geospatialFilter();
 
-  const spots = await features.queryPromise;
+//   const spots = await features.queryPromise;
 
-  // Send response
+//   // Send response
+
+  const promise = new ApiFeatures(Spot.find(), req.query)
+    // .within()
+    .filter()
+    .searchByName()
+    .searchByHobby()
+    .sort()
+    .pagination()
+    .limitFields().queryPromise;
+
+  let spots = await promise;
+
   return res.status(200).json({
     status: "success",
     data: spots,
@@ -86,21 +99,20 @@ export const getSpotsWithin = catchAsync(async (req, res, _next) => {
   });
 });
 
-
 export const findSpotById = catchAsync(async (req, res, next) => {
-    let { id } = req.params;
+  let { id } = req.params;
 
-    const spotFound = await Spot.findById(id);
-  
-    if (!spotFound) {
-      return next(new AppError("Spot found", 400));
-    }
-  
-    return res.status(200).json({
-        message: "Spot found",
-        data : spotFound
-      });
-});  
+  const spotFound = await Spot.findById(id);
+
+  if (!spotFound) {
+    return next(new AppError("Spot found", 400));
+  }
+
+  return res.status(200).json({
+    message: "Spot found",
+    data: spotFound,
+  });
+});
 
 export const findSpotPageById = catchAsync(async (req, res, next) => {
   let { id } = req.params;
@@ -113,33 +125,32 @@ export const findSpotPageById = catchAsync(async (req, res, next) => {
 
   const reviews = await Review.find({ spot: req.params.spotId });
 
-  if(spot.image){
-    return res.status(200).render('spot', {
+  if (spot.image) {
+    return res.status(200).render("spot", {
       title: spot.name,
-      image_src: '/'+spot.image.replace(/\\/g, '/'),
+      image_src: "/" + spot.image.replace(/\\/g, "/"),
       spotName: spot.name,
       tagList: spot.hobby,
       spotCoordinates: spot.location.coordinates,
       spotDescription: spot.description,
-      avgRating: Math.round((spot.ratingsAvg) * 100) / 100,
+      avgRating: Math.round(spot.ratingsAvg * 100) / 100,
       numRatings: spot.ratingsTotal,
-      review: reviews
+      review: reviews,
     });
-  }else{
-    return res.status(200).render('spot', {
+  } else {
+    return res.status(200).render("spot", {
       title: spot.name,
-      image_src: '/uploads/spots/undefined.jpeg',
+      image_src: "/uploads/spots/undefined.jpeg",
       spotName: spot.name,
       tagList: spot.hobby,
       spotCoordinates: spot.location.coordinates,
       spotDescription: spot.description,
-      avgRating: Math.round((spot.ratingsAvg) * 100) / 100,
+      avgRating: Math.round(spot.ratingsAvg * 100) / 100,
       numRatings: spot.ratingsTotal,
-      review: reviews
+      review: reviews,
     });
   }
-  
-}); 
+});
 export const updateSpotHandler = catchAsync(async (req, res, next) => {
   let { id } = req.params;
   const spot = await Spot.findById(id);
@@ -148,10 +159,10 @@ export const updateSpotHandler = catchAsync(async (req, res, next) => {
     return next(new AppError("Spot found", 400));
   }
   console.log(res.locals.user._id + " " + spot.user.id);
-  if(res.locals.user._id!= spot.user.id ){
-    return next(new AppError("User doesnot match",400));
+  if (res.locals.user._id != spot.user.id) {
+    return next(new AppError("User doesnot match", 400));
   }
-  const updateSpot = await Spot.findByIdAndUpdate(id , req.body, { new: true });
+  const updateSpot = await Spot.findByIdAndUpdate(id, req.body, { new: true });
 
   return res.status(200).json({
     status: "success",
