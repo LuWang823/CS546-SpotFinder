@@ -26,8 +26,8 @@ export const getSpotHandler = catchAsync(async (req, res, _next) => {
 
 export const getAllSpotsHandler = catchAsync(async (req, res, _next) => {
   const promise = new ApiFeatures(Spot.find(), req.query)
-    // .within()
-    .filter()
+    .within()
+    // .filter()
     .searchByName()
     .searchByHobby()
     .sort()
