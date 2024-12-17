@@ -15,12 +15,14 @@ class ApiFeatures {
   }
 
   searchByHobby() {
+    console.log(this.queryObject);
     if (
       "hobby" in this.queryObject &&
       typeof this.queryObject.hobby === "string"
     )
       this.queryPromise.find({
         hobby: { $regex: this.queryObject.hobby, $options: "i" },
+        // hobby: [this.queryObject.hobby],
       });
     return this;
   }
@@ -28,6 +30,7 @@ class ApiFeatures {
   filter() {
     const excludeFields = ["page", "limit", "sort", "fields"];
     let queryObject = _.omit(this.queryObject, excludeFields);
+    console.log(queryObject);
 
     queryObject = JSON.parse(
       JSON.stringify(queryObject).replace(
@@ -103,16 +106,21 @@ class ApiFeatures {
 // =======
   within() {
     if (
-      "x" in this.queryObject &&
-      "y" in this.queryObject &&
-      "r" in this.queryObject
+      "lan" in this.queryObject &&
+      "lat" in this.queryObject &&
+      "distance" in this.queryObject
     ) {
-      let x = Number(this.queryObject.x);
-      let y = Number(this.queryObject.y);
-      let r = Number(this.queryObject.r);
+      let lan = Number(this.queryObject.lan);
+      let lat = Number(this.queryObject.lat);
+      let distance = Number(this.queryObject.distance);
 
+      // this.queryPromise.find({
+      //   location: { $geoWithin: { $centerSphere: [[x, y], r / 3963.2] } },
+      // });
       this.queryPromise.find({
-        location: { $geoWithin: { $centerSphere: [[x, y], r / 3963.2] } },
+        location: {
+          $geoWithin: { $center: [[lan, lat], distance] },
+        },
       });
     }
 
