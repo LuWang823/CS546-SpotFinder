@@ -123,11 +123,11 @@ export const getCurrentUserHandler = catchAsync(async (_req, res, _next) => {
 
   const postedSpots = await Spot.find({ user: res.locals.user._id });
 
-  console.log("Posted Spots:", postedSpots, "\n\n");
+  // console.log("Posted Spots:", postedSpots, "\n\n");
   user.postedSpots = postedSpots;
 
   const postedReviews = await Review.find({ user: res.locals.user._id });
-  console.log("Posted Reviews:", postedReviews, "\n\n");
+  // console.log("Posted Reviews:", postedReviews, "\n\n");
   user.postedReviews = postedReviews;
 
   return res.status(200).json({
