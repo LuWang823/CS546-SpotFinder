@@ -7,7 +7,7 @@ const smtp = {
   service: "gmail",
   auth: {
     user: "harsh99gautam@gmail.com",
-    pass: "weapurvzyeqfmrei",
+    pass: "",
   },
 };
 
